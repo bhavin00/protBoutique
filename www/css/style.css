@@ -1,0 +1,7 @@
+/* Empty. Add your own CSS if you like */
+.home-card{
+    color: blue;
+}
+.home-card:hover{
+    background-color: lightgrey;
+}
