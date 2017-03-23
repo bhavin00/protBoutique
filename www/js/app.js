@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.login', 'starter.menu', 'starter.customer','starter.home','starter.order','starter.dashboard'])
+angular.module('starter', ['ionic', 'starter.login', 'starter.menu', 'starter.customer', 'starter.home', 'starter.order', 'starter.dashboard','starter.stats'])
 
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
@@ -68,12 +68,42 @@ angular.module('starter', ['ionic', 'starter.login', 'starter.menu', 'starter.cu
           }
         }
       })
+       .state('app.edit-customer', {
+        url: '/edit-customer',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/menu/customer/edit-customer.html',
+            controller: 'CustomerCtrl',
+            controllerAs: 'vm'
+          }
+        }
+      })
       .state('app.order', {
         url: '/order',
         views: {
           'menuContent': {
             templateUrl: 'templates/menu/order/order.html',
             controller: 'OrderCtrl',
+            controllerAs: 'vm'
+          }
+        }
+      })
+        .state('app.edit-order', {
+        url: '/edit-order',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/menu/order/edit-order.html',
+            controller: 'OrderCtrl',
+            controllerAs: 'vm'
+          }
+        }
+      })
+      .state('app.stats', {
+        url: '/stats',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/menu/stats/stats.html',
+            controller: 'StatsCtrl',
             controllerAs: 'vm'
           }
         }

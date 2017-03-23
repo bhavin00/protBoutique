@@ -1,0 +1,17 @@
+post--localhost:3002/api/user
+{
+	"username":"bhavin",
+	"password":"padiya",
+	"pwd":"padiya",
+	"fullname" :"bhavin padiya",
+	"phone":"1234567890",
+	"userrole":"admin",
+	"email":"bhavin@gmail.com",
+	"isActive":1
+}
+
+--New
+--Completed
+--Stitching
+--Partial
+--Cancelled
