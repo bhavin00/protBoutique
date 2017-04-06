@@ -1,49 +1,91 @@
-<div class="inner-heading-bar" ng-init="vm.getList()">Boutique Stats </div>
+<ion-view view-title="Dashboard">
+  <ion-content>
 
-<div class="main-contant-part minpageheight">
-  <div class="statsinchar">
-    <h2 class="statusUnderline">Stats in Products</h2>
-    <div class="stats-container ">
-      <div class="oval-margin">
-        <div class="oval"><strong>{{vm.bestDesign}}</strong> <span>Best Selling Design</span></div>
-        
-      </div>
-      <div class="oval-margin">
-        <div class="oval"><strong>{{vm.bestStyle}}</strong> <span>Best Selling Style</span></div>
-      </div>
-      <div class="oval-margin">
-        <div class="oval"><strong>{{vm.bestCombo}}</strong> <span>Best Selling Combo (Design + Style)</span></div>
+    <div ng-init="vm.getList()"></div>
+
+    <div class="main-contant-part minpageheight">
+      <div class="statsinchar">
+        <h2 class="statusUnderline">Collection Stats</h2>
+        <div class="stats-container row  row-no-padding">
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.todayCollection | currency : '&#8377;'}}</strong> <span align="center">Today's</span></div>
+          </div>
+          <div class="oval-margin ">
+            <div class="oval"><strong>{{vm.thisweekCollection | currency : '&#8377;'}}</strong> <span>This Week</span></div>
+          </div>
+          <div class="oval-margin ">
+            <div class="oval"><strong>{{vm.thismonthCollection | currency : '&#8377;'}}</strong> <span>This Month</span></div>
+          </div>
+
+        </div>
       </div>
 
-    </div>
-  </div>
-  <div class="statsinnumber">
-    <h2 class="statusUnderline">Stats in Numbers</h2>
-    <div class="stats-container ">
-      <div class="stats-number-bx">
-        <div class="circle">{{vm.totalCustomers}}</div>
-        Total Customers
+      <div class="statsinchar">
+        <h2 class="statusUnderline">Order Stats</h2>
+        <div class="stats-container ">
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.todayorder}}</strong> <span>Today's</span></div>
+          </div>
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.thisweekorder}}</strong> <span>This Week</span></div>
+          </div>
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.thismonthorder}}</strong> <span>This Month</span></div>
+          </div>
+
+        </div>
       </div>
-      <div class="stats-number-bx">
-        <div class="circle">{{vm.totalOrders}}</div>
-        Total Orders
+
+      <div class="statsinchar">
+        <h2 class="statusUnderline">Products Stats</h2>
+        <div class="stats-container ">
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.bestDesign}}</strong> <span>Best Design</span></div>
+
+          </div>
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.bestStyle}}</strong> <span>Best Style</span></div>
+          </div>
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.bestCombo}}</strong> <span>Best Combo</span></div>
+          </div>
+
+        </div>
       </div>
-      <div class="stats-number-bx">
-        <div class="circle">{{vm.newOrders}}</div>
-        New Orders
+
+
+      <div class="statsinchar">
+        <h2 class="statusUnderline">Numbers Stats</h2>
+        <div class="stats-container ">
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.totalCustomers}}</strong> <span>Customers</span></div>
+          </div>
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.totalOrders}}</strong> <span>Orders</span></div>
+          </div>
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.newOrders}}</strong><span>New Orders</span></div>
+          </div>
+        </div>
       </div>
-      <div class="stats-number-bx">
-        <div class="circle">{{vm.stitchingOrders}}</div>
-        Stitching Orders
-      </div>
-      <div class="stats-number-bx">
-        <div class="circle">{{vm.completedOrders}}</div>
-        Completed Orders
-      </div>
-      <div class="stats-number-bx">
-        <div class="circle">{{vm.cancelledOrders}}</div>
-        Cancelled Orders
-      </div>
-    </div>
-  </div>
-</div>
+      
+        <div class="stats-container ">
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.stitchingOrders}}</strong> <span>Stitching</span></div>
+          </div>
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.completedOrders}}</strong> <span>Completed</span></div>
+          </div>
+          <div class="oval-margin">
+            <div class="oval"><strong>{{vm.cancelledOrders}}</strong> <span>Cancelled</span></div>
+          </div>
+        </div>
+
+
+
+     
+          
+          
+
+  </ion-content>
+</ion-view>

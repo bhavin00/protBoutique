@@ -1,3 +1,4 @@
+
 <ion-view view-title="Order Page">
     <ion-content>
 <div class="main-contant-part" ng-init="vm.activate()">
@@ -82,7 +83,7 @@
                                             <option value="">-- Please Select --</option>
                                             <option value="{{stl.id}}" ng-repeat="stl in vm.styles | filter : {DesignId : vm.order.OrderItems[$index].DesignId}">{{stl.title}}</option>
                                         </select>
-                                        <img ng-src="{{vm.order.OrderItems[$index].Style.image}}" alt="{{stl.title}}" width="160" height="150">
+                                        <img ng-src="http://localhost:3002/{{vm.order.OrderItems[$index].Style.image}}" alt="{{stl.title}}" width="160" height="150">
                                     </td>
                                 </tr>
 
@@ -176,7 +177,7 @@
                             </tr>
                             <tr ng-repeat="orderItem in vm.order.OrderItems track by $index" class="ng-scope" ng-class="{'table-tr-alternate-color': vm.sprayColour($index,vm.order.OrderItems)}">
                                 <td data-th="Design: " class="top-purpal-color-row2 ng-binding" ng-click="vm.detail()">
-                                    <img height="50" width="50" class="image-text-set-order" ng-src="{{orderItem.Style.image}}">
+                                    <img height="50" width="50" class="image-text-set-order" ng-src="http://localhost:3002/{{orderItem.Style.image}}">
                                     <a href="">{{orderItem.Design.title}} ({{orderItem.Style.title}})</a>
                                     
                                 </td>

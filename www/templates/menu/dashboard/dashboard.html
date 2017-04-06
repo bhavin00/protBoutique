@@ -1,164 +1,157 @@
 <ion-view view-title="Dashboard page">
   <ion-content>
-    <ion-icon name="sad"></ion-icon>
 
-    <div class="main-contant-part minpageheight" ng-init="vm.activate()">
 
-      <!-- Dashboard Tab start here -->
-      <div class="tabGroup">
-        <ion-icon name="heart"></ion-icon>
+<div class="main-contant-part minpageheight" ng-init="vm.activate()">
+
+    <!-- Dashboard Tab start here -->
+    <div class="tabGroup">
         <input type="radio" name="tabGroup1" id="rad1" checked="checked" />
-        <label for="rad1" class="dashboad-label-mobile-btm-mar"><i class="ion-paper-airplane  io-larger"></i>
-</label>
+        <label for="rad1" class="dashboad-label-mobile-btm-mar">Deliverable Orders</label>
 
         <input type="radio" name="tabGroup1" id="rad2" />
-        <label for="rad2" class="dashboad-label-mobile-btm-mar"><i class="ion-android-add  io-larger"></i></label>
+        <label for="rad2" class="dashboad-label-mobile-btm-mar">New Orders</label>
 
         <input type="radio" name="tabGroup1" id="rad3" />
-        <label for="rad3" class="dashboad-label-mobile-btm-mar"><i class="ion-android-done  io-larger"></i></label>
+        <label for="rad3" class="dashboad-label-mobile-btm-mar">Completed Orders</label>
 
         <input type="radio" name="tabGroup1" id="rad4" />
-        <label for="rad4" class="dashboad-label-mobile-btm-mar"><i class="ion-android-close  io-larger"></i></label>
+        <label for="rad4" class="dashboad-label-mobile-btm-mar">Cancelled Orders</label>
 
         <br/>
 
         <div class="tab1">
-          <h2 class="no-record-found-tex2" ng-if="!vm.list.one.length">No record found</h2>
-          <table ng-if="vm.list.one.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
-            <tr class="top-purpal-color-row">
-              <th>Order Id</th>
-              <th>Designs</th>
-              <th>Customer Name</th>
-              <th>Delivery Date</th>
-              <th>Status</th>
-            </tr>
-            <tr ng-repeat="stch in vm.list.one">
-              <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
-              <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
-              <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
-              <td data-th="Delivery Date: " class="top-purpal-color-row2">{{stch.deliveryDate | date:'dd-MM-yyyy'}}</td>
-              <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
-            </tr>
-          </table>
-          <div class="paging" ng-if="vm.list.one.length > 0">
-            <span class="showing-text-bx">
+            <h2 class="no-record-found-tex2" ng-if="!vm.list.one.length">No record found</h2>
+            <table ng-if="vm.list.one.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
+                <tr class="top-purpal-color-row">
+                    <th>Order Id</th>
+                    <th>Designs</th>
+                    <th>Customer Name</th>
+                    <th>Delivery Date</th>
+                    <th>Status</th>
+                </tr>
+                <tr ng-repeat="stch in vm.list.one">
+                    <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
+                    <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
+                    <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
+                    <td data-th="Delivery Date: " class="top-purpal-color-row2">{{stch.deliveryDate | date:'dd-MM-yyyy'}}</td>
+                    <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
+                </tr>
+            </table>
+            <div class="paging" ng-if="vm.list.one.length > 0">
+                <span class="showing-text-bx">
                     Showing {{ ((vm.options.one.page - 1) * vm.options.one.pagesize) + 1 }} to
                     <t ng-if="(vm.options.one.page * vm.options.one.pagesize) > vm.options.one.totalItems">{{vm.options.one.totalItems}}</t>
                     <t ng-if="(vm.options.one.page * vm.options.one.pagesize) < vm.options.one.totalItems">{{vm.options.one.page * vm.options.one.pagesize}}</t>
                     of {{vm.options.one.totalItems}} Deliverable Orders
                 </span>
-            <div class="paging-text">
-              <ul uib-pagination ng-change="vm.pageChange('one')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.one.totalItems"
-                items-per-page="vm.options.one.pagesize" ng-model="vm.options.one.page" class="pagination-sm" previous-text="&lsaquo;"
-                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                <div class="paging-text">
+                    <ul uib-pagination ng-change="vm.pageChange('one')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.one.totalItems" items-per-page="vm.options.one.pagesize" ng-model="vm.options.one.page" class="pagination-sm" previous-text="&lsaquo;"
+                        next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                </div>
             </div>
-          </div>
         </div>
 
 
         <div class="tab2">
-          <h2 class="no-record-found-tex2" ng-if="!vm.list.two.length">No record found</h2>
-          <table ng-if="vm.list.two.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
-            <tr class="top-purpal-color-row">
-              <th>Order Id</th>
-              <th>Designs</th>
-              <th>Customer Name</th>
-              <th>Delivery Date</th>
-              <th>Status</th>
-            </tr>
-            <tr ng-repeat="stch in vm.list.two">
-              <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
-              <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
-              <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
-              <td data-th="Delivery Date: " class="top-purpal-color-row2">{{stch.deliveryDate | date:'dd-MM-yyyy'}}</td>
-              <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
-            </tr>
-          </table>
-          <div class="paging" ng-if="vm.list.two.length > 0">
-            <span class="showing-text-bx">
+            <h2 class="no-record-found-tex2" ng-if="!vm.list.two.length">No record found</h2>
+            <table ng-if="vm.list.two.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
+                <tr class="top-purpal-color-row">
+                    <th>Order Id</th>
+                    <th>Designs</th>
+                    <th>Customer Name</th>
+                    <th>Delivery Date</th>
+                    <th>Status</th>
+                </tr>
+                <tr ng-repeat="stch in vm.list.two">
+                    <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
+                    <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
+                    <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
+                    <td data-th="Delivery Date: " class="top-purpal-color-row2">{{stch.deliveryDate | date:'dd-MM-yyyy'}}</td>
+                    <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
+                </tr>
+            </table>
+            <div class="paging" ng-if="vm.list.two.length > 0">
+                <span class="showing-text-bx">
                     Showing {{ ((vm.options.two.page - 1) * vm.options.two.pagesize) + 1 }} to
                     <t ng-if="(vm.options.two.page * vm.options.two.pagesize) > vm.options.two.totalItems">{{vm.options.two.totalItems}}</t>
                     <t ng-if="(vm.options.two.page * vm.options.two.pagesize) < vm.options.two.totalItems">{{vm.options.two.page * vm.options.two.pagesize}}</t>
                     of {{vm.options.two.totalItems}} New Orders
                 </span>
-            <div class="paging-text">
-              <ul uib-pagination ng-change="vm.pageChange('two')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.two.totalItems"
-                items-per-page="vm.options.two.pagesize" ng-model="vm.options.two.page" class="pagination-sm" previous-text="&lsaquo;"
-                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                <div class="paging-text">
+                    <ul uib-pagination ng-change="vm.pageChange('two')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.two.totalItems" items-per-page="vm.options.two.pagesize" ng-model="vm.options.two.page" class="pagination-sm" previous-text="&lsaquo;"
+                        next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                </div>
             </div>
-          </div>
         </div>
 
 
         <div class="tab3">
-          <h2 class="no-record-found-tex2" ng-if="!vm.list.three.length">No record found</h2>
-          <table ng-if="vm.list.three.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
-            <tr class="top-purpal-color-row">
-              <th>Order Id</th>
-              <th>Designs</th>
-              <th>Customer Name</th>
-              <th>Completed On</th>
-              <th>Status</th>
-            </tr>
-            <tr ng-repeat="stch in vm.list.three">
-              <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
-              <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
-              <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
-              <td data-th="Completed On: " class="top-purpal-color-row2">{{stch.completeDate | date:'dd-MM-yyyy'}}</td>
-              <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
-            </tr>
-          </table>
-          <div class="paging" ng-if="vm.list.three.length > 0">
-            <span class="showing-text-bx">
+            <h2 class="no-record-found-tex2" ng-if="!vm.list.three.length">No record found</h2>
+            <table ng-if="vm.list.three.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
+                <tr class="top-purpal-color-row">
+                    <th>Order Id</th>
+                    <th>Designs</th>
+                    <th>Customer Name</th>
+                    <th>Completed On</th>
+                    <th>Status</th>
+                </tr>
+                <tr ng-repeat="stch in vm.list.three">
+                    <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
+                    <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
+                    <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
+                    <td data-th="Completed On: " class="top-purpal-color-row2">{{stch.completeDate | date:'dd-MM-yyyy'}}</td>
+                    <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
+                </tr>
+            </table>
+            <div class="paging" ng-if="vm.list.three.length > 0">
+                <span class="showing-text-bx">
                     Showing {{ ((vm.options.three.page - 1) * vm.options.three.pagesize) + 1 }} to
                     <t ng-if="(vm.options.three.page * vm.options.three.pagesize) > vm.options.three.totalItems">{{vm.options.three.totalItems}}</t>
                     <t ng-if="(vm.options.three.page * vm.options.three.pagesize) < vm.options.three.totalItems">{{vm.options.three.page * vm.options.three.pagesize}}</t>
                     of {{vm.options.three.totalItems}} Completed Orders
                 </span>
-            <div class="paging-text">
-              <ul uib-pagination ng-change="vm.pageChange('three')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.three.totalItems"
-                items-per-page="vm.options.three.pagesize" ng-model="vm.options.three.page" class="pagination-sm" previous-text="&lsaquo;"
-                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                <div class="paging-text">
+                    <ul uib-pagination ng-change="vm.pageChange('three')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.three.totalItems" items-per-page="vm.options.three.pagesize" ng-model="vm.options.three.page" class="pagination-sm"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                </div>
             </div>
-          </div>
         </div>
 
 
         <div class="tab4">
-          <h2 class="no-record-found-tex2" ng-if="!vm.list.four.length">No record found</h2>
-          <table ng-if="vm.list.four.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
-            <tr class="top-purpal-color-row">
-              <th>Order Id</th>
-              <th>Designs</th>
-              <th>Customer Name</th>
-              <th>Cancelled On</th>
-              <th>Status</th>
-            </tr>
-            <tr ng-repeat="stch in vm.list.four">
-              <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
-              <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
-              <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
-              <td data-th="Cancelled On: " class="top-purpal-color-row2">{{stch.cancelDate | date:'dd-MM-yyyy'}}</td>
-              <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
-            </tr>
-          </table>
-          <div class="paging" ng-if="vm.list.four.length > 0">
-            <span class="showing-text-bx">
+            <h2 class="no-record-found-tex2" ng-if="!vm.list.four.length">No record found</h2>
+            <table ng-if="vm.list.four.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
+                <tr class="top-purpal-color-row">
+                    <th>Order Id</th>
+                    <th>Designs</th>
+                    <th>Customer Name</th>
+                    <th>Cancelled On</th>
+                    <th>Status</th>
+                </tr>
+                <tr ng-repeat="stch in vm.list.four">
+                    <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
+                    <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
+                    <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
+                    <td data-th="Cancelled On: " class="top-purpal-color-row2">{{stch.cancelDate | date:'dd-MM-yyyy'}}</td>
+                    <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
+                </tr>
+            </table>
+            <div class="paging" ng-if="vm.list.four.length > 0">
+                <span class="showing-text-bx">
                     Showing {{ ((vm.options.four.page - 1) * vm.options.four.pagesize) + 1 }} to
                     <t ng-if="(vm.options.four.page * vm.options.four.pagesize) > vm.options.four.totalItems">{{vm.options.four.totalItems}}</t>
                     <t ng-if="(vm.options.four.page * vm.options.four.pagesize) < vm.options.four.totalItems">{{vm.options.four.page * vm.options.four.pagesize}}</t>
                     of {{vm.options.four.totalItems}} Cancelled Orders
                 </span>
-            <div class="paging-text">
-              <ul uib-pagination ng-change="vm.pageChange('four')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.four.totalItems"
-                items-per-page="vm.options.four.pagesize" ng-model="vm.options.four.page" class="pagination-sm" previous-text="&lsaquo;"
-                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                <div class="paging-text">
+                    <ul uib-pagination ng-change="vm.pageChange('four')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.four.totalItems" items-per-page="vm.options.four.pagesize" ng-model="vm.options.four.page" class="pagination-sm" previous-text="&lsaquo;"
+                        next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-
+</div>
 
   </ion-content>
 </ion-view>

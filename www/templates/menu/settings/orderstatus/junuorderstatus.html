@@ -1,0 +1,50 @@
+  <div class="main-contant-part">
+        
+            <div class="managecustomer-right-bx">
+                <div class="customer-detail-page-contant managecustomer-right-bx-h4" ng-init="vm.getList()">
+                    <div class="customer-search-box-main"><input class="serchInput" ng-model="vm.options.search" ng-change="vm.search()" placeholder="Search by Order Status"
+                            type="text"></div>
+                    <!--<div class="right-add-new-button"><a ui-sref="app.edit-orderstatus" class="ion-plus"></a></div>-->
+
+                    <div class="details-table">
+                        <h2 class="no-record-found-text" ng-if="!vm.list.length">No record found</h2>
+                        <table ng-if="vm.list.length > 0" class="table-part" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                                <tr class="top-purpal-color-row">
+                                    <th class="customer-detail-th-width-1">
+                                        <a href="" ng-click="vm.order('title',vm.asc)">
+                                            <font>Order Status</font>
+                                            <span ng-if="vm.asc === true" class="">
+                                    <img ng-src="/img/up-arrow-1.png" alt="">
+                                </span>
+                                            <span ng-show="vm.asc === false" class="">
+                                    <img ng-src="/img/down-arrow-1.png" alt="">
+                                </span>
+                                        </a>
+                                    </th>
+                                    <th>Status</th>
+                                </tr>
+                                <tr ng-repeat="obj in vm.list" ng-class="$index % 2 != 0 ? 'table-tr-alternate-color' : 'some'">
+                                    <td data-th="Order Status: " class="top-purpal-color-row2">{{obj.title}} </td>
+                                    <td ng-if="obj.isActive" data-th="Status: " class="top-purpal-color-row2">Active</td>
+                                    <td ng-if="!obj.isActive" data-th="Status: " class="top-purpal-color-row2">Inactive</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="paging" ng-if="vm.list.length > 0">
+                    <span class="showing-text-bx">
+            Showing {{ ((vm.options.page - 1) * vm.options.pagesize) + 1 }} to
+            <t ng-if="(vm.options.page * vm.options.pagesize) > vm.options.totalItems">{{vm.options.totalItems}}</t>
+            <t ng-if="(vm.options.page * vm.options.pagesize) < vm.options.totalItems">{{vm.options.page * vm.options.pagesize}}</t>
+            of {{vm.options.totalItems}} Order Status Records
+        </span>
+                    <div class="paging-text">
+                        <ul uib-pagination ng-change="vm.pageChange()" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.totalItems"
+                            items-per-page="vm.options.pagesize" ng-model="vm.options.page" class="pagination-sm" previous-text="&lsaquo;"
+                            next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,13 @@
+﻿<ion-view view-title="Manage Measurements">
+    <ion-content>
+        <div class="row header" ng-init="vm.getList()">
+            <div class="col pro-boder" align="center">Measurement</div>
+            <div class="col " align="center">Status</div>
+        </div>
+        <div class="row" ng-repeat="obj in vm.list">
+            <div data-th="Measurement: " class="col  item positive pro-boder" ng-click="vm.edit(obj)">{{obj.title}}</div>
+            <div ng-if="obj.isActive" data-th="Status: " class="col item balanced">Active</div>
+            <div ng-if="!obj.isActive" data-th="Status: " class="col item assertive">Inactive</div>
+        </div>
+    </ion-content>
+</ion-view>

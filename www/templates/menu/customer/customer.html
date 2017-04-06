@@ -4,7 +4,7 @@
       <!-- Customer Details page Section Start Here -->
       <div class="customer-detail-page-contant">
         <div class="customer-search-box-main"><input class="serchInput" placeholder="Search by Customer Name" type="text" ng-model="vm.options.search" ng-change="vm.search()"></div>
-        <div class="right-add-new-button"><a ui-sref="app.edit-customer">Add New</a>
+        <div class="right-add-new-button"><a ui-sref="app.edit-customer" class="ion-plus"></a>
         </div>
         <div class="details-table">
           <h2 class="no-record-found-text" ng-if="!vm.list.length">No record found</h2>
@@ -14,10 +14,10 @@
                 <a href="" ng-click="vm.order('name',vm.asc)">
                   <font>Customer Name</font>
                   <span ng-if="vm.asc === true" class="">
-                                <img ng-src="/images/up-arrow-1.png" alt="">
+                                <img ng-src="/img/up-arrow-1.png" alt="">
                             </span>
                   <span ng-show="vm.asc === false" class="">
-                                <img ng-src="/images/down-arrow-1.png" alt="">
+                                <img ng-src="/img/down-arrow-1.png" alt="">
                             </span>
                 </a>
               </th>

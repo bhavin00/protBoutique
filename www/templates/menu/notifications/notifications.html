@@ -1,0 +1,55 @@
+<ion-view view-title="notifications">
+  <ion-content>
+  
+<div class="main-contant-part minpageheight">
+      
+  <div class="notification-main-bx">
+	  <div class="noti-date-text"><input class="floatdate" type="date" readonly
+        name="orderDate"
+        uib-datepicker-popup="" is-open="vm.open_orderDate"
+        convert-to-date ng-model="vm.selectedDate"
+        ng-click="vm.openCal()" ng-init="vm.change(vm.selectedDate)" ng-change="vm.change(vm.selectedDate)"
+        ng-max="vm.today" ng-required="true">
+</div>
+    
+	<div  class="notification-box" ng-if="vm.birthdays.length == 0 && vm.annerversarys.length == 0 && vm.alerts.length == 0 && vm.deliverys.length == 0" >
+	  <!--<div class="left-icon-bx"><img src="img/birthday.png"></div>-->
+	  <div class="right-heading-bx">
+	   <h4 class="notification-heading1">No records found</h4>
+	  </div>
+	 </div>
+	 <div  class="notification-box" ng-if="vm.birthdays.length > 0" ng-repeat="data in vm.birthdays">
+	  <div class="left-icon-bx"><img src="img/birthday.png"></div>
+	  <div class="right-heading-bx">
+	   <h4 class="notification-heading1">Birthday</h4>
+	   <span><a href="" ng-click="vm.edit(data)">{{data.name}}</a> has a Birthday today.</span>
+	  </div>
+	 </div>
+	 <div  class="notification-box" ng-if="vm.annerversarys.length > 0" ng-repeat="data in vm.annerversarys"> 
+	  <div class="left-icon-bx"><img src="img/anniversary.png"></div>
+	  <div class="right-heading-bx">
+	   <h4 class="notification-heading2">Anniversary</h4>
+	   <span><a href="" ng-click="vm.edit(data)">{{data.name}}</a> has an Anniversary today.</span>
+	  </div>
+	 </div>
+	  <div class="notification-box" ng-if="vm.alerts.length > 0" ng-repeat="data in vm.alerts"> 
+	  <div class="left-icon-bx"><img src="img/alert.png"></div>
+	  <div class="right-heading-bx">
+	   <h4 class="notification-heading3">Alert</h4>
+	   <span><a href="" ng-click="vm.edit3(data.OrderId)">Order # {{data.OrderId|leadingZero}}</a> for {{data.Design.title}} ({{data.Style.title}})'s alert date is due today.Kindly alert <a href="" ng-click="vm.edit2(data.Order.CustomerId)">{{data.Order.Customer.name}}</a> regarding upcoming delivery.</span>
+	  </div>
+	 </div>
+	 <div class="notification-box" ng-if="vm.deliverys.length > 0" ng-repeat="data in vm.deliverys">
+	  <div class="left-icon-bx"><img src="img/delivery.png"></div>
+	  <div class="right-heading-bx">
+	   <h4 class="notification-heading4">Delivery</h4>
+	   <span><a href="" ng-click="vm.edit3(data.OrderId)">Order # {{data.OrderId|leadingZero}}</a> for {{data.Design.title}} ({{data.Style.title}})'s delivery date is due today.</span>
+	  </div>
+	 </div> 
+	</div>
+</div>
+
+
+
+  </ion-content>
+</ion-view>

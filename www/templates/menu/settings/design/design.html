@@ -1,0 +1,20 @@
+﻿<ion-view view-title="Manage Designs">
+    <ion-content>
+         
+
+        <div class="row header" ng-init="vm.getList()">
+            <div class="col pro-boder" align="center">Design</div>
+            <div class="col " align="center">Status</div>
+            <div class="col " align="center">Action</div>
+        </div>
+        <div class="row" ng-repeat="obj in vm.list">
+            <div data-th="Design:" class="col  item positive pro-boder" ng-click="vm.edit(obj)"><span class="io-margin-top">{{obj.title}}</span></div>
+            <!--<div data-th="Measurement:" class="col  item over-over"  ng-bind="vm.getCommaSeperatedMeasurement(obj.DesignMeasurements)"></div>-->
+            <div ng-if="obj.isActive" data-th="Status: " class="col item balanced">Active</div>
+            <div ng-if="!obj.isActive" data-th="Status: " class="col item assertive">Inactive</div>
+            <div class="col item" align=""><i class="ion-edit io-large" ng-click="vm.edit(obj)"></i><i class="ion-information-circled io-large" ng-click="modal.show()"></i></div>
+        </div>
+
+    </ion-content>
+</ion-view>
+    

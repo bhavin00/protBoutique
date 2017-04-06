@@ -14,7 +14,7 @@
                 <option value="{{os.id}}" ng-repeat="os in vm.customers">{{os.name}}</option>
             </select>
         </div>
-        <div class="right-add-new-button right-add-new-button-mobile"><a ui-sref="app.edit-order">Add Order</a></div>
+        <div class="right-add-new-button right-add-new-button-mobile"><a ui-sref="app.edit-order" class="ion-plus"></a></div>
         <div class="details-table">
             <h2 class="no-record-found-text" ng-if="!vm.list.length">No record found</h2>
             <table ng-if="vm.list.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
@@ -23,10 +23,10 @@
                         <a href="" ng-click="vm.sort('id',vm.asc)">
                             <font>Order Id</font>
                             <span ng-if="vm.asc['id'] === true" class="">
-                                <img ng-src="/images/up-arrow-1.png" alt="">
+                                <img ng-src="/img/up-arrow-1.png" alt="">
                             </span>
                             <span ng-show="vm.asc['id'] === false" class="">
-                                <img ng-src="/images/down-arrow-1.png" alt="">
+                                <img ng-src="/img/down-arrow-1.png" alt="">
                             </span>
                         </a>
                     </th>
@@ -34,10 +34,10 @@
                         <a href="" ng-click="vm.sort('orderDate',vm.asc)">
                             <font>Order Date</font>
                             <span ng-if="vm.asc['orderDate'] === true" class="">
-                                <img ng-src="/images/up-arrow-1.png" alt="">
+                                <img ng-src="/img/up-arrow-1.png" alt="">
                             </span>
                             <span ng-show="vm.asc['orderDate'] === false" class="">
-                                <img ng-src="/images/down-arrow-1.png" alt="">
+                                <img ng-src="/img/down-arrow-1.png" alt="">
                             </span>
                         </a>
                     </th>

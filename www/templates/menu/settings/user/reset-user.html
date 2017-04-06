@@ -1,0 +1,72 @@
+﻿<ion-view view-title="Reset Password">
+    <ion-content>
+    <div class="main-contant-part"> <div class="managecustomer-right-bx">
+            <form name="userForm" novalidate>
+                <!-- Left Form Section Start Here -->
+                <div class="order-form-left-section add-new-form">
+                    <div class="form-section-box form-section-box-2">
+                        <fieldset ng-disabled="vm.currentUser.userrole != 'admin'" style="border:none">
+                        
+                            <div class="form-box">
+                                <label><em style="color:Red">*</em>Username</label>
+                                <input name="username" placeholder="Username" type="text" ng-model="vm.user.username" required ng-disabled="vm.user.id">
+                                <span ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.required"><i><b>Username</b></i> is required.</span>
+                                <span ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.minlength"><i><b>Username</b></i> should be at least 2 characters long.</span>
+                                <span ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.maxlength"><i><b>Username</b></i> should not be more than 50 characters long.</span>
+                            </div>
+
+                            <div class="form-box">
+                                <label><em style="color:Red">*</em>Full Name</label>
+                                <input name="fullname" placeholder="Full Name" type="text" ng-model="vm.user.fullname" required ng-disabled="vm.user.id">
+                                <span ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.required"><i><b>Full Name</b></i> is required.</span>
+                                <span ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.minlength"><i><b>Full Name</b></i> should be at least 2 characters long.</span>
+                                <span ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.maxlength"><i><b>Full Name</b></i> should not be more than 50 characters long.</span>
+                            </div>
+
+                            <div class="form-box">
+                                <label><em style="color:Red">*</em>Password</label>
+                                <input name="password" ng-minlength="6" ng-maxlength="25" required placeholder="Password" type="password" ng-model="vm.user1.password">
+                                <span ng-if="(userForm.password.$dirty || vm.isSubmitted) && userForm.password.$error.required"><i><b>Password</b></i> is required.</span>
+                                <span ng-if="(userForm.password.$dirty || vm.isSubmitted) && userForm.password.$error.minlength"><i><b>Password</b></i> should be at least 6 characters long.</span>
+                                <span ng-if="(userForm.password.$dirty || vm.isSubmitted) && userForm.password.$error.maxlength"><i><b>Password</b></i> should not be more than 25 characters long.</span>
+                            </div>
+
+                            <div class="form-box">
+                                <label><em id="mandatory" style="color:Red">*</em>Confirm Password</label>
+                                <input name="confirm" required placeholder="Confirm Password" type="password" ng-model="vm.confirmPassword">
+                                <span ng-if="(userForm.confirm.$dirty || vm.isSubmitted) && userForm.confirm.$error.required"><i><b>Confirm Password</b></i> is required.</span>
+                                <span ng-if="(userForm.confirm.$dirty || vm.isSubmitted) && !userForm.confirm.$error.required &&  vm.user1.password != vm.confirmPassword"><i><b>Password</b></i> & <i><b>Confirm Password</b></i> does not match.</span>
+                            </div>
+
+                        </fieldset>
+
+                        <div class="register-btm-btn-box register-btm-btn-box-left-mar">
+                            <div class="submit-error" ng-if="vm.error">
+                                <div>{{vm.error}}</div>
+                            </div>
+                            <div class="submit-button">
+                                <input ng-disabled="vm.startProcessing" ng-if="vm.currentUser.userrole === 'admin'" value="Save" class="register-submit-btn" type="button" ng-click="vm.resetPassword(userForm)">
+                            </div>
+                            <div class="cancel-button">
+                                <input value="Cancel" class="register-cancel-btn" ui-sref="app.user" type="button">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+            </form>
+            <!-- Customer Details page Section End Here -->
+
+
+
+        </div>
+        </div>
+
+
+  </ion-content>
+</ion-view>
