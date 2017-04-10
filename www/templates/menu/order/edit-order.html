@@ -1,315 +1,96 @@
-
-<ion-view view-title="Order Page">
-    <ion-content>
-<div class="main-contant-part" ng-init="vm.activate()">
-    <div class="customer-detail-page-contant">
-        <form name="customerForm" novalidate>
-            <div class="order-summary-box">
-                <div class="summary-bx-1">
-                    <div class="orderdate-bx">
-                        <label>* Order Date</label>
-                        <input type="date" readonly
-                               name="orderDate"
-                               uib-datepicker-popup="" is-open="vm.open_orderDate"
-                               convert-to-date ng-model="vm.order.orderDate"
-                               ng-click="vm.openCal()"
-                               ng-max="vm.today" ng-required="true">
-
-                        <!--<span class="input-group-btn">
-                            <button type="button" class="btn btn-default">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                            </button>
-                        </span>-->
-                        <!--<input name="orderDate" required type="date" ng-model="vm.order.orderDate" placeholder="dd-MM-yyyy" ng-disabled="vm.isOrderProceed || vm.order.id" ng-max="vm.today">-->
-                        <span class="submit-error" style="float:left;margin-top:7px;" ng-if="(customerForm.orderDate.$dirty || vm.isSubmitted) && customerForm.orderDate.$error.max"><i><b>Order date</b></i> should not be future date.</span>
-                    </div>
-                    <div class="orderstatus-bx">
-                        <label>Order Status</label>
-                        <span>{{vm.order.OrderStatus.title}}</span>
-                    </div>
-                </div>
-                <div class="summary-bx-2" ng-init="vm.getCustomerList()">
-                    <div class="orderdate-bx">
-                        <label>* Order by</label>
-                        <select required name="customerId" ng-model="vm.order.CustomerId" ng-change="vm.customerChange(vm.order.CustomerId)" ng-disabled="vm.isOrderProceed || vm.order.OrderStatusId != '1'" convert-to-number>
-                            <option value="">-- Please Select --</option>
-                            <option value="{{cust.id}}" ng-repeat="cust in vm.customers">{{cust.name}}</option>
-                        </select>
-                    </div>
-                    <div class="orderstatus-bx">
-                        <label>Mobile Number</label>
-                        <span>{{vm.order.Customer.mobile}}</span>
-                    </div>
-                    <div class="address-bx">
-                        <label>Address</label>
-                        <span>{{vm.order.Customer.address}}</span>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <form name="orderForm" novalidate>
-            <div class="addproducttable-main-box" ng-if="!vm.isOrderProceed">
-                <div class="left-list-addproduct">
-                    <ul>
-                        <li>* Design</li>
-                        <li class="add-photo-textarea-height">* Sub Design</li>
-                        <li>Material Type</li>
-                        <li>Color Code</li>
-                        <li class="Customization-textarea-height">Customization</li>
-                        <li class="Customization-textarea-height">Remarks</li>
-                        <!--<li class="add-photo-textarea-height">Add Photo</li>-->
-                        <li class="add-photo-textarea-height">* Measurement</li>
-                    </ul>
-                </div>
-
-
-                <div class="addProduct-createorder-scrollbar-btm">
-                    <!-- Table Repeat Section Start Here -->
-                    <div class="addproduct-scrollbar-bx" ng-repeat="orderItem in vm.order.OrderItems track by $index">
-                        <table class="measurment-table-width">
-                            <tbody>
-                                <tr>
-                                    <td class="addproducttable-B">
-                                        <select ng-disabled="vm.order.id" convert-to-number required name="designId_{{$index}}" ng-model="vm.order.OrderItems[$index].DesignId" ng-change="vm.getOrderItemMeasurement($index,vm.order.OrderItems[$index].DesignId,vm.order.OrderItems[$index].Style.image)">
-                                            <option value="">-- Please Select --</option>
-                                            <option value="{{dgn.id}}" ng-repeat="dgn in vm.designs | filter : {isActive : true}">{{dgn.title}}</option>
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="addproducttable-B add-photo-image-height">
-                                        <select ng-disabled="vm.order.id || !vm.order.OrderItems[$index].DesignId" convert-to-number required ng-model="vm.order.OrderItems[$index].StyleId" name="styleId_{{$index}}" ng-change="vm.styleChange($index,vm.order.OrderItems[$index].StyleId)">
-                                            <option value="">-- Please Select --</option>
-                                            <option value="{{stl.id}}" ng-repeat="stl in vm.styles | filter : {DesignId : vm.order.OrderItems[$index].DesignId}">{{stl.title}}</option>
-                                        </select>
-                                        <img ng-src="http://localhost:3002/{{vm.order.OrderItems[$index].Style.image}}" alt="{{stl.title}}" width="160" height="150">
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="addproducttable-B">
-                                        <select convert-to-number name="materialId_{{$index}}" ng-model="vm.order.OrderItems[$index].MaterialId">
-                                            <option value="">-- Please Select --</option>
-                                            <option value="{{mtrl.id}}" ng-repeat="mtrl in vm.materials">{{mtrl.title}}</option>
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="addproducttable-B">
-                                        <input type="text" ng-model="vm.order.OrderItems[$index].colorCode">
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="addproducttable-B Customization-textarea-height">
-                                        <cite title="{{vm.order.OrderItems[$index].customization}}"><textarea rows="4" cols="50" ng-model="vm.order.OrderItems[$index].customization"></textarea></cite>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="addproducttable-B Customization-textarea-height">
-                                        <cite title="{{vm.order.OrderItems[$index].remark}}"><textarea rows="4" cols="50" ng-model="vm.order.OrderItems[$index].remark"></textarea></cite>
-                                    </td>
-                                </tr>
-
-                                <!--<tr>
-                                    <td class="addproducttable-B add-photo-image-height">
-                                        <input ngf-select="vm.displayPhoto($file,$index)" ng-model="vm.order[$index].image" name="file_{{$index}}" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="3MB"  style="color: transparent;border: transparent;" type="file">
-                                        <img ng-src="{{vm.order.OrderItems[$index].image}}" width="160" height="150">
-                                    </td>
-                                </tr>-->
-
-                                <tr>
-                                    <td class="addproducttable-B add-measurement-height" style="overflow-y: scroll;">
-                                        <div ng-repeat="oim in orderItem.OrderItemMeasurements" class="measurment-box-123">
-                                            <label> {{oim.Measurement.title}}</label>
-                                            <input class="measurement-input2" name="measurement_{{$parent.$index}}_{{$index}}" ng-model="vm.order.OrderItems[$parent.$index].OrderItemMeasurements[$index].val" required type="text">
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr ng-if="!vm.order.id">
-                                    <td class="addproducttable-B">
-                                        <div class="addproducttable-Add-BTN add-pair-box">
-                                            <input ng-hide="orderItem.hasPair" value="Add Pair" ng-click="vm.addOrderItemPair($index)" type="button">
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- Table Repeat Section End Here -->
-
-                    <div class="addproducttable-Add-BTN" ng-if="!vm.order.id">
-                        <input value="+" ng-click="vm.addOrderItem()" type="button">
-                        <span>
-                            <input style="font-size: 16px;font-weight: bold;" value="X" ng-click="vm.removeOrderItem()" type="submit">
-                        </span>
-                    </div>
-                </div>
-                <div class="submit-error" ng-if="(orderForm.$invalid || customerForm.$invalid)&& vm.isSubmitted">
-                    <span>Please fill all mandatory fields marked with *.</span>
-                </div>
-                <div class="submit-button Proceed-with-Order-btn">
-                    <input class="btn-align" value="Proceed with Order" ng-click="vm.proceedOrder(orderForm,customerForm)" type="button">
-                    <!--<input class="btn btn-info" type="button" value="Cancel" ui-sref="secure.order">-->
-                </div>
-                <div class="cancel-button">
-                    <input class="register-cancel-btn" type="button" value="Cancel" ui-sref="app.order">
-                </div>
-            </div>
-        </form>
-
-        <form name="orderProceedForm" novalidate>
-            <div class="form-section-box" ng-if="vm.isOrderProceed">
-                <div class="form-box">
-                    <table class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tbody>
-                            <tr class="top-purpal-color-row">
-                                <th class="edit-order-design-th-width">Design</th>
-                                <th>* Delivery Date</th>
-                                <th>* Stiching Date</th>
-                                <th>* Alert Date</th>
-                                <th class="edit-order-amount-th-width">* Amount</th>
-                                <th class="edit-order-status-th-width">Status</th>
-                            </tr>
-                            <tr ng-repeat="orderItem in vm.order.OrderItems track by $index" class="ng-scope" ng-class="{'table-tr-alternate-color': vm.sprayColour($index,vm.order.OrderItems)}">
-                                <td data-th="Design: " class="top-purpal-color-row2 ng-binding" ng-click="vm.detail()">
-                                    <img height="50" width="50" class="image-text-set-order" ng-src="http://localhost:3002/{{orderItem.Style.image}}">
-                                    <a href="">{{orderItem.Design.title}} ({{orderItem.Style.title}})</a>
-                                    
-                                </td>
-                                <td data-th="Delivery Date: " class="top-purpal-color-row2">
-                                    <input type="date" readonly class="Create-Order-respo-table-mobile"
-                                           required
-                                            ng-change="vm.onDeliveryDateChange($index)"
-                                           name="deliveryDate_{{$index}}"
-                                           uib-datepicker-popup="" is-open="open.deliveryDate[$index]"
-                                           convert-to-date 
-                                           ng-model="vm.order.OrderItems[$index].deliveryDate"
-                                           ng-click="open.deliveryDate[$index] = !open.deliveryDate[$index]"
-                                           ng-min="vm.order.orderDate">
-
-
-                                    <!--<input class="Create-Order-respo-table-mobile" style="width: 90%"
-                                           required
-                                           type="date"
-                                           ng-change="vm.onDeliveryDateChange($index)"
-                                           name="deliveryDate_{{$index}}"
-                                           ng-model="vm.order.OrderItems[$index].deliveryDate"
-                                           convert-to-date
-                                           ng-min="vm.order.orderDate" />-->
-                                           <!--<input type="text" uib-datepicker-popup="" name="dob" placeholder="dd-MM-yyyy"
-                               ng-model="dob" is-open="popup.opened" datepicker-options="dateOptions"
-                               ng-required="true" close-text="Close" class="form-control" />
-                        <span class="input-group-btn">
-                            <button type="button" ng-click="open()" class="btn btn-default">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                            </button>
-                        </span>-->
-                                </td>
-                                <td data-th="Stiching Date: " class="top-purpal-color-row2">
-                                    <input type="date" readonly class="Create-Order-respo-table-mobile"
-                                           required
-                                           name="stitchingDate_{{$index}}"
-                                           uib-datepicker-popup="" is-open="open.stitchingDate[$index]"
-                                           convert-to-date
-                                           ng-model="vm.order.OrderItems[$index].stitchingDate"
-                                           ng-click="open.stitchingDate[$index] = !open.stitchingDate[$index]"
-                                           ng-min="vm.order.orderDate" 
-                                           ng-max="orderItem.alertDate">
-                                    <!--<input class="Create-Order-respo-table-mobile" style="width: 90%" 
-                                           required 
-                                           type="date"
-                                           name="stitchingDate_{{$index}}"
-                                           ng-model="vm.order.OrderItems[$index].stitchingDate"
-                                           convert-to-date
-                                           ng-min="vm.order.orderDate" 
-                                           ng-max="orderItem.alertDate"/>-->
-                                           <!--<input type="text" uib-datepicker-popup="" name="dob" placeholder="dd-MM-yyyy"
-                                           ng-model="dob" is-open="popup.opened" datepicker-options="dateOptions"
-                                           ng-required="true" close-text="Close" class="form-control" />
-                                            <span class="input-group-btn">
-                                                <button type="button" ng-click="open()" class="btn btn-default">
-                                                    <i class="glyphicon glyphicon-calendar"></i>
-                                                </button>
-                                            </span>-->
-                                </td>
-                                <td data-th="Alert Date: " class="top-purpal-color-row2">
-                                    <input type="date" readonly class="Create-Order-respo-table-mobile"
-                                           required
-                                           name="alertDate_{{$index}}"
-                                           uib-datepicker-popup="" is-open="open.alertDate[$index]"
-                                           convert-to-date
-                                           ng-model="vm.order.OrderItems[$index].alertDate"
-                                           ng-click="open.alertDate[$index] = !open.alertDate[$index]"
-                                           ng-min="vm.order.orderDate" 
-                                           ng-max="orderItem.deliveryDate">
-                                    <!--<input class="Create-Order-respo-table-mobile" style="width: 90%"
-                                           required
-                                           type="date"
-                                           name="alertDate_{{$index}}"
-                                           ng-model="vm.order.OrderItems[$index].alertDate"
-                                           convert-to-date
-                                           ng-min="vm.order.orderDate" 
-                                           ng-max="orderItem.deliveryDate"/>-->
-                                           <!--<input type="text" uib-datepicker-popup="" name="dob" placeholder="dd-MM-yyyy"
-                                               ng-model="dob" is-open="popup.opened" datepicker-options="dateOptions"
-                                               ng-required="true" close-text="Close" class="form-control" />
-                                            <span class="input-group-btn">
-                                                <button type="button" ng-click="open()" class="btn btn-default">
-                                                    <i class="glyphicon glyphicon-calendar"></i>
-                                                </button>
-                                            </span>-->
-                                </td>
-                                <td data-th="Amount: " class="top-purpal-color-row2">
-                                    <input class="Create-Order-respo-table-mobile" style="width: 90%" ng-min="0" ng-max="999999999" class="addorder-amount-icon datepicker-input-margin-btm-none" name="amount_{{$index}}" required="required" ng-model="vm.order.OrderItems[$index].amount" type="number" placeholder="* Amount">
-                                </td>
-                                <td data-th="Status: " class="top-purpal-color-row2">
-                                    <select class="Create-Order-respo-table-mobile" ng-change="vm.changeOrderItemStatus()" class="outside2 edit-order-status-td-input" placeholder="Search by Name" name="customeruser" ng-model="vm.order.OrderItems[$index].OrderStatusId" convert-to-number ng-disabled="!vm.order.id">
-                                        <option value="{{os.id}}" ng-repeat="os in vm.orderStatuses | filter : {isActive : true}">{{os.title}}</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!--validation-->
-                <div class="add-new-btm-btn edit-customer-detail-btn-btn-left-mar-none" style="margin-top:15px;">
-                    <div class="submit-error" ng-if="orderProceedForm.$invalid && vm.isSubmitted2">
-                        <div ng-if="orderProceedForm.$error.min.length > 0 || orderProceedForm.$error.max.length > 0">
-                           Please check the field with red border and make it correct according to the below Note.
-                        </div>
-                        <div ng-if="orderProceedForm.$error.required.length > 0">
-                            Please fill all mandatory fields marked with *.
-                        </div>
-                        <div ng-if="vm.error2">
-                            {{vm.error2}}
-                        </div>
-                    </div>
-                    <div>
-                        <b>Note : </b>
-                        <ul>
-                            <li>Delivery date should be greater than or equal to Alert date, Stitching date and Order date.</li>
-                            <li>Alert date should be greater than or equal to Stitching date and Order date.</li>
-                            <li>Stitching date should be greater than or equal to Order date.</li>
-                        </ul>
-                    </div>
-                    <div class="submit-button">
-                        <input class="register-submit-btn" type="button" ng-disabled="vm.startProcessing" value="{{vm.SubmitOrderText}}" ng-click="vm.submitOrder(orderProceedForm)">
-                        <!--<input class="btn btn-info" type="button" value="Back" ng-click="vm.goBack()">-->
-                    </div>
-                    <div class="cancel-button">
-                        <input value="Back" class="register-cancel-btn"  type="button" value="Back" ng-click="vm.goBack()">
-                    </div>
-                </div>
-            </div>
-        </form>
+<ion-view view-title="Add/Edit Order">
+  <ion-content has-footer="true">
+    <div class="card" style="color: red; text-align: center;" ng-show="errorMessage">
+      {{errorMessage}}
     </div>
-</div>
-	
-    </ion-content>
+    <ion-slide-box show-pager="false" deletgate-handle="wizard">
+      <ion-slide>
+        <div class="box">
+          <h1>What is your name?</h1>
+          <div class="list">
+            <label class="tem item-input item-floating-label my-item-border">First Name
+              <input type="text" placeholder="First Name" ng-model="slide1.firstName">
+            </label>
+            <label class="tem item-input item-floating-label my-item-border">Last Name
+              <input type="text" placeholder="Last Name" ng-model="slide1.lastName">
+            </label>
+          </div>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="box">
+          <h1>What is your quest?</h1>
+          <div class="list">
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Quests
+              </div>
+              <select ng-model="slide2.quest">
+                <option ng-repeat="quest in quests" value="{{quest}}">{{quest}}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </ion-slide>
+      <ion-slide class="box">
+
+          <h1>What is your favorite color?</h1>
+          <ion-radio value="{{color}}" ng-model="slide3.color" style="color: {{color}}; text-align:left;" ng-repeat="color in colors">
+            {{color}}
+          </ion-radio>
+      </ion-slide>
+      <ion-slide>
+        <div class="box">
+          <h1>What is the airspeed velocity of an unladen swallow?</h1>
+          <ion-toggle ng-model="slide4.african" toggle-class="toggle-royal" style="text-align: left;"> African </ion-toggle>
+          <ion-toggle ng-model="slide4.european" toggle-class="toggle-royal" style="text-align: left;"> European </ion-toggle>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="box">
+          <h1>How much do you love kittens?</h1>
+          <div class="item range">
+            <i class="icon ion-heart-broken"></i>
+            <input type="range" min="0" max="100" value="33" ng-model="slide5.love" />
+            <i class="icon ion-heart"></i>
+          </div>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="box">
+          <h1>FINAL SCORE!</h1>
+          <div class="card" ng-repeat="slide in slides">
+            <div class="item item-divider">
+              Slide {{$index+1}}
+            </div>
+            <div class="item item-text-wrap">
+              {{slide}}
+            </div>
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slide-box>
+
+  </ion-content>
+  <ion-footer-bar>
+    <div class="bar bar-footer">
+      <div class="row">
+        <div class="col-25">
+          <button class="button icon-left ion-chevron-left button-calm" ng-click="back()">
+            Back
+          </button>
+        </div>
+        <div class="col-50">
+          <div style="text-align: center">
+            Step {{slide+1}} of 6
+          </div>
+        </div>
+        <div class="col-25">
+          <button class="button icon-right ion-chevron-right button-calm" style="float: right;" ng-click="next()">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-footer-bar>
 </ion-view>

@@ -1,10 +1,26 @@
 ﻿<ion-view view-title="Add/Edit Material Type">
     <ion-content>
-        <div class="main-contant-part">
+    <div name="materialForm">
+         <div class="list" name="designForm">
+            <label class="item item-input   item-floating-label">
+                <span class="input-label">Material Type</span>
+                    <input id="username" name="title" required placeholder="Material Type" type="text"  ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.material.title" ng-minlength="2" ng-maxlength="30">
+            </label>
+
+        <ion-list>
+             <ion-checkbox  ng-model="vm.design.isActive">Active</ion-checkbox>
+        </div>
+        
+        <a class="button button-outline button-balanced button-block" type="submit" ng-disabled="vm.startProcessing" ng-click="vm.save(designForm)">Save</a>
+        <a class="button button-outline button-assertive button-block" type="submit" ui-sref="app.material">cancel</a>
+    </div>
+
+    </ion-content>
+</ion-view>
+
+<!--
 <div class="managecustomer-right-bx">
-    <!--<h4 class="admin-setting-heding">Add/Edit Material Type</h4>-->
     <form name="materialForm" novalidate>
-        <!-- Left Form Section Start Here -->
         <div class="order-form-left-section add-new-form">
 
             <div class="form-section-box form-section-box-2">
@@ -43,12 +59,5 @@
 
         </div>
     </form>
-    <!-- Customer Details page Section End Here -->
-
-
-
 </div>
-        </div>
-
-    </ion-content>
-</ion-view>
+        </div>-->

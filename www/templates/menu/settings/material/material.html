@@ -1,15 +1,28 @@
 ﻿<ion-view view-title="Manage Material Types">
     <ion-content>
-            <div class="row header" ng-init="vm.getList()">
-                <div class="col pro-boder" align="center">Material Types</div>
-                <div class="col " align="center">Status</div>
+         <div class="" ng-init="vm.getList()"></div>
+                <!--<div class="padding"></div>-->
+                <div class="list list-inset">
+                    <label class="item item-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="text" placeholder="Search..." ng-model="vm.options.search" ng-change="vm.search()">
+                    </label>
+                </div>
+            <div class="row calm" align="center">
+                <div class="col col-33 table-col">Material Type</div>
+                <div class="col col-33 table-col">Status</div>
+                <div class="col col-33 table-col">Action</div>
             </div>
-            <div class="row" ng-repeat="obj in vm.list">
-                <div data-th="Material: " class="col  item positive pro-boder" ng-click="vm.edit(obj)">{{obj.title}}</div>
-                <div ng-if="obj.isActive" data-th="Status: " class="col item balanced">Active</div>
-                <div ng-if="!obj.isActive" data-th="Status: " class="col item assertive">Inactive</div>
-            </div>
-        <ion-content>
+            <div class="row" align="" ng-repeat="obj in vm.list">
+                <div class="col col-33 table-col">{{obj.title}}</div>
+                <div ng-if="obj.isActive" data-th="Status: " class="col col-33 table-col balanced">Active</div>
+                <div ng-if="!obj.isActive" data-th="Status: " class="col col-33 table-col assertive">Inactive</div>
+                <div class="col col-33 table-col">
+                    <i class="ion-edit table-icon-large" ng-click="vm.edit(obj)"></i>
+                    <i class="ion-information-circled table-icon-large"></i>
+                </div>
+            <button class="button button-float" ui-sref="app.edit-material">
+                <i class="icon ion-plus"></i>
+            </button
+     <ion-content>
 </ion-view>
-
-        

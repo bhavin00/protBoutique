@@ -1,91 +1,159 @@
 <ion-view view-title="Dashboard">
   <ion-content>
-
     <div ng-init="vm.getList()"></div>
 
-    <div class="main-contant-part minpageheight">
-      <div class="statsinchar">
-        <h2 class="statusUnderline">Collection Stats</h2>
-        <div class="stats-container row  row-no-padding">
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.todayCollection | currency : '&#8377;'}}</strong> <span align="center">Today's</span></div>
-          </div>
-          <div class="oval-margin ">
-            <div class="oval"><strong>{{vm.thisweekCollection | currency : '&#8377;'}}</strong> <span>This Week</span></div>
-          </div>
-          <div class="oval-margin ">
-            <div class="oval"><strong>{{vm.thismonthCollection | currency : '&#8377;'}}</strong> <span>This Month</span></div>
-          </div>
-
-        </div>
+    <h2 class="calm padding-left">Collection Stats</h2>
+    <div class="card">
+      <div class="item item-text-wrap item-calm">
+        Today collection
       </div>
-
-      <div class="statsinchar">
-        <h2 class="statusUnderline">Order Stats</h2>
-        <div class="stats-container ">
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.todayorder}}</strong> <span>Today's</span></div>
-          </div>
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.thisweekorder}}</strong> <span>This Week</span></div>
-          </div>
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.thismonthorder}}</strong> <span>This Month</span></div>
-          </div>
-
-        </div>
+      <div class="item item-divider">
+        {{vm.todayCollection | currency : '&#8377;'}}
       </div>
+    </div>
 
-      <div class="statsinchar">
-        <h2 class="statusUnderline">Products Stats</h2>
-        <div class="stats-container ">
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.bestDesign}}</strong> <span>Best Design</span></div>
-
-          </div>
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.bestStyle}}</strong> <span>Best Style</span></div>
-          </div>
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.bestCombo}}</strong> <span>Best Combo</span></div>
-          </div>
-
-        </div>
+      <div class="card">
+      <div class="item item-text-wrap item-calm">
+        This week collection
       </div>
+      <div class="item item-divider">
+        {{vm.thisweekCollection | currency : '&#8377;'}}
+      </div>
+    </div>
+    
+      <div class="card">
+      <div class="item item-text-wrap item-calm">
+        This month collection
+      </div>
+      <div class="item item-divider">
+        {{vm.thismonthCollection | currency : '&#8377;'}}
+      </div>
+    </div>
+    <!--#######2222222-->
+     <h2 class="calm padding-left">Order Stats</h2>
+    <div class="card">
+      <div class="item item-text-wrap item-calm">
+        Today orders
+      </div>
+      <div class="item item-divider">
+        {{vm.todayorder}}
+      </div>
+    </div>
 
+      <div class="card">
+      <div class="item item-text-wrap item-calm">
+        This week orders
+      </div>
+      <div class="item item-divider">
+        {{vm.thisweekorder}}
+      </div>
+    </div>
+    
+      <div class="card">
+      <div class="item item-text-wrap item-calm">
+        This month orders
+      </div>
+      <div class="item item-divider">
+        {{vm.thismonthorder}}
+      </div>
+    </div>
+    <!--#######333333333333333-->
+    <h2 class="calm padding-left">Products Stats</h2>
+        <div class="card">
+      <div class="item item-text-wrap item-calm">
+        Best design
+      </div>
+      <div class="item item-divider">
+        {{vm.bestDesign}}
+      </div>
+    </div>
 
-      <div class="statsinchar">
-        <h2 class="statusUnderline">Numbers Stats</h2>
-        <div class="stats-container ">
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.totalCustomers}}</strong> <span>Customers</span></div>
+      <div class="card">
+      <div class="item item-text-wrap item-calm">
+        Best Style
+      </div>
+      <div class="item item-divider">
+        {{vm.bestStyle}}
+      </div>
+    </div>
+    
+      <div class="card">
+      <div class="item item-text-wrap item-calm">
+        Best Combo (Design + Style)
+      </div>
+      <div class="item item-divider">
+        {{vm.bestCombo}}
+      </div>
+    </div>
+    <!--#######44444444444-->
+     <h2 class="calm padding-left">Numbers Stats</h2>
+        <div class="row">
+          <div class="col col-50">
+            <div class="card">
+                <div class="item item-text-wrap item-calm">
+                    Customers
+                </div>
+                 <div class="item item-divider">
+                    {{vm.totalCustomers}}
+                </div>
+            </div>
           </div>
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.totalOrders}}</strong> <span>Orders</span></div>
-          </div>
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.newOrders}}</strong><span>New Orders</span></div>
+          <div class="col col-50">
+            <div class="card">
+                <div class="item item-text-wrap item-calm">
+                    Orders
+                </div>
+                 <div class="item item-divider">
+                     {{vm.totalOrders}}
+                </div>
+            </div>
           </div>
         </div>
-      </div>
+
+        <div class="row">
+          <div class="col col-50">
+            <div class="card">
+                <div class="item item-text-wrap item-calm">
+                    New Orders
+                </div>
+                 <div class="item item-divider">
+                    {{vm.newOrders}}
+                </div>
+            </div>
+          </div>
+          <div class="col col-50">
+            <div class="card">
+                <div class="item item-text-wrap item-calm">
+                    Stitching oders
+                </div>
+                 <div class="item item-divider">
+                     {{vm.stitchingOrders}}
+                </div>
+            </div>
+          </div>
+        </div>
       
-        <div class="stats-container ">
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.stitchingOrders}}</strong> <span>Stitching</span></div>
+      <div class="row">
+          <div class="col col-50">
+            <div class="card">
+                <div class="item item-text-wrap item-calm">
+                    Completed orders
+                </div>
+                 <div class="item item-divider">
+                    {{vm.completedOrders}}
+                </div>
+            </div>
           </div>
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.completedOrders}}</strong> <span>Completed</span></div>
-          </div>
-          <div class="oval-margin">
-            <div class="oval"><strong>{{vm.cancelledOrders}}</strong> <span>Cancelled</span></div>
+          <div class="col col-50">
+            <div class="card">
+                <div class="item item-text-wrap item-calm">
+                    Cancelled orders
+                </div>
+                 <div class="item item-divider">
+                     {{vm.cancelledOrders}}
+                </div>
+            </div>
           </div>
         </div>
-
-
-
-     
-          
-          
-
   </ion-content>
 </ion-view>

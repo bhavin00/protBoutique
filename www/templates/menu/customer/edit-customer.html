@@ -1,108 +1,69 @@
 <ion-view view-title="Add/Edit Customer">
-    <ion-content>
+    <ion-content >
+        <div class="list" ng-init="vm.activate()">
+        <form name="customerForm" name="customerForm">
+            <label class="item item-input   item-floating-label item-floating-label my-item-border">
+                <span class="input-label">Customer Name</span>
+                <input ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-minlength="2" ng-maxlength="50" ng-model="vm.customer.name"
+                name="name" required placeholder="Customer Name" type="text">
+            </label>
 
-<div class="main-contant-part" ng-init="vm.activate()">
-    <!-- Customer Details page Section Start Here -->
-    <form name="customerForm" novalidate>
-        <div class="order-form-left-section add-new-form">
+             <label class="item item-input   item-floating-label my-item-border">
+                <span class="input-label">Mobile Number</span>
+               <input ng-model="vm.customer.mobile" ng-pattern="/^[0-9]{1,10}$/" name="mobilenumber"
+                ng-minlength="10" ng-maxlength="10" required placeholder="Mobile Number" type="text">
+            </label>
 
-            <div class="form-section-box">
-                <h3 class="calm">Basic Information</h3>
+            <label class="item item-input   item-floating-label my-item-border">
+                <span class="input-label">Phone Number</span>
+               <input  ng-model="vm.customer.phone" ng-pattern="/^[0-9]{1,11}$/" name="phonenumber"
+                ng-minlength="11" ng-maxlength="11" placeholder="Phone Number" type="text">
+            </label>
 
-                <div class="form-box">
-                    <label><em id="mandatory" style="color:Red">*</em>Customer Name</label>
-                    <input id="" my-directive="" ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-minlength="2" ng-maxlength="50" ng-model="vm.customer.name" name="name" required
-                           placeholder="Customer Name" type="text">
-                    <span ng-if="(customerForm.name.$dirty || vm.isSubmitted) && customerForm.name.$error.pattern">No special characters are allowed.</span>
-                    <span ng-if="(customerForm.name.$dirty || vm.isSubmitted) && customerForm.name.$error.required"><i><b>Customer Name</b></i> is required.</span>
-                    <span ng-if="(customerForm.name.$dirty || vm.isSubmitted) && customerForm.name.$error.minlength"><i><b>Customer Name</b></i> should be at least 2 characters long.</span>
-                    <span ng-if="(customerForm.name.$dirty || vm.isSubmitted) && customerForm.name.$error.maxlength"><i><b>Customer Name</b></i> should not be more than 50 characters long.</span>
+             <label class="item item-input   item-floating-label my-item-border">
+                <span class="input-label">Email Address</span>
+               <input  ng-model="vm.customer.email" name="email" ng-pattern="/^[_A-Za-z0-9]+[a-zA-Z0-9_+-]+(\.[_A-Za-z0-9+-]+)*@[A-Za-z0-9+-_]+(\.[A-Za-z0-9+-]+)*(\.[A-Za-z]{2,5})$/"
+                placeholder="Email address" ng-minlength="5" ng-maxlength="250" type="email">
+            </label>
 
+            <label class="item item-input item-select my-item-border my-item-border">
+                <div class="input-label">
+                     Gender
                 </div>
-                <div class="form-box">
-                    <label><em style="color:Red">*</em>Gender</label>
-                    <select required class="paragraph " name="gender" ng-model="vm.customer.gender">
+                 <select required class="paragraph " name="gender" ng-model="vm.customer.gender">
                         <option value="">Please Select</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
-                    <span ng-if="(customerForm.gender.$dirty || vm.isSubmitted) && customerForm.gender.$error.required"><i><b>Gender</b></i> is required.</span>
-                </div>
-                <div class="form-box">
-                    <label>Birth Date</label>
-                    <input type="date" readonly name="dob" ng-model="vm.customer.dob">
-                    <span ng-if="(customerForm.dob.$dirty || vm.isSubmitted) && customerForm.dob.$error.max"><i><b>Birth Date</b></i> should not be future date.</span>
-                </div>
-                <div class="form-box">
-                    <label>Anniversary</label>
-                    <input type="date" readonly 
-                           uib-datepicker-popup="" 
-                           name="annerversary"
-                           convert-to-date
-                           ng-model="vm.customer.annerversary" is-open="open.annerversary"
-                           ng-click="open.annerversary = !open.annerversary"
-                           />
-                    <span ng-if="(customerForm.annerversary.$dirty || vm.isSubmitted) && customerForm.annerversary.$error.max"><i><b>Anniversary</b></i> should not be future date.</span>
-                </div>
-            </div>
+            </label>
+            
+            <label class="item item-input my-item-border my-item-border">
+                <span class="input-label">Birth Date</span>
+                <input type="date" name="dob" ng-model="vm.customer.dob" ng-max="vm.today" placeholder="Birth Date">
+            </label>
 
+            <label class="item item-input my-item-border my-item-border">
+                <span class="input-label">Anniversary</span>
+                <input type="date" name="dob" ng-model="vm.customer.annerversary" ng-max="vm.today">
+            </label>
 
-            <div class="form-section-box">
-                 <h3 class="calm">Contact Information</h3>
+            <label class="item item-input   item-floating-label my-item-border my-item-border">
+                <span class="input-label">Address</span>
+               <textarea required ng-model="vm.customer.address" rows="4" cols="50" placeholder="Address" name="address" ng-minlength="2" ng-maxlength="250"></textarea>
+            </label>
 
-                <div class="form-box">
-                    <label><em id="mandatory" style="color:Red">*</em>Mobile Number</label>
-                    <input ng-model="vm.customer.mobile" ng-pattern="/^[0-9]{1,10}$/" name="mobilenumber" ng-minlength="10" ng-maxlength="10" required
-                           placeholder="Mobile Number"
-                           type="text">
-                    <span ng-if="(customerForm.mobilenumber.$dirty || vm.isSubmitted) && customerForm.mobilenumber.$error.required"><i><b>Mobile Number</b></i> is required.</span>
-                    <span ng-if="(customerForm.mobilenumber.$dirty || vm.isSubmitted) && (customerForm.mobilenumber.$error.pattern || customerForm.mobilenumber.$error.minlength || customerForm.mobilenumber.$error.maxlength)">Enter a valid 10-digit <i><b>Mobile Number</b></i>.</span>
+            <label class="item item-input   item-floating-label my-item-border my-item-border">
+                <span class="input-label">Billing Address</span>
+                <textarea ng-model="vm.customer.billingAddress" rows="4" cols="50" placeholder="Billing Address" name="billingAddress" ng-minlength="2" ng-maxlength="250"></textarea>
+            </label>
 
-                </div>
+            <label class="item item-input   item-floating-label my-item-border">
+                <span class="input-label">Remarks</span>
+                <textarea ng-model="vm.customer.remark" rows="4" cols="50" placeholder="Remark" name="remark" ng-minlength="2" ng-maxlength="250"></textarea>
+            </label>
 
-                <div class="form-box">
-                    <label> Phone Number</label>
-                    <input  ng-model="vm.customer.phone" ng-pattern="/^[0-9]{1,11}$/" name="phonenumber" ng-minlength="11" ng-maxlength="11"
-                           placeholder="Phone Number"
-                           type="text">
-                    <span ng-if="(customerForm.phonenumber.$dirty || vm.isSubmitted) && (customerForm.phonenumber.$error.pattern || customerForm.phonenumber.$error.minlength || customerForm.phonenumber.$error.maxlength)">Enter a valid 11-digit <i><b>Phone Number</b></i>.</span>
-
-                </div>
-
-                <div class="form-box">
-                    <div class="form-box">
-                        <label> Email Address</label>
-                        <input  ng-model="vm.customer.email" name="email" ng-pattern="/^[_A-Za-z0-9]+[a-zA-Z0-9_+-]+(\.[_A-Za-z0-9+-]+)*@[A-Za-z0-9+-_]+(\.[A-Za-z0-9+-]+)*(\.[A-Za-z]{2,5})$/"
-                               placeholder="Email address" ng-minlength="5" ng-maxlength="250"
-                               type="email">
-                        <span ng-if="(customerForm.email.$dirty || vm.isSubmitted) && customerForm.email.$error.pattern">Enter a valid <i><b>Email</b></i>.</span>
-                        <span ng-if="(customerForm.email.$dirty || vm.isSubmitted) && !customerForm.email.$error.pattern && customerForm.email.$error.minlength"><i><b>Email</b></i> should be at least 5 characters long.</span>
-                        <span ng-if="(customerForm.email.$dirty || vm.isSubmitted) && customerForm.email.$error.maxlength"><i><b>Email</b></i> should not be more than 250 characters long.</span>
-
-                    </div>
-
-                    <div class="form-box">
-                        <label><em style="color:Red">*</em>Address</label>
-                        <textarea required ng-model="vm.customer.address" rows="4" cols="50" placeholder="Address" name="address" ng-minlength="2" ng-maxlength="250"></textarea>
-                        <span ng-if="(customerForm.address.$dirty || vm.isSubmitted) && customerForm.address.$error.required"><i><b>Address</b></i> is required.</span>
-                        <span ng-if="(customerForm.address.$dirty || vm.isSubmitted) && customerForm.address.$error.minlength"><i><b>Address</b></i> should be at least 2 characters long.</span>
-                        <span ng-if="(customerForm.address.$dirty || vm.isSubmitted) && customerForm.address.$error.maxlength"><i><b>Address</b></i> should not be more than 250 characters long.</span>
-                    </div>
-                    <div class="form-box">
-                        <label>Billing Address</label>
-                        <textarea ng-model="vm.customer.billingAddress" rows="4" cols="50" placeholder="Billing Address" name="billingAddress" ng-minlength="2" ng-maxlength="250"></textarea>
-                        <span ng-if="(customerForm.billingAddress.$dirty || vm.isSubmitted) && customerForm.billingAddress.$error.minlength"><i><b>Billing Address</b></i> should be at least 2 characters long.</span>
-                        <span ng-if="(customerForm.billingAddress.$dirty || vm.isSubmitted) && customerForm.billingAddress.$error.maxlength"><i><b>Billing Address</b></i> should not be more than 250 characters long.</span>
-                    </div>
-                    <div class="form-box">
-                        <label>Remark</label>
-                        <textarea ng-model="vm.customer.remark" rows="4" cols="50" placeholder="Remark" name="remark" ng-minlength="2" ng-maxlength="250"></textarea>
-                        <span ng-if="(customerForm.remark.$dirty || vm.isSubmitted) && customerForm.remark.$error.minlength"><i><b>Remark</b></i> should be at least 2 characters long.</span>
-                        <span ng-if="(customerForm.remark.$dirty || vm.isSubmitted) && customerForm.remark.$error.maxlength"><i><b>Remark</b></i> should not be more than 250 characters long.</span>
-                    </div>
-
-                    <div class="form-section-box" ng-init="vm.getMeasurementList()">
-                        <h3 class="calm padding-top">Measurement</h3>
+            <div ng-init="vm.getMeasurementList()">
+             <!--<div class="form-heading Measurement-editcostumer-detail-mobile">Measurement</div>
                         <div class="measurement-li-box">
                             <ul>
                                 <li class="ng-scope" ng-repeat="msr in vm.customer.CustomerMeasurements">
@@ -115,31 +76,14 @@
                             </ul>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="add-new-btm-btn edit-customer-detail-btn-btn-left-mar-none">
-                    <div class="submit-error" ng-if="vm.error">
-                        <div>{{vm.error}}</div>
-                    </div>
-                    <div class="submit-button">
-                        <input ng-disabled="vm.startProcessing" value="Save" ng-click="vm.save(customerForm)" type="button">
-                    </div>
-                    <div class="cancel-button">
-                        <input value="Cancel" ui-sref="secure.customer" type="button">
-                    </div>
-                </div>
-
-
-            </div>
-
-            <!-- Left Form Section End Here -->
-
+             </div>-->
+            <a class="button button-outline button-balanced button-block" type="submit" ng-disabled="vm.startProcessing" ng-click="vm.save(customerForm)">Save</a>
+            <a class="button button-outline button-assertive button-block" type="submit" ui-sref="app.customer">cancel</a>
+            </form>
         </div>
-    </form>
-    <!-- Customer Details page Section End Here -->
-</div>
-
 
 </ion-content>
 </ion-view>
+
+
+                   

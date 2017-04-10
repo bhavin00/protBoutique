@@ -1,22 +1,31 @@
 <ion-view view-title="Manage Users">
     <ion-content>
-        <div class="row header" ng-init="vm.getList()">
-            <div class="col pro-boder" align="center">Username</div>
-            <div class="col pro-boder" align="center">Full Name</div>
-            <div class="col pro-boder" align="center">Type</div>
-            <div class="col pro-boder" align="center">Mobile</div>
-            <div class="col " align="center">Status</div>
-            <div class="col " align="center">Action</div>
+        <div ng-init="vm.getList()"></div>
+        <div class="list list-inset">
+                <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Search..." ng-model="vm.options.search" ng-change="vm.search()">
+                </label>
+            </div>
+        <div class="row calm">
+             <!--<div class="padding"></div>-->
+            
+            <div class="col col-33 table-col" align="center">Username</div>
+            <div class="col col-33 table-col" align="center">Status</div>
+            <div class="col col-33 table-col" align="center">Action</div>
         </div>
-        <div class="row" ng-repeat="obj in vm.list">
-            <div data-th="Username: " class="col  item positive pro-boder" ng-click="vm.edit(obj)">{{obj.username}}</div>
-            <div data-th="Full Name:" class="col  item pro-boder">{{obj.fullname}}</div>
-            <div data-th="Type: "  class="col  item pro-boder">{{obj.userrole}}</div>
-            <div data-th="Mobile: "   class="col  item pro-boder">{{obj.phone}}</div>
-            <div ng-if="obj.isActive" data-th="Status: " class="col item balanced">Active</div>
-            <div ng-if="!obj.isActive" data-th="Status: " class="col item assertive">Inactive</div>
-            <div data-th="Action: "  class="col  item pro-boder"><a ng-if="vm.currentUser.userrole === 'admin'" ng-click="vm.resetUser(obj)">Reset Password</a></td>
-        </div>
+        <div class="row" align="" ng-repeat="obj in vm.list">
+                <div class="col col-33 table-col">{{obj.username}}</div>
+                <div ng-if="obj.isActive" data-th="Status: " class="col col-33 table-col balanced">Active</div>
+                <div ng-if="!obj.isActive" data-th="Status: " class="col col-33 table-col assertive">Inactive</div>
+                <div class="col col-33 table-col">
+                    <i class="ion-edit table-icon-large" ng-click="vm.edit(obj)"></i>
+                    <i class="ion-information-circled table-icon-large"></i>
+                </div>
+            </div>
 
+        <button class="button button-float" ui-sref="app.edit-user">
+                <i class="icon ion-plus"></i>
+        </button
     </ion-content>
 </ion-view>
