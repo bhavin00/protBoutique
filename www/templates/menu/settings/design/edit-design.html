@@ -1,83 +1,68 @@
 ﻿<ion-view view-title="Add/Edit Design">
     <ion-content>
-    <form  name="designForm">
-        <div class="list">
+    <form name="designForm" novalidate>
             <label class="item item-input   item-floating-label">
                 <span class="input-label">Design</span>
-                <input name="title" required placeholder="Design" type="text" ng-pattern="/^[a-zA-Z0-9 ]+$/" 
-                ng-model="vm.design.title" ng-minlength="2" ng-maxlength="30">
+                <input name="title" required placeholder="Design" type="text" ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.design.title" ng-minlength="2"
+                ng-maxlength="30">
+                <span ng-if="(designForm.title.$dirty || vm.isSubmitted) && designForm.title.$error.pattern" class="assertive">No special characters are allowed.</span>
+                <span ng-if="(designForm.title.$dirty || vm.isSubmitted) && designForm.title.$error.required" class="assertive"><i><b>Design</b></i> is required.</span>
+                <span ng-if="(designForm.title.$dirty || vm.isSubmitted) && designForm.title.$error.minlength" class="assertive"><i><b>Design</b></i> should be at least 2 characters long.</span>
+                <span ng-if="(designForm.title.$dirty  || vm.isSubmitted)&& designForm.title.$error.maxlength" class="assertive"><i><b>Design</b></i> should not be more than 30 characters long.</span>
             </label>
 
            <label class="item item-input item-select" ng-init="vm.getMeasurementList()">
                 <div class="input-label">
                      Measurement
                 </div>
-                 <select required class="paragraph " ng-required="vm.design.DesignMeasurements.length == 0" 
-                 name="gender" ng-model="vm.customer.gender" name="selectMeasurement" ng-model="vm.selectMeasurement"
-                 ng-options="item as item.title for item in vm.mesaurements | filter : {isActive : true} track by item.id"
-                 ng-change="vm.isDesignMeasurementPreset = false;">
-                <option value="">Please Select</option>
-                </select>
+                 <select ng-required="vm.design.DesignMeasurements.length == 0" class="paragraph Edit-Design-Measurement" name="selectMeasurement"
+                    ng-model="vm.selectMeasurement" ng-options="item as item.title for item in vm.mesaurements | filter : {isActive : true} track by item.id"
+                    ng-change="vm.isDesignMeasurementPreset = false;vm.addInDesignMeasurement(vm.selectMeasurement)">
+                        <option value="">Please Select</option>
+                    </select>
             </label> 
+            <span ng-if="(designForm.selectMeasurement.$dirty || vm.isSubmitted )&& (designForm.selectMeasurement.$error.required)" class="assertive padding"><i><b>Measurement</b></i> is required.</span>
+            <span ng-if="vm.isDesignMeasurementPreset" class="padding assertive"><i><b>{{vm.tempMeasurement}}</b></i> is already present.</span>
+            <!--<label class="item">
+                <div class="input-label">
+                </div>
+                <button class="button button-balanced" type="button" ng-click="vm.addInDesignMeasurement(vm.selectMeasurement)">Add</button>
+            </label> -->
+            <ul class="list" ng-repeat="msr in vm.design.DesignMeasurements">
+                <li class="item my-item-border">
+                    <span>
+                        {{msr.Measurement.title}}
+                    </span>
+                    <span class="rightside">
+                        <i class="ion-close-circled table-icon-large  ng-click="vm.deleteDesignMeasurement(msr,$index)""></i>
+                    </span>
+                </li>
+            </ul>
+             <!--<div class="form-box form-box-measurement-add" ng-repeat="msr in vm.design.DesignMeasurements" >
+                    {{msr.Measurement.title}}
+                    <button ng-click="vm.deleteDesignMeasurement(msr,$index)">X</button>
+             </div>               -->
 
-        <ion-list>
-             <ion-checkbox  ng-model="vm.design.isActive">Active</ion-checkbox>
-        </div>
+           <li class="item item-toggle">
+                    Is Active
+                <label class="toggle toggle-calm">
+                <input type="checkbox" ng-model="vm.design.isActive">
+                <div class="track">
+                <div class="handle"></div>
+                </div>
+                </label>
+            </li> 
         
+        <div class="submit-error" ng-if="vm.design.DesignMeasurements.length == 0 && vm.isSubmitted">
+             <span class="assertive">Atleast 1 <i><b>Measurement</b></i> is required.</span>
+        </div>
+         <div class="submit-error" ng-if="vm.error">
+              <div class="assertive">{{vm.error}}</div>
+         </div>
+
         <a class="button button-outline button-balanced button-block" type="submit" ng-disabled="vm.startProcessing" ng-click="vm.save(designForm)">Save</a>
         <a class="button button-outline button-assertive button-block" type="submit" ui-sref="app.design">cancel</a>
         </div>
     </form>
 </ion-content>
 </ion-view>
-<!--
-       <div class="main-contant-part">
-            <div class="managecustomer-right-bx">
-                <form name="designForm" novalidate>
-                    <div class="order-form-left-section add-new-form">
-                        <div class="form-section-box form-section-box-2">
-                            <div class="form-box">
-                                <label><em id="mandatory" style="color:Red">*</em>Design</label>
-                                <input name="title" required placeholder="Design" type="text" ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.design.title" ng-minlength="2"
-                                    ng-maxlength="30">
-                                <span ng-if="(designForm.title.$dirty || vm.isSubmitted) && designForm.title.$error.pattern">No special characters are allowed.</span>
-                                <span ng-if="(designForm.title.$dirty || vm.isSubmitted) && designForm.title.$error.required"><i><b>Design</b></i> is required.</span>
-                                <span ng-if="(designForm.title.$dirty || vm.isSubmitted) && designForm.title.$error.minlength"><i><b>Design</b></i> should be at least 2 characters long.</span>
-                                <span ng-if="(designForm.title.$dirty  || vm.isSubmitted)&& designForm.title.$error.maxlength"><i><b>Design</b></i> should not be more than 30 characters long.</span>
-                            </div>
-
-                <div class="form-box" ng-init="vm.getMeasurementList()">
-                    <label><em id="mandatory" style="color:Red">*</em>Measurement</label>
-                <select ng-required="vm.design.DesignMeasurements.length == 0" class="paragraph Edit-Design-Measurement" name="selectMeasurement"
-                    ng-model="vm.selectMeasurement" ng-options="item as item.title for item in vm.mesaurements | filter : {isActive : true} track by item.id"
-                    ng-change="vm.isDesignMeasurementPreset = false;">
-                                        <option value="">Please Select</option>
-                                    </select>
-                <input value="Add" class="edit-design-add-btn" type="button" ng-click="vm.addInDesignMeasurement(vm.selectMeasurement)">
-                <span ng-if="(designForm.selectMeasurement.$dirty || vm.isSubmitted )&& (designForm.selectMeasurement.$error.required)"><i><b>Measurement</b></i> is required.</span>
-                <span ng-if="vm.isDesignMeasurementPreset"><i><b>{{vm.tempMeasurement}}</b></i> is already present.</span>
-                </div>
-                <div class="form-box form-box-measurement-add" ng-repeat="msr in vm.design.DesignMeasurements">
-                    {{msr.Measurement.title}}
-                    <button ng-click="vm.deleteDesignMeasurement(msr,$index)">X</button>
-                </div>
-                <div class="form-box">
-                    <label>Is Active</label>
-                    <input ng-model="vm.design.isActive" class="billing-addres-checkbox clothcheck" type="checkbox">
-                </div>
-                <div class="register-btm-btn-box register-btm-btn-box-left-mar">
-                    <div class="submit-error" ng-if="vm.design.DesignMeasurements.length == 0 && vm.isSubmitted">
-                        <span>Atleast 1 <i><b>Measurement</b></i> is required.</span>
-                    </div>
-                    <div class="submit-error" ng-if="vm.error">
-                        <div>{{vm.error}}</div>
-                    </div>
-                    <div class="submit-button">
-                        <input ng-disabled="vm.startProcessing" value="Save" class="register-submit-btn" type="button" ng-click="vm.save(designForm)">
-                    </div>
-                    <div class="cancel-button">
-                        <input value="Cancel" class="register-cancel-btn" type="button" ui-sref="app.design">
-                    </div>
-                </div>
-                </div>
-                </div>-->

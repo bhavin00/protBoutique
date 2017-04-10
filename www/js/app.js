@@ -9,7 +9,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
   'starter.menu', 'starter.customer', 'starter.home',
   'starter.order', 'starter.dashboard', 'starter.stats',
   'starter.user', 'starter.style', 'starter.design', 'starter.material',
-  'starter.measurement', 'starter.orderstatus', 'starter.reports', 'starter.notifications','starter.designmodal'
+  'starter.measurement', 'starter.orderstatus', 'starter.reports', 'starter.notifications', 'starter.designmodal'
 ])
 
   .run(function ($ionicPlatform) {
@@ -32,7 +32,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
     RestangularProvider.setBaseUrl('http://localhost\:3002');
     RestangularProvider.setFullResponse(true);
     $stateProvider
-
       .state('login', {
         url: '/login',
         templateUrl: 'templates/login/login.html',
@@ -154,7 +153,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
           }
         }
       })
-       .state('app.designModal', {
+      .state('app.designModal', {
         url: '/designModal',
         views: {
           'menuContent': {
@@ -314,9 +313,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
       })
       .state('app.notifications', {
         url: '/notifications',
+        views: {
+          'menuContent': {
         templateUrl: 'templates/menu/notifications/notifications.html',
         controller: 'NotificationsCtrl',
         controllerAs: 'vm'
+          }
+        }
       });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');

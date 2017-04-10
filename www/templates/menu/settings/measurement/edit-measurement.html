@@ -1,55 +1,31 @@
 ﻿<ion-view view-title="Add/Edit Measurement">
     <ion-content>
-        <div class="main-contant-part">
-﻿<div class="managecustomer-right-bx">
-    <form name="measurementForm" novalidate>
-        <!-- Left Form Section Start Here -->
-        <div class="order-form-left-section add-new-form">
-
-            <div class="form-section-box form-section-box-2">
-
-                <div class="form-box">
-                    <label><em id="mandatory" style="color:Red">*</em>Measurement</label>
+                <form name="measurementForm" novalidate>
+                    <!-- Left Form Section Start Here -->
+                <label class="item item-input   item-floating-label item-floating-label my-item-border">
+                    <span class="input-label">Measurement</span>
                     <input id="username" name="title" required placeholder="Measurement" type="text"  ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.measurement.title" ng-minlength="2" ng-maxlength="30">
                     <span ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.pattern">No special characters are allowed.</span>
                     <span ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.required"><i><b>Measurement</b></i> is required.</span>
                     <span ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.minlength"><i><b>Measurement</b></i> should be at least 2 characters long.</span>
                     <span ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.maxlength"><i><b>Measurement</b></i> should not be more than 30 characters long.</span>
+                </label>
 
+                <li class="item item-toggle">
+                    Is Active
+                <label class="toggle toggle-calm">
+                <input type="checkbox" ng-model="vm.measurement.isActive">
+                <div class="track">
+                <div class="handle"></div>
                 </div>
-                <div class="form-box">
-                    <label>Is Active</label>
-                    <input ng-model="vm.measurement.isActive" class="billing-addres-checkbox clothcheck" type="checkbox">
-
+                </label>
+                </li>
+                
+                <div class="submit-error" ng-if="vm.error">
+                        <div class="assertive">{{vm.error}}</div>
                 </div>
-
-                <div class="register-btm-btn-box register-btm-btn-box-left-mar">
-                    <div class="submit-error" ng-if="vm.error">
-                        <div>{{vm.error}}</div>
-                    </div>
-                    <div class="submit-button">
-                        <input ng-disabled="vm.startProcessing" value="Save" class="register-submit-btn" type="button" ng-click="vm.save(measurementForm)">
-                    </div>
-                    <div class="cancel-button">
-                        <input value="Cancel" class="register-cancel-btn" ui-sref="app.measurement">
-                    </div>
-                </div>
-
-            </div>
-
-
-
-
-
-        </div>
-    </form>
-    <!-- Customer Details page Section End Here -->
-
-
-
-</div>
-
-
-</div>
-   </ion-content>
+                <a class="button button-outline button-balanced button-block" type="submit" ng-disabled="vm.startProcessing" ng-click="vm.save(measurementForm)">Save</a>
+                <a class="button button-outline button-assertive button-block" type="button" ui-sref="app.measurement">cancel</a>
+                </form>
+    </ion-content>
 </ion-view>

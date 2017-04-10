@@ -1,63 +1,31 @@
 ﻿<ion-view view-title="Add/Edit Material Type">
     <ion-content>
-    <div name="materialForm">
-         <div class="list" name="designForm">
+    <form name="materialForm" novalidate>
             <label class="item item-input   item-floating-label">
                 <span class="input-label">Material Type</span>
-                    <input id="username" name="title" required placeholder="Material Type" type="text"  ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.material.title" ng-minlength="2" ng-maxlength="30">
-            </label>
-
-        <ion-list>
-             <ion-checkbox  ng-model="vm.design.isActive">Active</ion-checkbox>
-        </div>
-        
-        <a class="button button-outline button-balanced button-block" type="submit" ng-disabled="vm.startProcessing" ng-click="vm.save(designForm)">Save</a>
-        <a class="button button-outline button-assertive button-block" type="submit" ui-sref="app.material">cancel</a>
-    </div>
-
-    </ion-content>
-</ion-view>
-
-<!--
-<div class="managecustomer-right-bx">
-    <form name="materialForm" novalidate>
-        <div class="order-form-left-section add-new-form">
-
-            <div class="form-section-box form-section-box-2">
-
-                <div class="form-box">
-                    <label><em id="mandatory" style="color:Red">*</em>Material Type</label>
                     <input id="username" name="title" required placeholder="Material Type" type="text"  ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.material.title" ng-minlength="2" ng-maxlength="30">
                     <span ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.pattern">No special characters are allowed.</span>
                     <span ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.required"><i><b>Material Type</b></i> is required.</span>
                     <span ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.minlength"><i><b>Material Type</b></i> should be at least 2 characters long.</span>
                     <span ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.maxlength"><i><b>Material Type</b></i> should not be more than 30 characters long.</span>
-
+            </label>
+            
+               <li class="item item-toggle">
+                    Is Active
+                <label class="toggle toggle-calm">
+                <input type="checkbox" ng-model="vm.material.isActive">
+                <div class="track">
+                <div class="handle"></div>
                 </div>
-                <div class="form-box">
-                    <label>Is Active</label>
-                    <input ng-model="vm.material.isActive" class="billing-addres-checkbox clothcheck" type="checkbox">
+                </label>
+                </li>
+                
+                <div class="submit-error" ng-if="vm.error">
+                        <div class="assertive">{{vm.error}}</div>
                 </div>
-               
-                <div class="register-btm-btn-box register-btm-btn-box-left-mar">
-                    <div class="submit-error" ng-if="vm.error">
-                        <span>{{vm.error}}</span>
-                    </div>
-                    <div class="submit-button">
-                        <input ng-disabled="vm.startProcessing" value="Save" class="register-submit-btn" type="button" ng-click="vm.save(materialForm)">
-                    </div>
-                    <div class="cancel-button">
-                        <input value="Cancel" class="register-cancel-btn" type="button" ui-sref="app.material">
-                    </div>
-                </div>
-
-            </div>
-
-
-
-
-
-        </div>
+        <a class="button button-outline button-balanced button-block" type="submit" ng-disabled="vm.startProcessing" ng-click="vm.save(materialForm)">Save</a>
+        <a class="button button-outline button-assertive button-block" type="submit" ui-sref="app.material">cancel</a>
     </form>
-</div>
-        </div>-->
+    </ion-content>
+</ion-view>
+

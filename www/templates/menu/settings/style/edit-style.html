@@ -1,77 +1,62 @@
 ﻿<ion-view view-title="Add/Edit Style">
-    <ion-content>
-        <div class="main-contant-part">
-    <div class="managecustomer-right-bx" ng-init="vm.activate()">
-    <form name="styleForm" novalidate>
-        <!-- Left Form Section Start Here -->
-        <div class="order-form-left-section add-new-form">
+<ion-content>
+    <div ng-init="vm.activate()"></div>
+     <form name="styleForm" novalidate>
+            <label class="item item-input   item-floating-label">
+                <span class="input-label">Style</span>
+                 <input id="username" name="title" required placeholder="Style" type="text"  ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.style.title" ng-minlength="2" ng-maxlength="30">
+                    <span class="assertive" ng-if="(styleForm.title.$dirty || vm.isSubmitted) && styleForm.title.$error.pattern">No special characters are allowed.</span>
+                    <span class="assertive" ng-if="styleForm.title.$dirty && styleForm.title.$error.required"><i><b>Style</b></i> is required.</span>
+                    <span class="assertive" ng-if="styleForm.title.$dirty && styleForm.title.$error.minlength"><i><b>Style</b></i> should be at least 2 characters long.</span>
+                    <span class="assertive" ng-if="styleForm.title.$dirty && styleForm.title.$error.maxlength"><i><b>Style</b></i> should not be more than 30 characters long.</span>
+            </label>
 
-            <div class="form-section-box form-section-box-2">
-
-                <div class="form-box">
-                    <label><em id="mandatory" style="color:Red">*</em>Style</label>
-                    <input id="username" name="title" required placeholder="Style" type="text"  ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.style.title" ng-minlength="2" ng-maxlength="30">
-                    <span ng-if="(styleForm.title.$dirty || vm.isSubmitted) && styleForm.title.$error.pattern">No special characters are allowed.</span>
-                    <span ng-if="styleForm.title.$dirty && styleForm.title.$error.required"><i><b>Style</b></i> is required.</span>
-                    <span ng-if="styleForm.title.$dirty && styleForm.title.$error.minlength"><i><b>Style</b></i> should be at least 2 characters long.</span>
-                    <span ng-if="styleForm.title.$dirty && styleForm.title.$error.maxlength"><i><b>Style</b></i> should not be more than 30 characters long.</span>
+              <label class="item item-input item-select" ng-init="vm.getDesignList()">
+                <div class="input-label">
+                     Design
                 </div>
-                <div class="form-box" ng-init="vm.getDesignList()">
-                    <label><em style="color:Red">*</em>Design</label>
-                    <!--ng-options="item.id as item.title for item in vm.designs | filter :{isActive : true} track by item.id"-->
-                    <select required class="paragraph" name="designId" ng-model="vm.style.DesignId">
+                <select required class="paragraph" name="designId" ng-model="vm.style.DesignId">
                         <option value="">Please Select</option>
                         <option ng-repeat="item in vm.designs | filter:{isActive :true}" value="{{item.id}}">{{item.title}}</option>
-                    </select>
-                    <span ng-if="styleForm.designId.$dirty && styleForm.designId.$error.required"><i><b>Design</b></i> is required.</span>
-                </div>
-                <div class="form-box" >
-                    <label><em style="color:Red">*</em>Image</label>
-                    <button type="button" class="register-cancel-btn" style="margin-top: 9px;" ngf-select="vm.displayPhoto($file)"
+                </select>
+                <span class="assertive" ng-if="styleForm.designId.$dirty && styleForm.designId.$error.required"><i><b>Design</b></i> is required.</span>
+            </label> 
+
+              <label class="item item-input row">
+                <div class="input-label col col-33">
+                     &nbsp;Image
+             </div>
+                <button class="button  button-small button-assertive col col-33 col-offset-33"
+                       ngf-select="vm.displayPhoto($file)"
                        ng-model="vm.file"
                        ngf-pattern="'image/*'"
                        ngf-accept="'image/*'"
                        ngf-max-size="3MB"
                        ngf-min-height="10"
                        ngf-required
-                       ngf-resize>Choose a Image</button>
-                    <div style="clear:both;">&nbsp;</div>
-                    <span ng-if="styleForm.designId.$dirty && styleForm.designId.$error.required"><i><b>Image</b></i> is required.</span>
-                </div>
-                <div class="form-box">
-                    <label></label>
-                    <img class="addsubdesign-browse-img" ng-if="vm.localPicture || vm.style.image" ng-src="{{vm.localPicture ||vm.style.image}}" height="200" width="200">
-                </div>
-                <div class="form-box">
-                    <label>Is Active</label>
-                    <input ng-model="vm.style.isActive" class="billing-addres-checkbox clothcheck" type="checkbox">
-                </div>
-                <div class="register-btm-btn-box register-btm-btn-box-left-mar">
-                    <div class="submit-error" ng-if="vm.error">
-                        <div>{{vm.error}}</div>
-                    </div>
-                    <div class="submit-button">
-                        <input ng-disabled="vm.startProcessing" value="Save" class="register-submit-btn" type="button" ng-click="vm.save(styleForm)">
-                    </div>
-                    <div class="cancel-button">
-                        <input value="Cancel" class="register-cancel-btn" ui-sref="app.style">
-                    </div>
-                </div>
+                       ngf-resize>Choose</button>
+                    <span class="assertive" ng-if="styleForm.designId.$dirty && styleForm.designId.$error.required"><i><b>Image</b></i> is required.</span>
+            </label>
 
+            <div class="padding" align="center">
+                    <img ng-if="vm.localPicture || vm.style.image" ng-src="{{vm.localPicture || vm.style.image}}" height="200" width="200">
             </div>
 
+            <li class="item item-toggle">
+                    Is Active
+                <label class="toggle toggle-calm">
+                <input type="checkbox" ng-model="vm.style.isActive">
+                <div class="track">
+                <div class="handle"></div>
+                </div>
+                </label>
+            </li> 
 
-
-
-
-        </div>
+                    <div ng-if="vm.error">
+                        <div class="assertive padding">{{vm.error}}</div>
+                    </div>
+                     <a class="button button-outline button-balanced button-block" type="submit" ng-disabled="vm.startProcessing" ng-click="vm.save(styleForm)">Save</a>
+                     <a class="button button-outline button-assertive button-block" type="submit" ui-sref="app.style">cancel</a>
     </form>
-    <!-- Customer Details page Section End Here -->
-
-
-
-</div>
-
-</div>
   </ion-content>
 </ion-view>

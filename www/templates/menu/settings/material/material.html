@@ -8,7 +8,21 @@
                     <input type="text" placeholder="Search..." ng-model="vm.options.search" ng-change="vm.search()">
                     </label>
                 </div>
-            <div class="row calm" align="center">
+
+           <div class="list card"  ng-if="!vm.list.length">
+            <div class="item text-center">
+            <h1>NO DATA FOUND</h1>
+            </div>
+            <div class="item item-body">
+            <p>
+            <div class="text-center">
+            <img src="img/nodata.jpg" style="width:250px;height:250px">
+            </img>
+            </div>
+            </div>
+        </div>
+
+          <div class="row calm" align="center" ng-if="vm.list.length > 0">
                 <div class="col col-33 table-col">Material Type</div>
                 <div class="col col-33 table-col">Status</div>
                 <div class="col col-33 table-col">Action</div>

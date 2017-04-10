@@ -41,7 +41,6 @@
             vm.startProcessing = true;
             if (!vm.material.id) {
                 Restangular.all('api/material').post(vm.material).then(function(res) {
-                   swal("Good job!", "You clicked the button!", "success")
                     $state.go('app.material');
                 }, function(err) {
                     vm.error = err.data.message;
@@ -49,7 +48,6 @@
                 });
             } else {
                 Restangular.one('api/material/' + vm.material.id).patch(vm.material).then(function(res) {
-                   swal("Good job!", "You clicked the button!", "success")
                     $state.go('app.material');
                 }, function(err) {
                     vm.error = err.data.message;
