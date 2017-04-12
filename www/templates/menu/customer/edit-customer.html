@@ -59,7 +59,6 @@
                 <input type="date" name="annerversary" ng-model="vm.customer.annerversary" ng-max="vm.today">
             </label>
             <span class="item assertive" ng-if="(customerForm.annerversary.$dirty || vm.isSubmitted) && customerForm.annerversary.$error.max" class="assertive"><i><b>Anniversary</b></i> should not be future date.</span>
-            
             <label class="item item-input   item-floating-label my-item-border ">
                 <span class="input-label">Address</span>
                <textarea required ng-model="vm.customer.address" rows="4" cols="50" placeholder="Address" name="address" ng-minlength="2" ng-maxlength="250"></textarea>
