@@ -5,10 +5,10 @@
                 <label class="item item-input   item-floating-label item-floating-label my-item-border">
                     <span class="input-label">Measurement</span>
                     <input id="username" name="title" required placeholder="Measurement" type="text"  ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.measurement.title" ng-minlength="2" ng-maxlength="30">
-                    <span ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.pattern">No special characters are allowed.</span>
-                    <span ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.required"><i><b>Measurement</b></i> is required.</span>
-                    <span ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.minlength"><i><b>Measurement</b></i> should be at least 2 characters long.</span>
-                    <span ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.maxlength"><i><b>Measurement</b></i> should not be more than 30 characters long.</span>
+                    <span class="assertive" ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.pattern">No special characters are allowed.</span>
+                    <span class="assertive" ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.required"><i><b>Measurement</b></i> is required.</span>
+                    <span class="assertive" ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.minlength"><i><b>Measurement</b></i> should be at least 2 characters long.</span>
+                    <span class="assertive" ng-if="(measurementForm.title.$dirty || vm.isSubmitted)&& measurementForm.title.$error.maxlength"><i><b>Measurement</b></i> should not be more than 30 characters long.</span>
                 </label>
 
                 <li class="item item-toggle">

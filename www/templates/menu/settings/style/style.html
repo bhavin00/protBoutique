@@ -32,8 +32,7 @@
                 <div ng-if="obj.isActive" data-th="Status: " class="col col-33 table-col balanced">Active</div>
                 <div ng-if="!obj.isActive" data-th="Status: " class="col col-33 table-col assertive">Inactive</div>
                 <div class="col col-33 table-col">
-                    <i class="ion-edit table-icon-large" ng-click="vm.edit(obj)"></i>
-                    <i class="ion-information-circled table-icon-large"></i>
+                    <button class="button  button-small button-dark" ng-click="vm.edit(obj)">Edit Data</a>
                 </div>
             </div>
 

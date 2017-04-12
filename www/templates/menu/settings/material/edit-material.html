@@ -4,10 +4,10 @@
             <label class="item item-input   item-floating-label">
                 <span class="input-label">Material Type</span>
                     <input id="username" name="title" required placeholder="Material Type" type="text"  ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.material.title" ng-minlength="2" ng-maxlength="30">
-                    <span ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.pattern">No special characters are allowed.</span>
-                    <span ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.required"><i><b>Material Type</b></i> is required.</span>
-                    <span ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.minlength"><i><b>Material Type</b></i> should be at least 2 characters long.</span>
-                    <span ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.maxlength"><i><b>Material Type</b></i> should not be more than 30 characters long.</span>
+                    <span class="assertive" ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.pattern">No special characters are allowed.</span>
+                    <span class="assertive" ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.required"><i><b>Material Type</b></i> is required.</span>
+                    <span class="assertive" ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.minlength"><i><b>Material Type</b></i> should be at least 2 characters long.</span>
+                    <span class="assertive" ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.maxlength"><i><b>Material Type</b></i> should not be more than 30 characters long.</span>
             </label>
             
                <li class="item item-toggle">

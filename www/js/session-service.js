@@ -9,8 +9,10 @@
         var m = {
             login: login,
             isAuthenticated: isAuthenticated,
-            logout: logout
+            getDATA: getDATA,
+            logout: logout,
         }
+        
         function login(data) {
             var deferred = $q.defer();
 
@@ -18,6 +20,7 @@
                 if (res.data.message) {
                     deferred.resolve("false");
                 } else {
+                    localStorage.setItem('userrole',res.data.userrole);
                     localStorage.setItem('authId', res.data.id);
                     localStorage.setItem('authUsername', res.data.username);
                     deferred.resolve("true");
@@ -35,11 +38,15 @@
                 return true;
             }
         };
+         function getDATA() {
+            this.user = localStorage.getItem('userrole');
+                return this.user;
+        };
         function logout() {
             localStorage.removeItem('authId');
             localStorage.removeItem('authUsername');
             $state.go('login');
-        }
+        };
         return m;
     }
 })();

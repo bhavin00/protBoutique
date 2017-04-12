@@ -23,7 +23,7 @@
             </div>
             </div>
 
-             <div class="row calm" align="center" ng-if="vm.list.length > 0">
+             <div class="row calm" align="" ng-if="vm.list.length > 0">
                 <div class="col col-33 table-col">Design</div>
                 <div class="col col-33 table-col">Status</div>
                 <div class="col col-33 table-col">Action</div>
@@ -34,8 +34,7 @@
                 <div ng-if="obj.isActive" data-th="Status: " class="col col-33 table-col balanced">Active</div>
                 <div ng-if="!obj.isActive" data-th="Status: " class="col col-33 table-col assertive">Inactive</div>
                 <div class="col col-33 table-col">
-                    <i class="ion-edit table-icon-large" ng-click="vm.edit(obj)"></i>
-                    <i class="ion-information-circled table-icon-large"></i>
+                    <button class="button  button-small button-dark" ng-click="vm.edit(obj)">Edit Data</a>
                 </div>
             </div>
 

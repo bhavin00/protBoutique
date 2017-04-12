@@ -1,75 +1,75 @@
 ﻿<ion-view view-title="Add/Edit User">
     <ion-content>
-        <form name="customerForm" name="userForm">
-            <fieldset ng-disabled="vm.currentUser.userrole != 'admin'" style="border:none">
+        <form  name="userForm">
+            <fieldset ng-disabled="vm.currentUser != 'admin'" style="border:none">
                         <label class="item item-input   item-floating-label item-floating-label my-item-border">
                             <span class="input-label">Username</span>
                             <input name="username" placeholder="Username" type="text" ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.user.username" ng-minlength="2"
                                 ng-maxlength="50" required>
-                            <span ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.pattern">No special characters are allowed.</span>
-                            <span ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.required"><i><b>Username</b></i> is required.</span>
-                            <span ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.minlength"><i><b>Username</b></i> should be at least 2 characters long.</span>
-                            <span ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.maxlength"><i><b>Username</b></i> should not be more than 50 characters long.</span>
+                            <span class="assertive" ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.pattern">No special characters are allowed.</span>
+                            <span class="assertive" ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.required"><i><b>Username</b></i> is required.</span>
+                            <span class="assertive"  ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.minlength"><i><b>Username</b></i> should be at least 2 characters long.</span>
+                            <span class="assertive"ng-if="(userForm.username.$dirty || vm.isSubmitted) && userForm.username.$error.maxlength"><i><b>Username</b></i> should not be more than 50 characters long.</span>
                         </label>
 
                         <label class="item item-input   item-floating-label my-item-border">
                             <span class="input-label">Full Name</span>
                        <input name="fullname" placeholder="Full Name" type="text" ng-model="vm.user.fullname" ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-minlength="2"
                                 ng-maxlength="50" required>
-                            <span ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.pattern">No special characters are allowed.</span>
-                            <span ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.required"><i><b>Full Name</b></i> is required.</span>
-                            <span ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.minlength"><i><b>Full Name</b></i> should be at least 2 characters long.</span>
-                            <span ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.maxlength"><i><b>Full Name</b></i> should not be more than 50 characters long.</span>
+                            <span class="assertive" ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.pattern">No special characters are allowed.</span>
+                            <span class="assertive" ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.required"><i><b>Full Name</b></i> is required.</span>
+                            <span class="assertive" ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.minlength"><i><b>Full Name</b></i> should be at least 2 characters long.</span>
+                            <span class="assertive" ng-if="(userForm.fullname.$dirty || vm.isSubmitted) && userForm.fullname.$error.maxlength"><i><b>Full Name</b></i> should not be more than 50 characters long.</span>
                         </label>
 
-                        <label class="item item-input  my-item-border">
+                        <label class="item item-input item-select my-item-border">
                             <span class="input-label">Type of User</span>
                         <select class="paragraph" required name="userrole" ng-model="vm.user.userrole">
                                         <option value="">Please Select</option>
                                         <option value="admin">Admin</option>
                                         <option value="user">User</option>
                                     </select>
-                            <span ng-if="(userForm.userrole.$dirty || vm.isSubmitted) && userForm.userrole.$error.required"><i><b>Type of User</b></i> is required.</span>
                         </label>
-
+                        <span class="assertive item" ng-if="(userForm.userrole.$dirty || vm.isSubmitted) && userForm.userrole.$error.required"><i><b>Type of User</b></i> is required.</span>
+                       
                         <label class="item item-input   item-floating-label my-item-border">
                             <span class="input-label">Email Address</span>
                         <input ng-model="vm.user.email" name="email" ng-pattern="/^[_A-Za-z0-9]+[a-zA-Z0-9_+-]+(\.[_A-Za-z0-9+-]+)*@[A-Za-z0-9+-_]+(\.[A-Za-z0-9+-]+)*(\.[A-Za-z]{2,5})$/ "
                                 placeholder="Email address" ng-minlength="5" ng-maxlength="250" type="email">
-                            <span ng-if="(userForm.email.$dirty || vm.isSubmitted) && userForm.email.$error.pattern">Enter a valid <i><b>Email</b></i>.</span>
-                            <span ng-if="(userForm.email.$dirty || vm.isSubmitted) && !userForm.email.$error.pattern && userForm.email.$error.minlength"><i><b>Email</b></i> should be at least 5 characters long.</span>
-                            <span ng-if="(userForm.email.$dirty || vm.isSubmitted) && userForm.email.$error.maxlength"><i><b>Email</b></i> should not be more than 250 characters long.</span>
+                            <span class="assertive" ng-if="(userForm.email.$dirty || vm.isSubmitted) && userForm.email.$error.pattern">Enter a valid <i><b>Email</b></i>.</span>
+                            <span class="assertive" ng-if="(userForm.email.$dirty || vm.isSubmitted) && !userForm.email.$error.pattern && userForm.email.$error.minlength"><i><b>Email</b></i> should be at least 5 characters long.</span>
+                            <span class="assertive" ng-if="(userForm.email.$dirty || vm.isSubmitted) && userForm.email.$error.maxlength"><i><b>Email</b></i> should not be more than 250 characters long.</span>
                         </label>
-                        <label class="item item-input   item-floating-label my-item-border">
+                        <label class="item item-input   item-floating-label my-item-border" ng-if="!vm.user.id">
                             <div class="input-label">
                                 Password
                             </div>
                             <input name="password" ng-minlength="6" ng-maxlength="25" required placeholder="Password" type="password" ng-model="vm.user.password">
-                            <span ng-if="(userForm.password.$dirty || vm.isSubmitted) && userForm.password.$error.required"><i><b>Password</b></i> is required.</span>
-                            <span ng-if="(userForm.password.$dirty || vm.isSubmitted) && userForm.password.$error.minlength"><i><b>Password</b></i> should be at least 6 characters long.</span>
-                            <span ng-if="(userForm.password.$dirty || vm.isSubmitted) && userForm.password.$error.maxlength"><i><b>Password</b></i> should not be more than 25 characters long.</span>
+                            <span class="assertive" ng-if="(userForm.password.$dirty || vm.isSubmitted) && userForm.password.$error.required"><i><b>Password</b></i> is required.</span>
+                            <span class="assertive" ng-if="(userForm.password.$dirty || vm.isSubmitted) && userForm.password.$error.minlength"><i><b>Password</b></i> should be at least 6 characters long.</span>
+                            <span class="assertive" ng-if="(userForm.password.$dirty || vm.isSubmitted) && userForm.password.$error.maxlength"><i><b>Password</b></i> should not be more than 25 characters long.</span>
                         </label>
                         
-                        <label class="item item-input   item-floating-label my-item-border">
+                        <label class="item item-input   item-floating-label my-item-border" ng-if="!vm.user.id">
                             <span class="input-label">Confirm Password</span>
                             <input name="confirm" required placeholder="Confirm Password" type="password" ng-model="vm.confirmPassword">
-                            <span ng-if="(userForm.confirm.$dirty || vm.isSubmitted) && userForm.confirm.$error.required"><i><b>Confirm Password</b></i> is required.</span>
-                            <span ng-if="(userForm.confirm.$dirty || vm.isSubmitted) && !userForm.confirm.$error.required &&  vm.user.password != vm.confirmPassword"><i><b>Password</b></i> & <i><b>Confirm Password</b></i> does not match.</span>
+                            <span class="assertive" ng-if="(userForm.confirm.$dirty || vm.isSubmitted) && userForm.confirm.$error.required"><i><b>Confirm Password</b></i> is required.</span>
+                            <span class="assertive" ng-if="(userForm.confirm.$dirty || vm.isSubmitted) && !userForm.confirm.$error.required &&  vm.user.password != vm.confirmPassword"><i><b>Password</b></i> & <i><b>Confirm Password</b></i> does not match.</span>
                         </label>
 
                         <label class="item item-input   item-floating-label my-item-border">
                             <span class="input-label">Mobile Number</span>
                             <input id="" name="phonenumber" required="required" ng-pattern="/^[0-9]{1,11}$/" placeholder="Mobile Number" type="text"
                                 ng-model="vm.user.phone" ng-minlength="10" ng-maxlength="10">
-                            <span ng-if="(userForm.phonenumber.$dirty || vm.isSubmitted) && userForm.phonenumber.$error.required"><i><b>Mobile Number</b></i> is required.</span>
-                            <span ng-if="(userForm.phonenumber.$dirty || vm.isSubmitted) && (userForm.phonenumber.$error.pattern || userForm.phonenumber.$error.minlength || userForm.phonenumber.$error.maxlength)">Enter a valid 10-digit <i><b>Mobile Number</b></i>.</span>
+                            <span class="assertive" ng-if="(userForm.phonenumber.$dirty || vm.isSubmitted) && userForm.phonenumber.$error.required"><i><b>Mobile Number</b></i> is required.</span>
+                            <span class="assertive" ng-if="(userForm.phonenumber.$dirty || vm.isSubmitted) && (userForm.phonenumber.$error.pattern || userForm.phonenumber.$error.minlength || userForm.phonenumber.$error.maxlength)">Enter a valid 10-digit <i><b>Mobile Number</b></i>.</span>
                         </label>
 
                         <label class="item item-input   item-floating-label my-item-border">
                             <span class="input-label">Address</span>
                        <textarea ng-model="vm.user.address" rows="4" cols="50" placeholder="Address" name="address" ng-minlength="2" ng-maxlength="250"></textarea>
-                            <span ng-if="(userForm.address.$dirty || vm.isSubmitted) && userForm.address.$error.minlength"><i><b>Address</b></i> should be at least 2 characters long.</span>
-                            <span ng-if="(userForm.address.$dirty || vm.isSubmitted) && userForm.address.$error.maxlength"><i><b>Address</b></i> should not be more than 250 characters long.</span>
+                            <span class="assertive"  ng-if="(userForm.address.$dirty || vm.isSubmitted) && userForm.address.$error.minlength"><i><b>Address</b></i> should be at least 2 characters long.</span>
+                            <span class="assertive" ng-if="(userForm.address.$dirty || vm.isSubmitted) && userForm.address.$error.maxlength"><i><b>Address</b></i> should not be more than 250 characters long.</span>
                         </label>
                          
                           <li class="item item-toggle">
@@ -82,10 +82,10 @@
                           </label>
                     </fieldset>
                      <div class="submit-error" ng-if="vm.error">
-                            <div>{{vm.error}}</div>
+                            <div class="assertive">{{vm.error}}</div>
                         </div>
                         <a class="button button-outline button-balanced button-block" type="submit" ng-disabled="vm.startProcessing"
-                        ng-if="vm.currentUser.userrole === 'admin'"  ng-click="vm.save(userForm)">Save</a>
+                        ng-if="vm.currentUser === 'admin'"  ng-click="vm.save(userForm)">Save</a>
                         <a class="button button-outline button-assertive button-block" type="button" ui-sref="app.user">cancel</a>
             </form>
   </ion-content>

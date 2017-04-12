@@ -21,8 +21,8 @@
                         <option value="">Please Select</option>
                     </select>
             </label> 
-            <span ng-if="(designForm.selectMeasurement.$dirty || vm.isSubmitted )&& (designForm.selectMeasurement.$error.required)" class="assertive padding"><i><b>Measurement</b></i> is required.</span>
-            <span ng-if="vm.isDesignMeasurementPreset" class="padding assertive"><i><b>{{vm.tempMeasurement}}</b></i> is already present.</span>
+            <span ng-if="(designForm.selectMeasurement.$dirty || vm.isSubmitted )&& (designForm.selectMeasurement.$error.required)" class="assertive item"><i><b>Measurement</b></i> is required.</span>
+            <span ng-if="vm.isDesignMeasurementPreset" class="item assertive"><i><b>{{vm.tempMeasurement}}</b></i> is already present.</span>
             <!--<label class="item">
                 <div class="input-label">
                 </div>
@@ -54,7 +54,7 @@
             </li> 
         
         <div class="submit-error" ng-if="vm.design.DesignMeasurements.length == 0 && vm.isSubmitted">
-             <span class="assertive">Atleast 1 <i><b>Measurement</b></i> is required.</span>
+             <span class="assertive item">Atleast 1 <i><b>Measurement</b></i> is required.</span>
         </div>
          <div class="submit-error" ng-if="vm.error">
               <div class="assertive">{{vm.error}}</div>

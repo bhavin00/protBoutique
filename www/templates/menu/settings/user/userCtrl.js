@@ -1,36 +1,7 @@
 angular.module('starter.user', [])
-    .controller('UserCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular) {
-//for modal
-
-        $ionicModal.fromTemplateUrl('user.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.modal = modal;
-        });
-        $scope.openModal = function () {
-            $scope.modal.show();
-        };
-        $scope.closeModal = function () {
-            $scope.modal.hide();
-        };
-        // Cleanup the modal when we're done with it!
-        $scope.$on('$destroy', function () {
-            $scope.modal.remove();
-        });
-        // Execute action on hide modal
-        $scope.$on('modal.hidden', function () {
-            // Execute action
-        });
-        // Execute action on remove modal
-        $scope.$on('modal.removed', function () {
-            // Execute action
-        });
-        
-//for modal
-
+    .controller('UserCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular,sessionService) {
         var vm = this;
-        // vm.currentUser = Authentication.user;
+        vm.currentUser = sessionService.getDATA();
         vm.list = [];
         vm.save = save;
         vm.edit = edit;
@@ -59,11 +30,11 @@ angular.module('starter.user', [])
         }
 
         function edit(obj) {
-            $state.go('secure.setting.edit-user', { id: obj.id });
+            $state.go('app.edit-user', { id: obj.id });
         }
 
         function resetUser(obj) {
-            $state.go('secure.setting.reset-user', { id: obj.id });
+            $state.go('app.reset-user', { id: obj.id });
         }
 
         function resetPassword(form) {

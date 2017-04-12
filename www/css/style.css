@@ -3,7 +3,7 @@
 }
 
 .table-col {
-border-top: 1px solid #0a9dc7;
+/*border-top: 1px solid #0a9dc7;*/
 border-bottom: 1px solid #0a9dc7;
 }
 
@@ -14,11 +14,14 @@ border-bottom: 1px solid #0a9dc7;
 .rightside{
     float: right;
 }
-/*.item{
+.item{
     border: 0px white !important;
 }
 .my-item-border{
-    border: 1px solid #ddd !important;
+    border-bottom: 1px solid #ddd !important;
+}
+/*.button{
+    min-width: 0px !important;
 }*/
 .bottom{
     position: fixed;
