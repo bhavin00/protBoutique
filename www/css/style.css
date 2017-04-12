@@ -20,7 +20,16 @@ border-bottom: 1px solid #0a9dc7;
 .my-item-border{
     border: 1px solid #ddd !important;
 }*/
-
+.bottom{
+    position: fixed;
+    top: 85%;
+    width: 100%;
+}
+.top{
+    position: fixed;
+    top: 10% !important;
+    width: 100%;
+}
 .button-float{
   background: #ef473a !important;
   color:white !important;

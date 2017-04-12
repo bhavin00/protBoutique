@@ -10,15 +10,15 @@ angular.module('starter.notifications', [])
         vm.change = change;
 
         function edit(obj) {
-            $state.go('secure.edit-customer', { id: obj.id });
+            $state.go('app.edit-customer', { id: obj.id });
         }
 
         function edit2(obj) {
-            $state.go('secure.edit-customer', { id: obj });
+            $state.go('app.edit-customer', { id: obj });
         }
 
         function edit3(obj) {
-            $state.go('secure.edit-order', { id: obj });
+            $state.go('app.edit-order', { id: obj });
         }
 
         function openCal() {

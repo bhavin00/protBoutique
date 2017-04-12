@@ -2,7 +2,7 @@
     <ion-content >
         <div  ng-init="vm.activate()"></div>
         <form name="customerForm" novalidate>
-            <label class="item item-input   item-floating-label item-floating-label my-item-border">
+            <label class="item item-input   item-floating-label  my-item-border">
                 <span class="input-label">Customer Name</span>
                 <input ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-minlength="2" ng-maxlength="50" ng-model="vm.customer.name"
                 name="name" required placeholder="Customer Name" type="text">
@@ -36,7 +36,7 @@
                 <span ng-if="(customerForm.email.$dirty || vm.isSubmitted) && customerForm.email.$error.maxlength"><i><b>Email</b></i> should not be more than 250 characters long.</span>
             </label>
 
-            <label class="item item-input item-select my-item-border my-item-border">
+            <label class="item item-input item-select my-item-border">
                 <div class="input-label">
                      Gender
                 </div>

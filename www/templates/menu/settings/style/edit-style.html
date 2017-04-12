@@ -19,8 +19,8 @@
                         <option value="">Please Select</option>
                         <option ng-repeat="item in vm.designs | filter:{isActive :true}" value="{{item.id}}">{{item.title}}</option>
                 </select>
-                <span class="assertive" ng-if="styleForm.designId.$dirty && styleForm.designId.$error.required"><i><b>Design</b></i> is required.</span>
             </label> 
+            <span class="item assertive" ng-if="styleForm.designId.$dirty && styleForm.designId.$error.required"><i><b>Design</b></i> is required.</span>
 
               <label class="item item-input row">
                 <div class="input-label col col-33">
@@ -34,9 +34,11 @@
                        ngf-max-size="3MB"
                        ngf-min-height="10"
                        ngf-required
-                       ngf-resize>Choose</button>
-                    <span class="assertive" ng-if="styleForm.designId.$dirty && styleForm.designId.$error.required"><i><b>Image</b></i> is required.</span>
+                       ngf-resize 
+                       ngf-capture="'camera'"
+                       name="image">Choose</button>
             </label>
+            <span class="item assertive" ng-if="styleForm.designId.$dirty && styleForm.designId.$error.required"><i><b>Image</b></i> is required.</span>
 
             <div class="padding" align="center">
                     <img ng-if="vm.localPicture || vm.style.image" ng-src="{{vm.localPicture || vm.style.image}}" height="200" width="200">

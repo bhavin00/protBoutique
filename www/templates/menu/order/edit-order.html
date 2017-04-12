@@ -5,68 +5,189 @@
     </div>
     <ion-slide-box show-pager="false" deletgate-handle="wizard">
       <ion-slide>
-        <div class="box">
-          <h1>What is your name?</h1>
+        <div class="box" ng-init="vm.activate()">
+          <!--<h1>What is your name?</h1>-->
           <div class="list">
-            <label class="tem item-input item-floating-label my-item-border">First Name
-              <input type="text" placeholder="First Name" ng-model="slide1.firstName">
-            </label>
-            <label class="tem item-input item-floating-label my-item-border">Last Name
-              <input type="text" placeholder="Last Name" ng-model="slide1.lastName">
-            </label>
-          </div>
-        </div>
-      </ion-slide>
-      <ion-slide>
-        <div class="box">
-          <h1>What is your quest?</h1>
-          <div class="list">
-            <label class="item item-input item-select">
-              <div class="input-label">
-                Quests
-              </div>
-              <select ng-model="slide2.quest">
-                <option ng-repeat="quest in quests" value="{{quest}}">{{quest}}</option>
-              </select>
-            </label>
-          </div>
-        </div>
-      </ion-slide>
-      <ion-slide class="box">
+            <label class="item item-input my-item-border ">
+                  <span class="input-label">Order Date</span>
+                  <input type="date"
+                    name="orderDate"
+                    is-open="vm.open_orderDate"
+                    ng-model="vm.order.orderDate"
+                    ng-click="vm.openCal()"
+                    ng-max="vm.today" ng-required="true">
+              </label>
+            <span class="submit-error" ng-if="(customerForm.orderDate.$dirty || vm.isSubmitted) && customerForm.orderDate.$error.max"><i><b>Order date</b></i> should not be future date.</span>
 
-          <h1>What is your favorite color?</h1>
-          <ion-radio value="{{color}}" ng-model="slide3.color" style="color: {{color}}; text-align:left;" ng-repeat="color in colors">
-            {{color}}
-          </ion-radio>
-      </ion-slide>
-      <ion-slide>
-        <div class="box">
-          <h1>What is the airspeed velocity of an unladen swallow?</h1>
-          <ion-toggle ng-model="slide4.african" toggle-class="toggle-royal" style="text-align: left;"> African </ion-toggle>
-          <ion-toggle ng-model="slide4.european" toggle-class="toggle-royal" style="text-align: left;"> European </ion-toggle>
-        </div>
-      </ion-slide>
-      <ion-slide>
-        <div class="box">
-          <h1>How much do you love kittens?</h1>
-          <div class="item range">
-            <i class="icon ion-heart-broken"></i>
-            <input type="range" min="0" max="100" value="33" ng-model="slide5.love" />
-            <i class="icon ion-heart"></i>
+            <label class="item item-input my-item-border ">
+                  <span class="input-label">Order Status</span>
+                  <input type="text" value="{{vm.order.OrderStatus.title}}" ng-disabled="true">
+              </label>
+
+            <label class="item item-input item-select my-item-border" ng-init="vm.getCustomerList()">
+                  <span class="input-label">Order by</span>
+                  <select required name="customerId" ng-model="vm.order.CustomerId" ng-change="vm.customerChange(vm.order.CustomerId)" ng-disabled="vm.isOrderProceed || vm.order.OrderStatusId != '1'"
+                    convert-to-number>
+                    <option value="">-- Please Select --</option>
+                    <option value="{{cust.id}}" ng-repeat="cust in vm.customers">{{cust.name}}</option>
+                  </select>
+              </label>
+
+            <label class="item item-input my-item-border ">
+                  <span class="input-label">Mobile Number</span>
+                  <input type="text" value="{{vm.order.Customer.mobile}}" ng-disabled="true">
+              </label>
+
+            <!--<label class="item item-input   item-floating-label my-item-border ">
+                <span class="input-label">Address</span>
+                <textarea rows="4" cols="50" ng-value= "{{vm.order.Customer.address}}"  ng-disabled="true" placeholder="Address"></textarea>
+            </label>-->
+
+            <label class="item item-input my-item-border ">
+                  <span class="input-label">Address</span>
+                  <input type="text" value="{{vm.order.Customer.address}}" ng-disabled="true">
+              </label>
+
           </div>
         </div>
       </ion-slide>
+
       <ion-slide>
         <div class="box">
-          <h1>FINAL SCORE!</h1>
-          <div class="card" ng-repeat="slide in slides">
+          <!--<h1>What is your quest?</h1>-->
+          <div class="list">
+            <div ng-repeat="orderItem in vm.order.OrderItems track by $index">
+              <label class="item item-input item-select my-item-border">
+                  <span class="input-label">Design</span>
+                  <select ng-disabled="vm.order.id" convert-to-number required name="designId_{{$index}}" ng-model="vm.order.OrderItems[$index].DesignId" ng-change="vm.getOrderItemMeasurement($index,vm.order.OrderItems[$index].DesignId,vm.order.OrderItems[$index].Style.image)">
+                      <option value="">-- Please Select --</option>
+                      <option value="{{dgn.id}}" ng-repeat="dgn in vm.designs | filter : {isActive : true}">{{dgn.title}}</option>
+                  </select>                 
+              </label>
+
+              <label class="item item-input item-select my-item-border">
+                  <span class="input-label">Sub Design</span>
+                  <select ng-disabled="vm.order.id || !vm.order.OrderItems[$index].DesignId" convert-to-number required ng-model="vm.order.OrderItems[$index].StyleId" name="styleId_{{$index}}" ng-change="vm.styleChange($index,vm.order.OrderItems[$index].StyleId)">
+                  <option value="">-- Please Select --</option>
+                  <option value="{{stl.id}}" ng-repeat="stl in vm.styles | filter : {DesignId : vm.order.OrderItems[$index].DesignId}">{{stl.title}}</option>
+              </select>
+              </label>
+              <center>
+                <img class="padding" ng-src="http://localhost:3002/{{vm.order.OrderItems[$index].Style.image}}" alt="{{stl.title}}" width="160"
+                  height="150">
+              </center>
+
+              <label class="item item-input item-select my-item-border">
+                  <span class="input-label">Material Type</span>
+                  <select convert-to-number name="materialId_{{$index}}" ng-model="vm.order.OrderItems[$index].MaterialId">
+                      <option value="">-- Please Select --</option>
+                      <option value="{{mtrl.id}}" ng-repeat="mtrl in vm.materials">{{mtrl.title}}</option>
+                  </select>                 
+              </label>
+
+              <label class="item item-input">
+                  <span class="input-label">Color Code</span>
+                  <input type="text" ng-model="vm.order.OrderItems[$index].colorCode">
+              </label>
+
+              <label class="item item-input item-floating-label">
+                  <span class="input-label">Customization</span>
+                  <cite title="{{vm.order.OrderItems[$index].customization}}"><textarea placeholder="Customization" rows="4" cols="50" ng-model="vm.order.OrderItems[$index].customization"></textarea></cite>
+            </label>
+
+              <label class="item item-input item-floating-label">
+                  <span class="input-label">Remarks</span>
+                  <cite title="{{vm.order.OrderItems[$index].remark}}"><textarea placeholder="Remarks" rows="4" cols="50" ng-model="vm.order.OrderItems[$index].remark"></textarea></cite>
+              </label>
+
+              <label class="item item-input" ng-repeat="oim in orderItem.OrderItemMeasurements" class="measurment-box-123">
+                 <span class="input-label"> {{oim.Measurement.title}} </span>
+                <input name="measurement_{{$parent.$index}}_{{$index}}" ng-model="vm.order.OrderItems[$parent.$index].OrderItemMeasurements[$index].val" required type="text">
+            </label>
+
+            <button class="button button-positive" ng-click="vm.addOrderItem()">
+              Add Another Product
+            </button>
+          </div>
+        </div>
+      </div>
+      </ion-slide>
+
+
+      <ion-slide class="box">
+        <!--<h1>What is your favorite color?</h1>-->
+        <div class="list" ng-repeat="orderItem in vm.order.OrderItems track by $index">
+          <div class="card">
+            <div class="item item-text-wrap item-calm">
+              <div class="row">
+                <div class="col col-50">
+                  {{orderItem.Design.title}} ({{orderItem.Style.title}})
+                </div>
+                <div class="col col-50">
+                    <!--<img height="80" width="80" class="image-text-set-order" ng-src="http://localhost:3002/{{orderItem.Style.image}}">-->
+                </div>
+              </div>
+            </div>
             <div class="item item-divider">
-              Slide {{$index+1}}
-            </div>
-            <div class="item item-text-wrap">
-              {{slide}}
+                 <img height="80" width="80" class="image-text-set-order" ng-src="http://localhost:3002/{{orderItem.Style.image}}">
+                  <label class="item item-input">
+                     <span class="input-label">Delivery Date</span>
+                     <input type="date" required
+                      ng-change="vm.onDeliveryDateChange($index)"
+                      name="deliveryDate_{{$index}}"
+                      is-open="open.deliveryDate[$index]"
+                      ng-model="vm.order.OrderItems[$index].deliveryDate"
+                      ng-click="open.deliveryDate[$index] = !open.deliveryDate[$index]"
+                      ng-min="vm.order.orderDate">
+                  </label>
+
+                  <label class="item item-input">
+                     <span class="input-label">Stiching Date</span>
+                      <input type="date" required
+                        name="stitchingDate_{{$index}}"
+                        is-open="open.stitchingDate[$index]"
+                        ng-model="vm.order.OrderItems[$index].stitchingDate"
+                        ng-click="open.stitchingDate[$index] = !open.stitchingDate[$index]"
+                        ng-min="vm.order.orderDate" 
+                        ng-max="orderItem.alertDate">              
+                  </label>
+
+                 <label class="item item-input">
+                     <span class="input-label">Alert Date</span>
+                     <input type="date" required
+                      name="alertDate_{{$index}}"
+                      is-open="open.alertDate[$index]"
+                      ng-model="vm.order.OrderItems[$index].alertDate"
+                      ng-click="open.alertDate[$index] = !open.alertDate[$index]"
+                      ng-min="vm.order.orderDate" 
+                      ng-max="orderItem.deliveryDate">
+                  </label>
+
+                 <label class="item item-input">
+                     <span class="input-label">Amount</span>
+                     <input class="Create-Order-respo-table-mobile" style="width: 90%" ng-min="0" ng-max="999999999" class="addorder-amount-icon datepicker-input-margin-btm-none" name="amount_{{$index}}" required="required" ng-model="vm.order.OrderItems[$index].amount" type="number" placeholder="* Amount">
+                 </label>
+
+                 <label class="item item-input item-select">
+                     <span class="input-label">Status</span>
+                      <select class="Create-Order-respo-table-mobile" ng-change="vm.changeOrderItemStatus()" class="outside2 edit-order-status-td-input"
+                      placeholder="Search by Name" name="customeruser" ng-model="vm.order.OrderItems[$index].OrderStatusId" convert-to-number
+                      ng-disabled="!vm.order.id">
+                      <option value="{{os.id}}" ng-repeat="os in vm.orderStatuses | filter : {isActive : true}">{{os.title}}</option>
+                      </select>
+                 </label>
+
+                 <div class="submit-button">
+                        <input class="register-submit-btn" type="button" ng-disabled="vm.startProcessing" value="{{vm.SubmitOrderText}}" ng-click="vm.submitOrder(orderProceedForm)">
+                    <!--<input class="btn btn-info" type="button" value="Back" ng-click="vm.goBack()">-->
+                </div>
+                <div class="cancel-button">
+                    <input value="Back" class="register-cancel-btn"  type="button" value="Back" ng-click="vm.goBack()">
+                </div>
+
             </div>
           </div>
+
         </div>
       </ion-slide>
     </ion-slide-box>
@@ -82,7 +203,7 @@
         </div>
         <div class="col-50">
           <div style="text-align: center">
-            Step {{slide+1}} of 6
+            Step {{slide+1}} of 3
           </div>
         </div>
         <div class="col-25">
