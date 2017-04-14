@@ -10,8 +10,8 @@ post--localhost:3002/api/user
 	"isActive":1
 }
 
---New
---Completed
---Stitching
---Partial
---Cancelled
+--1 New
+--2 Stitching
+--3 Completed
+--4 Cancelled
+--5 Partial

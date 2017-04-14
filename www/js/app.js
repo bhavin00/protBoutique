@@ -9,7 +9,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
   'starter.menu', 'starter.customer', 'starter.home',
   'starter.order', 'starter.dashboard', 'starter.stats',
   'starter.user', 'starter.style', 'starter.design', 'starter.material',
-  'starter.measurement', 'starter.orderstatus', 'starter.reports', 'starter.notifications', 'starter.designmodal'
+  'starter.measurement', 'starter.orderstatus', 'starter.reports', 'starter.notifications', 'starter.designmodal' ,'checklist-model'
 ])
 
   .run(function ($ionicPlatform) {

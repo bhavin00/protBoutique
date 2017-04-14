@@ -1,44 +1,80 @@
-<ion-view view-title="Dashboard page">
+<ion-view view-title="Manage Order page">
     <ion-content>
-     
+        <div ng-init="vm.activate()"></div>
+        <div class="tabs-striped tabs-color-assertive" ng-init="vm.flag=1">
+            <div class="tabs">
+                <a class="tab-item" ng-class="{active:  vm.flag==1}" ng-click="vm.flag=1">
+                    <i class="ion-model-s"></i> Delivery
+                </a>
+                <a class="tab-item " ng-class="{active: vm.flag==2}" ng-click="vm.flag=2">
+                    <i class="ion-plus"></i> New
+                </a>
+                <a class="tab-item " ng-class="{active: vm.flag==3}" ng-click="vm.flag=3">
+                    <i class="ion-checkmark-round"></i> Complete
+                </a>
+                <a class="tab-item " ng-class="{active: vm.flag==4}" ng-click="vm.flag=4">
+                    <i class="ion-close"></i> Cancel
+                </a>
+            </div>
+        </div>
 
-        <div class="main-contant-part minpageheight" ng-init="vm.activate()">
 
-            <!-- Dashboard Tab start here -->
-            <div class="tabGroup">
-                <input type="radio" name="tabGroup1" id="rad1" checked="checked" />
-                <label for="rad1" class="dashboad-label-mobile-btm-mar">Deliverable Orders</label>
 
-                <input type="radio" name="tabGroup1" id="rad2" />
-                <label for="rad2" class="dashboad-label-mobile-btm-mar">New Orders</label>
+        <div ng-if="vm.flag==1">
+            <div class="list card" ng-if="!vm.list.one.length">
+                <div class="item text-center">
+                    <h1>NO DATA FOUND</h1>
+                </div>
+                <div class="item item-body">
+                    <p>
+                        <div class="text-center">
+                            <img src="img/nodata.jpg" style="width:200px;height:200px">
+                            </img>
+                        </div>
+                </div>
+            </div>
+            <div class="card" ng-repeat="stch in vm.list.one" ng-if="vm.list.one.length > 0">
+                <div class="item item-text-wrap item-calm" align="" ng-click="vm.edit(stch)">
+                    OrderId:{{stch.Order.id}}
+                </div>
+                <div class="item item-divider">
+                    <div class="row my-item-border">
+                        <div class="col col-50">
+                            Design
+                        </div>
+                        <div class="col col-50">
+                            {{stch.Design.title}}
+                        </div>
+                    </div>
+                    <div class="row my-item-border">
+                        <div class="col col-50">
+                            Customer Name
+                        </div>
+                        <div class="col col-50">
+                            {{stch.Order.Customer.name}}
+                        </div>
+                    </div>
+                    <div class="row my-item-border">
+                        <div class="col col-50">
+                            Delivery Date
+                        </div>
+                        <div class="col col-50">
+                            {{stch.deliveryDate | date:'dd-MM-yyyy'}}
+                        </div>
+                    </div>
+                    <div class="row my-item-border">
+                        <div class="col col-50">
+                            Status
+                        </div>
+                        <div class="col col-50">
+                            {{stch.OrderStatus.title}}
+                        </div>
+                    </div>
 
-                <input type="radio" name="tabGroup1" id="rad3" />
-                <label for="rad3" class="dashboad-label-mobile-btm-mar">Completed Orders</label>
 
-                <input type="radio" name="tabGroup1" id="rad4" />
-                <label for="rad4" class="dashboad-label-mobile-btm-mar">Cancelled Orders</label>
-
-                <br/>
-
-                <div class="tab1">
-                    <h2 class="no-record-found-tex2" ng-if="!vm.list.one.length">No record found</h2>
-                    <table ng-if="vm.list.one.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tr class="top-purpal-color-row">
-                            <th>Order Id</th>
-                            <th>Designs</th>
-                            <th>Customer Name</th>
-                            <th>Delivery Date</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr ng-repeat="stch in vm.list.one">
-                            <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
-                            <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
-                            <td data-th="Delivery Date: " class="top-purpal-color-row2">{{stch.deliveryDate | date:'dd-MM-yyyy'}}</td>
-                            <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
-                        </tr>
-                    </table>
-                    <div class="paging" ng-if="vm.list.one.length > 0">
+                </div>
+            </div>
+            <!--<div class="paging" ng-if="vm.list.one.length > 0">
                         <span class="showing-text-bx">
                     Showing {{ ((vm.options.one.page - 1) * vm.options.one.pagesize) + 1 }} to
                     <t ng-if="(vm.options.one.page * vm.options.one.pagesize) > vm.options.one.totalItems">{{vm.options.one.totalItems}}</t>
@@ -50,29 +86,66 @@
                                 items-per-page="vm.options.one.pagesize" ng-model="vm.options.one.page" class="pagination-sm"
                                 previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
                         </div>
-                    </div>
+                    </div>-->
+        </div>
+
+
+        <div ng-if="vm.flag==2">
+            <div class="list card" ng-if="!vm.list.two.length">
+                <div class="item text-center">
+                    <h1>NO DATA FOUND</h1>
                 </div>
+                <div class="item item-body">
+                    <p>
+                        <div class="text-center">
+                            <img src="img/nodata.jpg" style="width:200px;height:200px">
+                            </img>
+                        </div>
+                </div>
+            </div>
+            <div class="card" ng-repeat="stch in vm.list.two" ng-if="vm.list.two.length > 0">
+                <div class="item item-text-wrap item-calm" align="" ng-click="vm.edit(stch)">
+                    OrderId:{{stch.Order.id}}
+                </div>
+                <div class="item item-divider">
+                    <div class="row my-item-border">
+                        <div class="col col-50">
+                            Design
+                        </div>
+                        <div class="col col-50">
+                            {{stch.Design.title}}
+                        </div>
+                    </div>
+                    <div class="row my-item-border">
+                        <div class="col col-50">
+                            Customer Name
+                        </div>
+                        <div class="col col-50">
+                            {{stch.Order.Customer.name}}
+                        </div>
+                    </div>
+                    <div class="row my-item-border">
+                        <div class="col col-50">
+                            Delivery Date
+                        </div>
+                        <div class="col col-50">
+                            {{stch.deliveryDate | date:'dd-MM-yyyy'}}
+                        </div>
+                    </div>
+                    <div class="row my-item-border">
+                        <div class="col col-50">
+                            Status
+                        </div>
+                        <div class="col col-50">
+                            {{stch.OrderStatus.title}}
+                        </div>
+                    </div>
 
 
-                <div class="tab2">
-                    <h2 class="no-record-found-tex2" ng-if="!vm.list.two.length">No record found</h2>
-                    <table ng-if="vm.list.two.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tr class="top-purpal-color-row">
-                            <th>Order Id</th>
-                            <th>Designs</th>
-                            <th>Customer Name</th>
-                            <th>Delivery Date</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr ng-repeat="stch in vm.list.two">
-                            <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
-                            <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
-                            <td data-th="Delivery Date: " class="top-purpal-color-row2">{{stch.deliveryDate | date:'dd-MM-yyyy'}}</td>
-                            <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
-                        </tr>
-                    </table>
-                    <div class="paging" ng-if="vm.list.two.length > 0">
+                </div>
+            </div>
+            </div>
+                <!--<div class="paging" ng-if="vm.list.two.length > 0">
                         <span class="showing-text-bx">
                     Showing {{ ((vm.options.two.page - 1) * vm.options.two.pagesize) + 1 }} to
                     <t ng-if="(vm.options.two.page * vm.options.two.pagesize) > vm.options.two.totalItems">{{vm.options.two.totalItems}}</t>
@@ -85,77 +158,131 @@
                                 previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
 
-                <div class="tab3">
-                    <h2 class="no-record-found-tex2" ng-if="!vm.list.three.length">No record found</h2>
-                    <table ng-if="vm.list.three.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tr class="top-purpal-color-row">
-                            <th>Order Id</th>
-                            <th>Designs</th>
-                            <th>Customer Name</th>
-                            <th>Completed On</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr ng-repeat="stch in vm.list.three">
-                            <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
-                            <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
-                            <td data-th="Completed On: " class="top-purpal-color-row2">{{stch.completeDate | date:'dd-MM-yyyy'}}</td>
-                            <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
-                        </tr>
-                    </table>
-                    <div class="paging" ng-if="vm.list.three.length > 0">
-                        <span class="showing-text-bx">
-                    Showing {{ ((vm.options.three.page - 1) * vm.options.three.pagesize) + 1 }} to
-                    <t ng-if="(vm.options.three.page * vm.options.three.pagesize) > vm.options.three.totalItems">{{vm.options.three.totalItems}}</t>
-                    <t ng-if="(vm.options.three.page * vm.options.three.pagesize) < vm.options.three.totalItems">{{vm.options.three.page * vm.options.three.pagesize}}</t>
-                    of {{vm.options.three.totalItems}} Completed Orders
-                </span>
-                        <div class="paging-text">
-                            <ul uib-pagination ng-change="vm.pageChange('three')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.three.totalItems"
-                                items-per-page="vm.options.three.pagesize" ng-model="vm.options.three.page" class="pagination-sm"
-                                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                <div ng-if="vm.flag==3">
+                    <div class="list card" ng-if="!vm.list.three.length">
+                        <div class="item text-center">
+                            <h1>NO DATA FOUND</h1>
+                        </div>
+                        <div class="item item-body">
+                            <p>
+                                <div class="text-center">
+                                    <img src="img/nodata.jpg" style="width:200px;height:200px">
+                                    </img>
+                                </div>
                         </div>
                     </div>
-                </div>
+                    <div class="card" ng-repeat="stch in vm.list.three" ng-if="vm.list.three.length > 0">
+                        <div class="item item-text-wrap item-calm" align="" ng-click="vm.edit(stch)">
+                            OrderId:{{stch.Order.id}}
+                        </div>
+                        <div class="item item-divider">
+                            <div class="row my-item-border">
+                                <div class="col col-50">
+                                    Design
+                                </div>
+                                <div class="col col-50">
+                                    {{stch.Design.title}}
+                                </div>
+                            </div>
+                            <div class="row my-item-border">
+                                <div class="col col-50">
+                                    Customer Name
+                                </div>
+                                <div class="col col-50">
+                                    {{stch.Order.Customer.name}}
+                                </div>
+                            </div>
+                            <div class="row my-item-border">
+                                <div class="col col-50">
+                                    Delivery Date
+                                </div>
+                                <div class="col col-50">
+                                    {{stch.deliveryDate | date:'dd-MM-yyyy'}}
+                                </div>
+                            </div>
+                            <div class="row my-item-border">
+                                <div class="col col-50">
+                                    Status
+                                </div>
+                                <div class="col col-50">
+                                    {{stch.OrderStatus.title}}
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
 
 
-                <div class="tab4">
-                    <h2 class="no-record-found-tex2" ng-if="!vm.list.four.length">No record found</h2>
-                    <table ng-if="vm.list.four.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tr class="top-purpal-color-row">
-                            <th>Order Id</th>
-                            <th>Designs</th>
-                            <th>Customer Name</th>
-                            <th>Cancelled On</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr ng-repeat="stch in vm.list.four">
-                            <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link">{{stch.Order.id}}</a></td>
-                            <td data-th="Designs: " class="top-purpal-color-row2">{{stch.Design.title}}</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2">{{stch.Order.Customer.name}}</td>
-                            <td data-th="Cancelled On: " class="top-purpal-color-row2">{{stch.cancelDate | date:'dd-MM-yyyy'}}</td>
-                            <td data-th="Status: " class="top-purpal-color-row2">{{stch.OrderStatus.title}}</td>
-                        </tr>
-                    </table>
-                    <div class="paging" ng-if="vm.list.four.length > 0">
-                        <span class="showing-text-bx">
+                <div ng-if="vm.flag==4">
+                    <div class="list card" ng-if="!vm.list.four.length">
+                        <div class="item text-center">
+                            <h1>NO DATA FOUND</h1>
+                        </div>
+                        <div class="item item-body">
+                            <p>
+                                <div class="text-center">
+                                    <img src="img/nodata.jpg" style="width:200px;height:200px">
+                                    </img>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="card" ng-repeat="stch in vm.list.four" ng-if="vm.list.four.length > 0">
+                        <div class="item item-text-wrap item-calm" align="" ng-click="vm.edit(stch)">
+                            OrderId:{{stch.Order.id}}
+                        </div>
+                        <div class="item item-divider">
+                            <div class="row my-item-border">
+                                <div class="col col-50">
+                                    Design
+                                </div>
+                                <div class="col col-50">
+                                    {{stch.Design.title}}
+                                </div>
+                            </div>
+                            <div class="row my-item-border">
+                                <div class="col col-50">
+                                    Customer Name
+                                </div>
+                                <div class="col col-50">
+                                    {{stch.Order.Customer.name}}
+                                </div>
+                            </div>
+                            <div class="row my-item-border">
+                                <div class="col col-50">
+                                    Delivery Date
+                                </div>
+                                <div class="col col-50">
+                                    {{stch.deliveryDate | date:'dd-MM-yyyy'}}
+                                </div>
+                            </div>
+                            <div class="row my-item-border">
+                                <div class="col col-50">
+                                    Status
+                                </div>
+                                <div class="col col-50">
+                                    {{stch.OrderStatus.title}}
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>                    
+                        <!--<div class="paging" ng-if="vm.list.four.length > 0">
+                            <span class="showing-text-bx">
                     Showing {{ ((vm.options.four.page - 1) * vm.options.four.pagesize) + 1 }} to
                     <t ng-if="(vm.options.four.page * vm.options.four.pagesize) > vm.options.four.totalItems">{{vm.options.four.totalItems}}</t>
                     <t ng-if="(vm.options.four.page * vm.options.four.pagesize) < vm.options.four.totalItems">{{vm.options.four.page * vm.options.four.pagesize}}</t>
                     of {{vm.options.four.totalItems}} Cancelled Orders
                 </span>
-                        <div class="paging-text">
-                            <ul uib-pagination ng-change="vm.pageChange('four')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.four.totalItems"
-                                items-per-page="vm.options.four.pagesize" ng-model="vm.options.four.page" class="pagination-sm"
-                                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
-                        </div>
+                            <div class="paging-text">
+                                <ul uib-pagination ng-change="vm.pageChange('four')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.four.totalItems"
+                                    items-per-page="vm.options.four.pagesize" ng-model="vm.options.four.page" class="pagination-sm"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                            </div>
+                        </div>-->
                     </div>
                 </div>
-            </div>
-        </div>
-
     </ion-content>
 </ion-view>

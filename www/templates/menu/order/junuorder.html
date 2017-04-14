@@ -1,88 +1,19 @@
-<ion-view view-title="Order Page">
-  <ion-content>
-    <div ng-init="vm.getList()"></div>
 
-                <label class="item item-input my-item-border item-select">
-                    <span class="input-label">Filter by</span>
-                    <select class="outside2 myorder-search-status-select-mobile" placeholder="Search by Status" name="statusid" ng-model="vm.searchBy.OrderStatusId" ng-change="vm.searchByField()" ng-init="vm.getOrderStatusList()">
-                        <option value="">Status</option>
-                        <option value="{{os.id}}" ng-repeat="os in vm.orderStatuses">{{os.title}}</option>
-                    </select>
-                 </label>
-
-                <label class="item item-input my-item-border item-select" >
-                    <span class="input-label">Filter by</span>
-                    <select class="outside2" placeholder="Search by Customer" name="customeruser" ng-model="vm.searchBy.CustomerId"  ng-change="vm.searchByField()" ng-init="vm.getCustomerList()">
-                        <option value="">Customer</option>
-                        <option value="{{os.id}}" ng-repeat="os in vm.customers">{{os.name}}</option>
-                    </select>
-                </label>
-                
-            <div class="list card"  ng-if="!vm.list.length">
-                <div class="item text-center">
-                    <h1>NO DATA FOUND</h1>
-                </div>
-                <div class="item item-body">
-                    <p>
-                    <div class="text-center">
-                        <img src="img/nodata.jpg" style="width:250px;height:250px"></img>
-                    </div>
-                </div>
-             </div>
-
-        <div >
-          <div class="card" ng-repeat="obj in vm.list" ng-if="vm.list.length > 0">
-                <div class="item item-text-wrap item-calm" align="" ng-click="vm.edit(obj)">
-                    OrderId:{{obj.id|leadingZero}}
-                </div>
-                <div class="item item-divider">
-                    <div class="row my-item-border">
-                        <div class="col col-50">
-                            Order Date
-                        </div>
-                        <div class="col col-50">
-                            {{obj.orderDate | date : 'dd-MM-yyyy'}}
-                        </div>
-                    </div>
-                    <div class="row my-item-border">
-                        <div class="col col-50">
-                            Customer Name
-                        </div>
-                        <div class="col col-50">
-                            {{obj.Customer.name}}
-                        </div>
-                    </div>
-                    <div class="row my-item-border">
-                        <div class="col col-50">
-                            Status
-                        </div>
-                        <div class="col col-50">
-                            {{obj.OrderStatus.title}}
-                        </div>
-                    </div>
-                    <div class="row my-item-border">
-                        <div class="col col-50">
-                            Invoice
-                        </div>
-                        <div class="col col-50">
-                           <a ng-click="vm.invoice($index)">View</a>
-                        </div>
-                    </div>
-            </div>
+<div class="main-contant-part" ng-init="vm.getList()">
+    <div class="customer-detail-page-contant">
+        <div class="customer-search-box-main customer-search-box-main-mobile">
+            <select class="outside2 myorder-search-status-select-mobile" placeholder="Search by Status" name="statusid" ng-model="vm.searchBy.OrderStatusId" ng-change="vm.searchByField()" ng-init="vm.getOrderStatusList()">
+                <option value="">Search by Status</option>
+                <option value="{{os.id}}" ng-repeat="os in vm.orderStatuses">{{os.title}}</option>
+            </select>
+            <select class="outside2" placeholder="Search by Customer" name="customeruser" ng-model="vm.searchBy.CustomerId"  ng-change="vm.searchByField()" ng-init="vm.getCustomerList()">
+                <option value="">Search by Customer</option>
+                <option value="{{os.id}}" ng-repeat="os in vm.customers">{{os.name}}</option>
+            </select>
         </div>
-        </div>
-
-        
-
-            <button class="button button-float" ui-sref="app.edit-order">
-                <i class="icon ion-plus"></i>
-            </button>   
-  
-  </ion-content>
-</ion-view>
-<!--
-            
+        <div class="right-add-new-button right-add-new-button-mobile"><a ui-sref="app.edit-order" class="ion-plus"></a></div>
         <div class="details-table">
+            <h2 class="no-record-found-text" ng-if="!vm.list.length">No record found</h2>
             <table ng-if="vm.list.length > 0" class="table-part" border="0" cellspacing="0" cellpadding="0">
                 <tr class="top-purpal-color-row">
                     <th>
@@ -140,6 +71,7 @@
                 </tr>
             </table>
         </div>
+    </div>
     <div class="paging" ng-if="vm.list.length > 0">
         <span class="showing-text-bx">
             Showing {{ ((vm.options.page - 1) * vm.options.pagesize) + 1 }} to
@@ -151,4 +83,3 @@
             <ul uib-pagination ng-change="vm.pageChange()" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.totalItems" items-per-page="vm.options.pagesize" ng-model="vm.options.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
         </div>
     </div>
--->

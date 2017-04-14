@@ -1,430 +1,187 @@
-<ion-view view-title="Dashboard">
-  <ion-content>
+<ion-view view-title="Reports">
+    <ion-content>
+        <div ng-init="vm.activate()">
+            
+        </div>
+        <div class="tabs-striped tabs-color-assertive" ng-init="vm.flag=2">
+            <div class="tabs">
+                <!--<a class="tab-item" ng-class="{active:  vm.flag==1}" ng-click="vm.flag=1">
+                    <i class="ion-social-usd ion-big"></i> Based
+                </a>-->
+                <a class="tab-item " ng-class="{active: vm.flag==2}" ng-click="vm.flag=2">
+                    <i class="ion-document-text ion-big"></i> Collection Based
+                </a>
+                <a class="tab-item " ng-class="{active: vm.flag==3}" ng-click="vm.flag=3">
+                    <i class="ion-ios-people ion-big"></i> Customer Based
+                </a>
+            </div>
+        </div>
 
-<div class="main-contant-part minpageheight" ng-init="vm.activate()">
 
-    <!-- Dashboard Tab start here -->
-    <div class="tabGroup">
+    <!--Tab 1 Start Here-->
+        <div ng-if="vm.flag == 2">
+            <label class="item item-input my-item-border item-select">
+                    <span class="input-label">Time Period</span>
+                    <select required class="paragraph " ng-init="vm.option='frequency'" ng-model="vm.option">
+                            <option  value="frequency">Frequency</option>
+                            <option  value="custom">Custom</option>
+                    </select>
+                </label>
 
-        <input type="radio" name="tabGroup1" id="rad2" checked="checked" />
-        <label for="rad2" class="dashboad-label-mobile-btm-mar wd">Collection Based Reports</label>
+            <label class="item item-input my-item-border item-select" ng-if="vm.option == 'frequency'">
+                    <span class="input-label">Filter by</span>
+                    <select ng-init="vm.frequency = 'today'" ng-model="vm.frequency">
+                                <option value="today">Today</option>
+                                <option value="week">Last 7 Days</option>
+                                <option value="month">Last 30 Days</option>
+                                <option value="monthly">Monthly</option>
+                        </select>
+                </label>
 
-        <input type="radio" name="tabGroup1" id="rad3" />
-        <label for="rad3" class="dashboad-label-mobile-btm-mar wd">Invoice Based Reports</label>
+            <label class="item item-input my-item-border item-select" ng-if="vm.option == 'custom'">
+                    <span class="input-label">Froms Date</span>
+                    <input type="date"  name="orderDate"  is-open="vm.open_orderDate" ng-model="vm.datefrom"
+                        ng-click="vm.openCal()" ng-max="" ng-required="true">
+                </label>
+            <label class="item item-input my-item-border item-select" ng-if="vm.option == 'custom'">
+                    <span class="input-label">To Date</span>
+                    <input type="date" name="orderDate" is-open="vm.open_orderDate2"  ng-model="vm.dateto"
+                        ng-click="vm.openCal2()" ng-max="" ng-required="true">
+                </label>
 
-        <input type="radio" name="tabGroup1" id="rad1" />
-        <label for="rad1" class="dashboad-label-mobile-btm-mar wd">Customer Based Reports</label>
+            <a class="button button-outline button-balanced button-block" type="submit" ng-click="vm.filter()">Filter</a>
+            
+        <!-- Data Display here -->
+            <div class="row calm" align="" ng-if="vm.showtable">
+                <div class="col col-33 table-col">Sr No.</div>
+                <div class="col col-33 table-col">Order Date</div>
+                <div class="col col-33 table-col">Collection</div>
+            </div>
+            <div class="row" align="" ng-repeat="data in vm.records" ng-if="vm.showtable">
+                <div class="col col-33 table-col">{{$index+1}}</div>
+                <div class="col col-33 table-col">{{data.orderDate | date: 'dd MMMM yyyy'}}</div>
+                <div class="col col-33 table-col">
+                   {{data.totalamount | currency : '&#8377;'}}
+              </div>
+          </div>
+        <!-- Data Display End here -->
 
-        <br/>
+         <!-- Data Display here -->
+            <div class="row calm" align="" ng-if="vm.showtable2">
+                <div class="col col-33 table-col">Sr No.</div>
+                <div class="col col-33 table-col">Order Date</div>
+                <div class="col col-33 table-col">Collection</div>
+            </div>
+            <div class="row" align="" ng-repeat="data in vm.records | orderBy: '-orderDate'" ng-if="vm.showtable2">
+                <div class="col col-33 table-col">{{$index+1}}</div>
+                <div class="col col-33 table-col">{{data.orderDate | date: 'dd MMMM yyyy'}}</div>
+                <div class="col col-33 table-col">
+                   {{data.totalamount | currency : '&#8377;'}}
+              </div>
+          </div>
+        <!-- Data Display End here -->
 
-        <!--Tab 1 Start Here-->
-        <div class="tab2">
-            <div class="summary-bx-2">
-                <div class="orderdate-bx">
-                    <label>Time Period</label>
-                    <span><input type="radio" ng-init="vm.option='frequency'" ng-model="vm.option" value="frequency"><i>Frequency</i></span>
-                    <span><input type="radio" ng-model="vm.option" value="custom"><i>Custom</i></span>
+        <!-- Data Display here -->
+            <div class="row calm" align="" ng-if="vm.showtable3">
+                <div class="col col-33 table-col">Sr No.</div>
+                <div class="col col-33 table-col">Order Date</div>
+                <div class="col col-33 table-col">Collection</div>
+            </div>
+            <div class="row" align="" ng-repeat="data in vm.records | orderBy: '-orderDate'" ng-if="vm.showtable3">
+                <div class="col col-33 table-col">{{$index+1}}</div>
+                <div class="col col-33 table-col">{{vm.months[$index]}}</div>
+                <div class="col col-33 table-col">
+                   {{data.val | currency : '&#8377;'}}
+              </div>
+          </div>
+        <!-- Data Display End here -->
+        </div>
+    <!--Tab 1 End Here-->
 
-                </div>
-                <div>
-                    <div class="orderdate-bx" ng-if="vm.option == 'frequency'">
-                        <label>Filter by</label>
-                        <select ng-init="vm.frequency = 'today'" ng-model="vm.frequency">
+        <!--Tab 2 Start Here-->
+        <div ng-if="vm.flag == 3">
+            <div ng-init="vm.getCustomerList()"></div>
+                <label class="item item-input my-item-border item-select">
+                    <span class="input-label">Customer Name</span>
+                    <select required name="customerId" ng-init="vm.order.CustomerId = 'all'" ng-model="vm.order.CustomerId" ng-change="vm.customerChange(vm.order.CustomerId)"
+                        convert-to-number>
+                            <option value="all">All</option>
+                            <option value="{{cust.id}}" ng-repeat="cust in vm.customers">{{cust.name}}</option>
+                    </select>
+                </label>
+
+                <label class="item item-input my-item-border item-select">
+                    <span class="input-label">Time Period</span>
+                    <select required class="paragraph " ng-init="vm.option3='frequency'" ng-model="vm.option3">
+                            <option  value="frequency">Frequency</option>
+                            <option  value="custom">Custom</option>
+                    </select>
+                </label>
+
+                <label class="item item-input my-item-border item-select" ng-if="vm.option3 == 'frequency'">
+                    <span class="input-label">Filter by</span>
+                    <select ng-init="vm.frequencyOption3 = 'today'" ng-model="vm.frequencyOption3">
                             <option value="today">Today</option>
                             <option value="week">Last 7 Days</option>
                             <option value="month">Last 30 Days</option>
-                            <option value="monthly">Monthly</option>
-                            <!--<option value="yearly">Yearly</option>-->
                     </select>
-                    </div>
-                    <div class="summary-bx-2" ng-if="vm.option == 'custom'">
-                        <div class="orderdate-bx">
-                            <label>Select Date</label>
-                            <div class="fromtodatepicker">
-                                <label class="from-label">From</label>
-                                <input type="date" readonly name="orderDate" uib-datepicker-popup="" is-open="vm.open_orderDate" convert-to-date ng-model="vm.datefrom"
-                                    ng-click="vm.openCal()" ng-max="" ng-required="true">
+                </label>
 
-                            </div>
-                            <div class="fromtodatepicker">
-                                <label class="date-to-label">To</label>
-                                <input type="date" readonly name="orderDate" uib-datepicker-popup="" is-open="vm.open_orderDate2" convert-to-date ng-model="vm.dateto"
-                                    ng-click="vm.openCal2()" ng-max="" ng-required="true">
+                <label class="item item-input my-item-border item-select" ng-if="vm.option3 == 'custom'">
+                    <span class="input-label">Froms Date</span>
+                    <input type="date"  name="fromdate3" is-open="vm.open_orderDate" convert-to-date ng-model="vm.datefrom3"
+                        ng-click="vm.openCal()" ng-max="vm.today" ng-required="true">
+                </label>
 
-                            </div>
-                        </div>
+                <label class="item item-input my-item-border item-select" ng-if="vm.option3 == 'custom'">
+                    <span class="input-label">To Date</span>
+                    <input type="date"  name="todate3" is-open="vm.open_orderDate2" convert-to-date ng-model="vm.dateto3"
+                        ng-click="vm.openCal2()" ng-max="vm.today" ng-min="vm.datefrom3" ng-required="true">
+                </label>
 
-                    </div>
-                    <span>{{vm.error}}</span>
-                    <div class="submit-button filter-btn-top-mar">
-                        <input value="Filter" class="register-submit-btn" type="button" ng-click="vm.filter()">
-                    </div>
-
-                    <table ng-if="vm.showtable && vm.records" class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tr class="top-purpal-color-row">
-                            <th>Sr. No.
-                                <no class=""></no>
-                            </th>
-                            <th ng-if="vm.orderIdColumn">Order Id</th>
-                            <th>Order Date</th>
-                            <th>Collection</th>
-                            <!--<th>Order Total</th>-->
-                            <!--<th>Delivery Date</th>-->
-                            <!--<th>Status</th>-->
-                        </tr>
-                        <tr class="ng-scope" ng-repeat="data in vm.records">
-                            <td data-th="Order Id: " class="top-purpal-color-row2">{{$index+1}}</td>
-                            <td ng-if="vm.orderIdColumn" data-th="Order Id: " class="top-purpal-color-row2">{{data.id | leadingZero}}</td>
-                            <td data-th="Designs: " class="top-purpal-color-row2 ng-binding">{{data.orderDate | date: 'dd MMMM yyyy'}}</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">{{data.totalamount | currency : '&#8377;'}}</td>
-                            <!--<td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">Mahammad</td>-->
-                            <!--<td data-th="Delivery Date: " class="top-purpal-color-row2 ng-binding">24-03-2017</td>-->
-                            <!--<td data-th="Status: " class="top-purpal-color-row2 ng-binding">Stitching</td>-->
-                        </tr>
-                    </table>
-
-                    <table ng-if="vm.showtable2" class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tr class="top-purpal-color-row">
-                            <th>Sr. No.
-                                <no class=""></no>
-                            </th>
-                            <th>Order Id</th>
-                            <!--<th>Order Date</th>-->
-                            <th>Collection</th>
-                            <!--<th>Order Total</th>-->
-                            <!--<th>Delivery Date</th>-->
-                            <!--<th>Status</th>-->
-                        </tr>
-                        <tr class="ng-scope" ng-repeat="data in vm.records | orderBy: '-orderDate'">
-                            <td data-th="Order Id: " class="top-purpal-color-row2">{{$index+1}}</td>
-                            <!--<td data-th="Order Id: " class="top-purpal-color-row2">{{data.id | leadingZero}}</td>-->
-                            <td data-th="Designs: " class="top-purpal-color-row2 ng-binding">{{data.orderDate | date: 'dd MMMM yyyy'}}</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">{{data.totalamount | currency : '&#8377;'}}</td>
-                            <!--<td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">Mahammad</td>-->
-                            <!--<td data-th="Delivery Date: " class="top-purpal-color-row2 ng-binding">24-03-2017</td>-->
-                            <!--<td data-th="Status: " class="top-purpal-color-row2 ng-binding">Stitching</td>-->
-                        </tr>
-                    </table>
-
-                    <table ng-if="vm.showtable3" class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tr class="top-purpal-color-row">
-                            <th>Sr. No.
-                                <no class=""></no>
-                            </th>
-                            <!--<th>Order Id</th>-->
-                            <th>Order Date</th>
-                            <th>Collection</th>
-                            <!--<th>Order Total</th>-->
-                            <!--<th>Delivery Date</th>-->
-                            <!--<th>Status</th>-->
-                        </tr>
-                        <tr class="ng-scope" ng-repeat="data in vm.records | orderBy: '-orderDate'">
-                            <td data-th="Order Id: " class="top-purpal-color-row2">{{$index+1}}</td>
-                            <!--<td data-th="Order Id: " class="top-purpal-color-row2">{{data.id | leadingZero}}</td>-->
-                            <td data-th="Designs: " class="top-purpal-color-row2 ng-binding">{{vm.months[$index]}}</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">{{data.val | currency : '&#8377;'}}</td>
-                            <!--<td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">Mahammad</td>-->
-                            <!--<td data-th="Delivery Date: " class="top-purpal-color-row2 ng-binding">24-03-2017</td>-->
-                            <!--<td data-th="Status: " class="top-purpal-color-row2 ng-binding">Stitching</td>-->
-                        </tr>
-                    </table>
-
-                    <!--<div class="paging">
-                        <span class="showing-text-bx ng-binding">
-                    Showing 1 to
-                    <t class="ng-binding ng-scope">5</t>
-                    of 5 Deliverable Orders
-                </span>
-                        <div class="paging-text">
-                            <ul uib-pagination="" ng-change="vm.pageChange('one')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.one.totalItems"
-                                items-per-page="vm.options.one.pagesize" ng-model="vm.options.one.page" class="pagination-sm ng-pristine ng-untouched ng-valid ng-isolate-scope pagination ng-not-empty"
-                                previous-text="‹" next-text="›" first-text="«" last-text="»" role="menu">
-                              
-                                <li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}"
-                                    class="pagination-first ng-scope disabled"><a href="" ng-click="selectPage(1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle=""
-                                        class="ng-binding" disabled="disabled" tabindex="-1">«</a></li>
-                                
-                                <li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}"
-                                    class="pagination-prev ng-scope disabled"><a href="" ng-click="selectPage(page - 1, $event)" ng-disabled="noPrevious()||ngDisabled"
-                                        uib-tabindex-toggle="" class="ng-binding" disabled="disabled" tabindex="-1">‹</a></li>
-
-                                <li role="menuitem" ng-repeat="page in pages track by $index" ng-class="{active: page.active,disabled: ngDisabled&amp;&amp;!page.active}"
-                                    class="pagination-page ng-scope active"><a href="" ng-click="selectPage(page.number, $event)" ng-disabled="ngDisabled&amp;&amp;!page.active"
-                                        uib-tabindex-toggle="" class="ng-binding">1</a></li>
-
-                                <li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}"
-                                    class="pagination-next ng-scope disabled"><a href="" ng-click="selectPage(page + 1, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle=""
-                                        class="ng-binding" disabled="disabled" tabindex="-1">›</a></li>
-
-                                <li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-last ng-scope disabled"><a href="" ng-click="selectPage(totalPages, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle=""
-                                        class="ng-binding" disabled="disabled" tabindex="-1">»</a></li>
-                            </ul>
-                        </div>
-                    </div>-->
-
-
-                </div>
-            </div>
-
-        </div>
-        <!--Tab 1 End Here-->
-
-        <!--Tab 2 Start Here-->
-        <div class="tab3">
-            <div class="summary-bx-2" ng-init="vm.getCustomerList()">
-                <div class="orderdate-bx">
-                    <label>Invoice #</label>
-                    <select required name="customerId" ng-init="vm.order.CustomerId = 'all'" ng-model="vm.order.CustomerId" ng-change="vm.customerChange(vm.order.CustomerId)"
-                        convert-to-number>
-                            <option value="all">All</option>
-                            <option value="{{cust.id}}" ng-repeat="cust in vm.customers">{{cust.name}}</option>
-                        </select>
-                </div>
-            </div>
-            <div class="summary-bx-2">
-                <div class="orderdate-bx">
-                    <label>Time Period</label>
-                    <span><input type="radio" ng-init="option='frequency'" ng-model="option" value="frequency"><i>Frequency</i></span>
-                    <span><input type="radio" ng-model="option" value="custom"><i>Custom</i></span>
-
-                </div>
-                <div>
-                    <div class="orderdate-bx" ng-if="option == 'frequency'">
-                        <label>Filter by</label>
-                        <select ng-init="frequencyOption = 'today'" ng-model="frequencyOption">
-                            <option value="today">Today</option>
-                            <option value="week">This Week</option>
-                            <option value="month">This Month</option>
-                    </select>
-                    </div>
-                    <div class="summary-bx-2" ng-if="option == 'custom'">
-                        <div class="orderdate-bx">
-                            <label>Select Date</label>
-                            <div class="fromtodatepicker">
-                                <label class="from-label">From</label>
-                                <input type="date" readonly name="orderDate" uib-datepicker-popup="" is-open="vm.open_orderDate" convert-to-date ng-model="vm.datefrom"
-                                    ng-click="vm.openCal()" ng-max="" ng-required="true">
-
-                            </div>
-                            <div class="fromtodatepicker">
-                                <label class="date-to-label">To</label>
-                                <input type="date" readonly name="orderDate" uib-datepicker-popup="" is-open="vm.open_orderDate2" convert-to-date ng-model="vm.dateto"
-                                    ng-click="vm.openCal2()" ng-max="" ng-required="true">
-
+                <div class="list">
+                    <label class="item item-input item-stacked-label" ng-init="vm.checkUncheck(true)">
+                        <span class="input-label">Measurements</span>
+                        <div class="row">
+                            <div class="col col-offset-20">
+                                <ion-checkbox  name="All" ng-model="vm.temp" ng-change="vm.checkUncheck(vm.temp)">All</ion-checkbox>
+                                <span ng-repeat="role in vm.roles">
+                                <ion-checkbox  checklist-model="vm.user.roles" checklist-value="role.id" ng-click="vm.something()">{{role.text}}</ion-checkbox>
+                            </span>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="orderdate-bx">
-                        <label>Order Status</label>
-                        <div class="order-status-checkbox">
-                            <span><input type="checkbox" name="All" value="All"> All</span>
-                            <span><input type="checkbox" name="New" value="New"> New</span>
-                            <span><input type="checkbox" name="Stitching" value="Stitching"> Stitching</span>
-                            <span><input type="checkbox" name="Completed" value="Completed"> Completed</span>
-                            <span><input type="checkbox" name="Cancelled" value="Cancelled"> Cancelled</span>
-                        </div>
-                    </div>
-                    <div class="submit-button filter-btn-top-mar">
-                        <input value="Filter" class="register-submit-btn" type="button">
-                    </div>
-
-                    <table class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tr class="top-purpal-color-row">
-                            <th>Order Id</th>
-                            <th>Designs</th>
-                            <th>Customer Name</th>
-                            <th>Delivery Date</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr class="ng-scope">
-                            <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link ng-binding">2</a></td>
-                            <td data-th="Designs: " class="top-purpal-color-row2 ng-binding">design 2</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">Mahammad</td>
-                            <td data-th="Delivery Date: " class="top-purpal-color-row2 ng-binding">24-03-2017</td>
-                            <td data-th="Status: " class="top-purpal-color-row2 ng-binding">Stitching</td>
-                        </tr>
-                        <tr class="ng-scope">
-                            <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link ng-binding">1</a></td>
-                            <td data-th="Designs: " class="top-purpal-color-row2 ng-binding">design 3</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">Mahammad</td>
-                            <td data-th="Delivery Date: " class="top-purpal-color-row2 ng-binding">26-03-2017</td>
-                            <td data-th="Status: " class="top-purpal-color-row2 ng-binding">New</td>
-                        </tr>
-                        <tr class="ng-scope">
-                            <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link ng-binding">2</a></td>
-                            <td data-th="Designs: " class="top-purpal-color-row2 ng-binding">design 1</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">Mahammad</td>
-                            <td data-th="Delivery Date: " class="top-purpal-color-row2 ng-binding">31-03-2017</td>
-                            <td data-th="Status: " class="top-purpal-color-row2 ng-binding">New</td>
-                        </tr>
-                        <tr class="ng-scope">
-                            <td data-th="Order Id: " class="top-purpal-color-row2"><a href="" ng-click="vm.edit(stch)" class="customer-name-link ng-binding">2</a></td>
-                            <td data-th="Designs: " class="top-purpal-color-row2 ng-binding">design 3</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">Mahammad</td>
-                            <td data-th="Delivery Date: " class="top-purpal-color-row2 ng-binding">31-03-2017</td>
-                            <td data-th="Status: " class="top-purpal-color-row2 ng-binding">Stitching</td>
-                        </tr>
-                    </table>
-                    <div class="paging">
-                        <span class="showing-text-bx ng-binding">
-                    Showing 1 to
-                    <t class="ng-binding ng-scope">5</t>
-                    of 5 Deliverable Orders
-                </span>
-                        <div class="paging-text">
-                            <ul uib-pagination="" ng-change="vm.pageChange('one')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.one.totalItems"
-                                items-per-page="vm.options.one.pagesize" ng-model="vm.options.one.page" class="pagination-sm ng-pristine ng-untouched ng-valid ng-isolate-scope pagination ng-not-empty"
-                                previous-text="‹" next-text="›" first-text="«" last-text="»" role="menu">
-                                <!-- ngIf: ::boundaryLinks -->
-                                <li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-first ng-scope disabled"><a href="" ng-click="selectPage(1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle=""
-                                        class="ng-binding" disabled="disabled" tabindex="-1">«</a></li>
-                                <!-- end ngIf: ::boundaryLinks -->
-                                <!-- ngIf: ::directionLinks -->
-                                <li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-prev ng-scope disabled"><a href="" ng-click="selectPage(page - 1, $event)" ng-disabled="noPrevious()||ngDisabled"
-                                        uib-tabindex-toggle="" class="ng-binding" disabled="disabled" tabindex="-1">‹</a></li>
-                                <!-- end ngIf: ::directionLinks -->
-                                <!-- ngRepeat: page in pages track by $index -->
-                                <li role="menuitem" ng-repeat="page in pages track by $index" ng-class="{active: page.active,disabled: ngDisabled&amp;&amp;!page.active}"
-                                    class="pagination-page ng-scope active"><a href="" ng-click="selectPage(page.number, $event)" ng-disabled="ngDisabled&amp;&amp;!page.active"
-                                        uib-tabindex-toggle="" class="ng-binding">1</a></li>
-                                <!-- end ngRepeat: page in pages track by $index -->
-                                <!-- ngIf: ::directionLinks -->
-                                <li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-next ng-scope disabled"><a href="" ng-click="selectPage(page + 1, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle=""
-                                        class="ng-binding" disabled="disabled" tabindex="-1">›</a></li>
-                                <!-- end ngIf: ::directionLinks -->
-                                <!-- ngIf: ::boundaryLinks -->
-                                <li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-last ng-scope disabled"><a href="" ng-click="selectPage(totalPages, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle=""
-                                        class="ng-binding" disabled="disabled" tabindex="-1">»</a></li>
-                                <!-- end ngIf: ::boundaryLinks -->
-                            </ul>
-                        </div>
-                    </div>
-
-
+                    </label>
                 </div>
-            </div>
+                 
+                 <span class="error-msg-reports-1" ng-if="CustomerBasedReports.fromdate3.$dirty && CustomerBasedReports.fromdate3.$error.max"><em>From</em> date should not be future date.</span>
+                 <span class="error-msg-reports-1" ng-if="CustomerBasedReports.todate3.$dirty && CustomerBasedReports.todate3.$error.max"><em>To</em> date should not be future date.</span>
+                 <span class="error-msg-reports-1" ng-if="CustomerBasedReports.todate3.$dirty && CustomerBasedReports.todate3.$error.min">Invalid date range. <em>To</em> date should be greater than <em>From</em> date.</span>
+                 <span class="error-msg-reports-1">{{vm.error}}</span>
 
+                 <a class="button button-outline button-balanced button-block" type="submit" ng-click="vm.filter3()">Filter</a>
+                    <div>
+                        <h2 class="no-record-found-text" ng-if="vm.showtable4 && !vm.CustomerBasedReports.length">No record found</h2>
+                    </div>
+
+                <!-- Data Display here -->
+                    <div class="row calm"  ng-if="vm.showtable4 && vm.CustomerBasedReports.length>0">
+                        <div class="col col-20 table-col">Order Id</div>
+                        <div class="col col-20 table-col">Designs</div>
+                        <div class="col col-20 table-col">Customer Name</div>
+                        <div class="col col-20 table-col">Delivery Date</div>
+                        <div class="col col-20 table-col">Status</div>
+                    </div>
+                    <div class="row" align="" ng-repeat="data in vm.CustomerBasedReports" ng-if="vm.CustomerBasedReports.length && vm.showtable4">
+                        <div class="col col-20 table-col">{{data.id | leadingZero}}</div>
+                        <div class="col col-20 table-col">{{data.Design}} ({{data.Style}})</div>
+                        <div class="col col-20 table-col">{{data.name}}</div>
+                        <div class="col col-20 table-col">{{data.deliveryDate | date: 'dd MMMM yyyy'}}</div>
+                        <div class="col col-20 table-col">{{data.OrderStatus}}</div>
+                </div>
         </div>
         <!--Tab 2 End Here-->
 
-        <!--Tab 3 Start Here-->
-        <div class="tab1">
-            <div class="summary-bx-2" ng-init="vm.getCustomerList()">
-                <div class="orderdate-bx">
-                    <label>Customer Name</label>
-                    <select required name="customerId" ng-init="vm.order.CustomerId = 'all'" ng-model="vm.order.CustomerId" ng-change="vm.customerChange(vm.order.CustomerId)"
-                        convert-to-number>
-                            <option value="all">All</option>
-                            <option value="{{cust.id}}" ng-repeat="cust in vm.customers">{{cust.name}}</option>
-                        </select>
-                </div>
-            </div>
-            <div class="summary-bx-2">
-                <div class="orderdate-bx">
-                    <label>Time Period</label>
-                    <span><input type="radio" ng-init="vm.option3='frequency'" ng-model="vm.option3" value="frequency"><i>Frequency</i></span>
-                    <span><input type="radio" ng-model="vm.option3" value="custom"><i>Custom</i></span>
 
-                </div>
-                <div>
-                    <div class="orderdate-bx" ng-if="vm.option3 == 'frequency'">
-                        <label>Filter by</label>
-                        <select ng-init="vm.frequencyOption3 = 'today'" ng-model="vm.frequencyOption3">
-                            <option value="today">Today</option>
-                            <option value="week">This Week</option>
-                            <option value="month">This Month</option>
-                    </select>
-                    </div>
-                    <div class="summary-bx-2" ng-if="vm.option3 == 'custom'">
-                        <div class="orderdate-bx">
-                            <label>Select Date</label>
-                            <div class="fromtodatepicker">
-                                <label class="from-label">From</label>
-                                <input type="date" readonly name="orderDate" uib-datepicker-popup="" is-open="vm.open_orderDate" convert-to-date ng-model="vm.datefrom3"
-                                    ng-click="vm.openCal()" ng-max="" ng-required="true">
-
-                            </div>
-                            <div class="fromtodatepicker">
-                                <label class="date-to-label">To</label>
-                                <input type="date" readonly name="orderDate" uib-datepicker-popup="" is-open="vm.open_orderDate2" convert-to-date ng-model="vm.dateto3"
-                                    ng-click="vm.openCal2()" ng-max="" ng-required="true">
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="orderdate-bx2">
-                        <label>Order Status</label> </div>{{vm.example1model}}
-                        <!--<div class="order-status-checkbox">-->
-                            <div ng-dropdown-multiselect="" options="vm.example1data" selected-model="vm.example1model"></div>
-
-                        <!--</div>-->
-                   
-                    <div class="submit-button filter-btn-top-mar">
-                        <input value="Filter" class="register-submit-btn" type="button" ng-click="vm.filter3()">
-                    </div>
-
-                    <table class="table-part" border="0" cellspacing="0" cellpadding="0">
-                        <tr class="top-purpal-color-row">
-                            <th>Order Id</th>
-                            <th>Designs</th>
-                            <th>Customer Name</th>
-                            <th>Delivery Date</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr class="ng-scope" ng-repeat="data in vm.result3">
-                            <td data-th="Order Id: " class="top-purpal-color-row2">{{data.OrderId|leadingZero}}</td>
-                            <td data-th="Designs: " class="top-purpal-color-row2 ng-binding">{{data.Design.title}} ({{data.Style.title}})</td>
-                            <td data-th="Customer Name: " class="top-purpal-color-row2 ng-binding">{{}}</td>
-                            <td data-th="Delivery Date: " class="top-purpal-color-row2 ng-binding">{{data.deliveryDate | date: 'dd MMMM yyyy'}}</td>
-                            <td data-th="Status: " class="top-purpal-color-row2 ng-binding">{{data.OrderStatus.title}}</td>
-                        </tr>
-                    </table>
-                    <div class="paging">
-                        <span class="showing-text-bx ng-binding">
-                    Showing 1 to
-                    <t class="ng-binding ng-scope">5</t>
-                    of 5 Deliverable Orders
-                </span>
-                        <div class="paging-text">
-                            <ul uib-pagination="" ng-change="vm.pageChange('one')" boundary-links="true" max-size="4" force-ellipses="true" total-items="vm.options.one.totalItems"
-                                items-per-page="vm.options.one.pagesize" ng-model="vm.options.one.page" class="pagination-sm ng-pristine ng-untouched ng-valid ng-isolate-scope pagination ng-not-empty"
-                                previous-text="‹" next-text="›" first-text="«" last-text="»" role="menu">
-                                <!-- ngIf: ::boundaryLinks -->
-                                <li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-first ng-scope disabled"><a href="" ng-click="selectPage(1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle=""
-                                        class="ng-binding" disabled="disabled" tabindex="-1">«</a></li>
-                                <!-- end ngIf: ::boundaryLinks -->
-                                <!-- ngIf: ::directionLinks -->
-                                <li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-prev ng-scope disabled"><a href="" ng-click="selectPage(page - 1, $event)" ng-disabled="noPrevious()||ngDisabled"
-                                        uib-tabindex-toggle="" class="ng-binding" disabled="disabled" tabindex="-1">‹</a></li>
-                                <!-- end ngIf: ::directionLinks -->
-                                <!-- ngRepeat: page in pages track by $index -->
-                                <li role="menuitem" ng-repeat="page in pages track by $index" ng-class="{active: page.active,disabled: ngDisabled&amp;&amp;!page.active}"
-                                    class="pagination-page ng-scope active"><a href="" ng-click="selectPage(page.number, $event)" ng-disabled="ngDisabled&amp;&amp;!page.active"
-                                        uib-tabindex-toggle="" class="ng-binding">1</a></li>
-                                <!-- end ngRepeat: page in pages track by $index -->
-                                <!-- ngIf: ::directionLinks -->
-                                <li role="menuitem" ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-next ng-scope disabled"><a href="" ng-click="selectPage(page + 1, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle=""
-                                        class="ng-binding" disabled="disabled" tabindex="-1">›</a></li>
-                                <!-- end ngIf: ::directionLinks -->
-                                <!-- ngIf: ::boundaryLinks -->
-                                <li role="menuitem" ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-last ng-scope disabled"><a href="" ng-click="selectPage(totalPages, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle=""
-                                        class="ng-binding" disabled="disabled" tabindex="-1">»</a></li>
-                                <!-- end ngIf: ::boundaryLinks -->
-                            </ul>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-
-        </div>
-        <!--Tab 3 End Here-->
-
-    </div>
-</div>
 
   </ion-content>
 </ion-view>
