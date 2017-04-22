@@ -1,23 +1,7 @@
 <ion-view view-title="Reports">
-    <ion-content>
+    <ion-content class="has-footer">
         <div ng-init="vm.activate()">
-            
         </div>
-        <div class="tabs-striped tabs-color-assertive" ng-init="vm.flag=2">
-            <div class="tabs">
-                <!--<a class="tab-item" ng-class="{active:  vm.flag==1}" ng-click="vm.flag=1">
-                    <i class="ion-social-usd ion-big"></i> Based
-                </a>-->
-                <a class="tab-item " ng-class="{active: vm.flag==2}" ng-click="vm.flag=2">
-                    <i class="ion-document-text ion-big"></i> Collection Based
-                </a>
-                <a class="tab-item " ng-class="{active: vm.flag==3}" ng-click="vm.flag=3">
-                    <i class="ion-ios-people ion-big"></i> Customer Based
-                </a>
-            </div>
-        </div>
-
-
     <!--Tab 1 Start Here-->
         <div ng-if="vm.flag == 2">
             <label class="item item-input my-item-border item-select">
@@ -141,7 +125,7 @@
 
                 <div class="list">
                     <label class="item item-input item-stacked-label" ng-init="vm.checkUncheck(true)">
-                        <span class="input-label">Measurements</span>
+                        <span class="input-label">Status</span>
                         <div class="row">
                             <div class="col col-offset-20">
                                 <ion-checkbox  name="All" ng-model="vm.temp" ng-change="vm.checkUncheck(vm.temp)">All</ion-checkbox>
@@ -180,8 +164,23 @@
                 </div>
         </div>
         <!--Tab 2 End Here-->
-
-
-
+        
   </ion-content>
+
+    <ion-footer>
+           <div class="tabs-striped tabs-color-assertive" ng-init="vm.flag=2">
+                <div class="tabs">
+                    <!--<a class="tab-item" ng-class="{active:  vm.flag==1}" ng-click="vm.flag=1">
+                        <i class="ion-social-usd ion-big"></i> Based
+                    </a>-->
+                    <a class="tab-item " ng-class="{active: vm.flag==2}" ng-click="vm.flag=2">
+                        <i class="ion-document-text ion-big"></i> Collection Based
+                    </a>
+                    <a class="tab-item " ng-class="{active: vm.flag==3}" ng-click="vm.flag=3">
+                        <i class="ion-ios-people ion-big"></i> Customer Based
+                    </a>
+                </div>
+            </div>
+    </ion-footer>
+    
 </ion-view>

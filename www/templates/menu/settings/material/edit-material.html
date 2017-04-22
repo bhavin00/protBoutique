@@ -1,7 +1,7 @@
 ﻿<ion-view view-title="Add/Edit Material Type">
     <ion-content>
     <form name="materialForm" novalidate>
-            <label class="item item-input   item-floating-label">
+            <label class="item item-input   item-floating-label my-item-border">
                 <span class="input-label">Material Type</span>
                     <input id="username" name="title" required placeholder="Material Type" type="text"  ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.material.title" ng-minlength="2" ng-maxlength="30">
                     <span class="assertive" ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.pattern">No special characters are allowed.</span>
@@ -10,7 +10,7 @@
                     <span class="assertive" ng-if="(materialForm.title.$dirty || vm.isSubmitted) && materialForm.title.$error.maxlength"><i><b>Material Type</b></i> should not be more than 30 characters long.</span>
             </label>
             
-               <li class="item item-toggle">
+               <li class="item item-toggle ">
                     Is Active
                 <label class="toggle toggle-calm">
                 <input type="checkbox" ng-model="vm.material.isActive">

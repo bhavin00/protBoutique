@@ -1,5 +1,5 @@
 <ion-view view-title="Order Page">
-  <ion-content>
+  <ion-content class="has-bottom">
     <div ng-init="vm.getList()"></div>
 
                 <label class="item item-input my-item-border item-select">
@@ -71,14 +71,17 @@
             </div>
         </div>
         </div>
-
-        
-
-            <button class="button button-float" ui-sref="app.edit-order">
-                <i class="icon ion-plus"></i>
-            </button>   
-  
   </ion-content>
+  
+   <div class="fixed-outside">
+      <div class="row">
+            <div class="col col-offset-66">
+                <button class="button button-circle button-assertive icon ion-plus" ui-sref="app.edit-order">
+                </button>
+            </div>
+        </div>
+        </div>
+        </div>
 </ion-view>
 <!--
             

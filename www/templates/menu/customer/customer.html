@@ -1,8 +1,8 @@
 <ion-view view-title="Customer Page">
-  <ion-content>
+  <ion-content class="has-bottom"> 
     <div class="" ng-init="vm.getList()"></div>
     <!--<div class="padding"></div>-->
-    <div class="list list-inset">
+    <div class="list list-inset my-search-border">
         <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
         <input type="text" placeholder="Search..." ng-model="vm.options.search" ng-change="vm.search()">
@@ -34,8 +34,16 @@
                 <button class="button  button-small button-dark" ng-click="vm.edit(obj)">Edit Data</a>
               </div>
           </div>
-        <button class="button button-float" ui-sref="app.edit-customer">
-                <i class="icon ion-plus"></i>
-        </button>
+ 
   </ion-content>
+  
+    <div class="fixed-outside">
+      <div class="row">
+            <div class="col col-offset-66">
+                <button class="button button-circle button-assertive icon ion-plus" ui-sref="app.edit-customer">
+                </button>
+            </div>
+        </div>
+        </div>
+        </div>
 </ion-view>

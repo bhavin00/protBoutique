@@ -1,5 +1,5 @@
 angular.module('starter.user', [])
-    .controller('UserCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular,sessionService) {
+    .controller('UserCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular,sessionService,$ionicHistory,$ionicHistory) {
         var vm = this;
         vm.currentUser = sessionService.getDATA();
         vm.list = [];
@@ -51,7 +51,7 @@ angular.module('starter.user', [])
             vm.startProcessing = true;
             Restangular.one('api/user/' + vm.user.id + '/reset').patch(vm.user1).then(function (res) {
                 // SweetAlert.swal("Password reset successfully!");
-                $state.go('app.user');
+                $ionicHistory.clearCache().then(function(){ $state.go('app.user') })
             }, function (err) {
                 console.log(err);
                 vm.error = err.data.message;
@@ -79,7 +79,7 @@ angular.module('starter.user', [])
                 }
                 Restangular.all('api/user').post(vm.user).then(function (res) {
                     // SweetAlert.swal("User saved successfully!");
-                    $state.go('app.user');
+                    $ionicHistory.clearCache().then(function(){ $state.go('app.user') })
                 }, function (err) {
                     console.log(err);
                     vm.error = err.data.message;
@@ -89,7 +89,7 @@ angular.module('starter.user', [])
             else {
                 Restangular.one('api/user/' + vm.user.id).patch(vm.user).then(function (res) {
                     // SweetAlert.swal("User updated successfully!");
-                    $state.go('app.user');
+                   $ionicHistory.clearCache().then(function(){ $state.go('app.user') })
                 }, function (err) {
                     console.log(err);
                     vm.error = err.data.message;

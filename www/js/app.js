@@ -9,7 +9,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
   'starter.menu', 'starter.customer', 'starter.home',
   'starter.order', 'starter.dashboard', 'starter.stats',
   'starter.user', 'starter.style', 'starter.design', 'starter.material',
-  'starter.measurement', 'starter.orderstatus', 'starter.reports', 'starter.notifications', 'starter.designmodal' ,'checklist-model'
+  'starter.measurement', 'starter.orderstatus', 'starter.reports', 'starter.notifications', 'checklist-model'
+  ,'underscore'
 ])
 
   .run(function ($ionicPlatform) {
@@ -29,7 +30,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
   })
 
   .config(function ($stateProvider, $urlRouterProvider, RestangularProvider) {
-    RestangularProvider.setBaseUrl('http://localhost\:3002');
+    // RestangularProvider.setBaseUrl('http://localhost\:3002');
+    RestangularProvider.setBaseUrl('http://protbb.herokuapp.com/');
+    
     RestangularProvider.setFullResponse(true);
     $stateProvider
       .state('login', {
@@ -149,17 +152,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
           'menuContent': {
             templateUrl: 'templates/menu/settings/design/design.html',
             controller: 'DesignCtrl',
-            controllerAs: 'vm'
-          }
-        }
-      })
-      .state('app.designModal', {
-        url: '/designModal',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/menu/settings/design/modal/designModal.html',
-            controller: 'DesignModalCtrl',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
           }
         }
       })

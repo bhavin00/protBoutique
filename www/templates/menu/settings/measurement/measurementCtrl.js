@@ -1,7 +1,9 @@
 ﻿
 angular.module('starter.measurement', [])
-  .controller('MeasurementCtrl', function ($stateParams, $scope, $state, $ionicModal, $timeout, $http, Restangular) {
-
+  .controller('MeasurementCtrl', function ($stateParams, $scope, $state, $ionicModal, $timeout, $http, Restangular, $ionicHistory) {
+     $scope.listlength = 5;
+   
+  
     var vm = this;
     vm.list = [];
     vm.save = save;
@@ -45,7 +47,7 @@ angular.module('starter.measurement', [])
       if (!vm.measurement.id) {
         Restangular.all('api/measurement').post(vm.measurement).then(function (res) {
           // SweetAlert.swal("Measurement saved successfully!");
-          $state.go('app.measurement');
+          $ionicHistory.clearCache().then(function(){ $state.go('app.measurement') })
         }, function (err) {
           console.log(err);
           vm.error = err.data.message;
@@ -55,7 +57,7 @@ angular.module('starter.measurement', [])
       else {
         Restangular.one('api/measurement/' + vm.measurement.id).patch(vm.measurement).then(function (res) {
           // SweetAlert.swal("Measurement updated successfully!");
-          $state.go('app.measurement');
+         $ionicHistory.clearCache().then(function(){ $state.go('app.measurement') })
         }, function (err) {
           console.log(err);
           vm.error = err.data.message;

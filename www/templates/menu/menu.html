@@ -25,10 +25,11 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ui-sref="app.home">
+        <ion-item menu-close  ui-sref="app.home">
           <i class="ion-ios-home padding"></i> Home
         </ion-item>
-        <ion-item menu-close ui-sref="app.stats">
+        <!--ng-click="clearCache()" -->
+        <ion-item menu-close ng-click="clearCache()" >
           <i class="ion-calendar padding"></i> Dashboard
         </ion-item>
         <ion-item menu-close ui-sref="app.customer">

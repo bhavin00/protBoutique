@@ -1,7 +1,7 @@
 angular.module('starter.reports', [])
     .controller('ReportCtrl', function ($scope, $state, Restangular) {
         
-      var vm = this;
+     var vm = this;
         var d = new Date();
         vm.today = d;
         vm.getFullYear = d.getFullYear();
@@ -83,22 +83,22 @@ angular.module('starter.reports', [])
         }
 
         function exportToExcel() {
-            console.log(document.getElementById('my-table'));
-            html2canvas(document.getElementById('my-table'), {
-                onrendered: function (canvas) {
-                    var data = canvas.toDataURL();
-                    var docDefinition = {
-                        content: [
-                            { text: 'January Transport Inc.', fontSize: 10, bold: false, alignment: 'center', margin: [0, 5, 0, 5] },
-                            { text: 'All Drivers', fontSize: 12, bold: false, alignment: 'center' },
-                            {
-                                image: data,
-                                width: 530
-                            }]
-                    };
-                    pdfMake.createPdf(docDefinition).download("report.pdf");
-                }
-            });
+            // console.log(document.getElementById('my-table'));
+            // html2canvas(document.getElementById('my-table'), {
+            //     onrendered: function (canvas) {
+            //         var data = canvas.toDataURL();
+            //         var docDefinition = {
+            //             content: [
+            //                 { text: 'January Transport Inc.', fontSize: 10, bold: false, alignment: 'center', margin: [0, 5, 0, 5] },
+            //                 { text: 'All Drivers', fontSize: 12, bold: false, alignment: 'center' },
+            //                 {
+            //                     image: data,
+            //                     width: 530
+            //                 }]
+            //         };
+            //         pdfMake.createPdf(docDefinition).download("report.pdf");
+            //     }
+            // });
         }
 
 
@@ -377,6 +377,7 @@ angular.module('starter.reports', [])
 
                         var newObj = { CustomerId: vm.custId, OrderStatusId: vm.user.roles, start: startDate, end: endDate };
                         Restangular.all('api/customerreport').post(newObj).then(function (res) {
+                            console.log(res);
                             res.data.forEach(function (element) {
                                 element.OrderItems.forEach(function (ele) {
                                     vm.CustomerBasedReports.push(
@@ -402,7 +403,9 @@ angular.module('starter.reports', [])
                         endDate.setHours(23, 59, 59, 999);
 
                         var newObj = { CustomerId: vm.custId, OrderStatusId: vm.user.roles, start: startDate, end: endDate };
+                            console.log(newObj);
                         Restangular.all('api/customerreport').post(newObj).then(function (res) {
+                            console.log(res);
                             res.data.forEach(function (element) {
                                 element.OrderItems.forEach(function (ele) {
                                     vm.CustomerBasedReports.push(
@@ -432,7 +435,6 @@ angular.module('starter.reports', [])
 
                             res.data.forEach(function (element) {
                                 element.OrderItems.forEach(function (ele) {
-                                    console.log(ele.Design.title);
                                     vm.CustomerBasedReports.push(
                                         {
                                             id: element.id,

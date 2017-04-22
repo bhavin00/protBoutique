@@ -1,5 +1,5 @@
 ﻿angular.module('starter.design', [])
-    .controller('DesignCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular) {
+    .controller('DesignCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular,$ionicHistory,$ionicLoading) {
         var vm = this;
         vm.list = [];
         vm.save = save;
@@ -23,6 +23,18 @@
             page: 1,
             search: ''
         }
+         //loading show start from here 
+        $scope.show = function () {
+            $ionicLoading.show({
+                // template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+                template:'<p>Loading...</p>  <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>'
+            });
+        };
+
+        $scope.hide = function () {
+            $ionicLoading.hide();
+        };
+        //loading show end  here 
         if ($stateParams.id && $stateParams.id != 'new') {
             Restangular.one('api/design/' + $stateParams.id).get().then(function (res) {
                 vm.design = res.data;
@@ -31,7 +43,7 @@
                 vm.error = err.data.message;
             });
         }
-
+        
         function edit(obj) {
             $state.go('app.edit-design', { id: obj.id });
         }
@@ -44,11 +56,11 @@
                 vm.isSubmitted = true;
                 return;
             }
-            vm.startProcessing = true;
+           $scope.show($ionicLoading);;
             if (!vm.design.id) {
                 Restangular.all('api/design').post(vm.design).then(function (res) {
-                    // SweetAlert.swal("Design saved successfully!");
-                    $state.go('app.design');
+                    $scope.hide($ionicLoading);
+                    $ionicHistory.clearCache().then(function(){ $state.go('app.design') })
                 }, function (err) {
                     console.log(err);
                     vm.error = err.data.message;
@@ -57,8 +69,8 @@
             }
             else {
                 Restangular.one('api/design/' + vm.design.id).patch(vm.design).then(function (res) {
-                    // SweetAlert.swal("Design updated successfully!");
-                    $state.go('app.design');
+                   $scope.hide($ionicLoading);
+                   $ionicHistory.clearCache().then(function(){ $state.go('app.design') })
                 }, function (err) {
                     console.log(err);
                     vm.error = err.data.message;

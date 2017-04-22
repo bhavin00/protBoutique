@@ -1,6 +1,201 @@
 <ion-view view-title="Notifications">
-	<ion-content>
-		<div class="tabs-striped tabs-color-assertive" ng-init="vm.flag=1">
+	<ion-content class="has-footer">
+		<div ng-if="vm.flag == 1"> 
+
+					<div class="list list-inset my-search-border">
+						<label class="item item-input">
+							<i class="icon ion-search placeholder-icon"></i>
+							<input type="date"  name="orderDate"  is-open="vm.open_orderDate" 
+							ng-model="vm.selectedDate" ng-click="vm.openCal()" ng-init="vm.change(vm.selectedDate)" 
+							ng-change="vm.change(vm.selectedDate)"
+							ng-max="vm.today" ng-required="true">
+						</label>
+					</div>
+					
+
+						 <div class="list card"  ng-if="vm.deliverys.length == 0">
+							<div class="item text-center">
+								<h1>NO DATA FOUND</h1>
+							</div>
+							<div class="item item-body">
+								<div class="text-center">
+									<img src="img/nodata.jpg" style="width:200px;height:200px">
+									</img>
+								</div>
+							</div>
+						</div>
+						
+						<div class="list card"  ng-if="vm.deliverys.length > 0">
+							<div class="item item-body">
+								<div class="item" ng-repeat="data in vm.deliverys">
+									<div class="row">
+										<div class="col col-50">
+											OrderId
+										</div>
+										<div class="col col-50">
+											<a href="" ng-click="vm.edit3(data.OrderId)">Order # {{data.OrderId|leadingZero}}</a>
+										</div>
+									</div>
+									<div class="row ">
+										<div class="col col-50">
+											Design
+										</div>
+										<div class="col col-50">
+											{{data.Design.title}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col col-50">
+											Style
+										</div>
+										<div class="col col-50">
+											{{data.Style.title}}
+										</div>
+									</div>																
+								</div>
+							</div>
+						</div>
+		</div>
+		<div ng-if="vm.flag == 2">
+					<div class="list list-inset my-search-border">
+						<label class="item item-input">
+							<i class="icon ion-search placeholder-icon"></i>
+							<input     type="date" name="orderDate"      is-open="vm.open_orderDate"  
+							ng-model="vm.selectedDate" ng-click="vm.openCal()" ng-init="vm.change(vm.selectedDate)" ng-change="vm.change(vm.selectedDate)"
+							ng-max="vm.today" ng-required="true">
+						</label>
+					</div>
+
+					<div class="list card"  ng-if="vm.alerts.length == 0">
+							<div class="item text-center">
+								<h1>NO DATA FOUND</h1>
+							</div>
+							<div class="item item-body">
+								<div class="text-center">
+									<img src="img/nodata.jpg" style="width:200px;height:200px">
+									</img>
+								</div>
+							</div>
+					</div>
+						
+						
+						<div class="list card"  ng-if="vm.alerts.length > 0" >
+							<div class="item item-body">
+								<div class="item" ng-repeat="data in vm.alerts">
+									<div class="row">
+										<div class="col col-50">
+											OrderId
+										</div>
+										<div class="col col-50">
+											<a href="" ng-click="vm.edit3(data.OrderId)">Order # {{data.OrderId|leadingZero}}</a>
+										</div>
+									</div>
+									<div class="row ">
+										<div class="col col-50">
+											Design
+										</div>
+										<div class="col col-50">
+											{{data.Design.title}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col col-50">
+											Style
+										</div>
+										<div class="col col-50">
+											{{data.Style.title}}
+										</div>
+									</div>																
+								</div>
+							</div>
+						</div>
+		</div>
+
+
+
+
+		<div ng-if="vm.flag==3">
+
+					<div class="list list-inset my-search-border">
+						<label class="item item-input">
+							<i class="icon ion-search placeholder-icon"></i>
+							<input type="date"  name="orderDate"      is-open="vm.open_orderDate"  
+							ng-model="vm.selectedDate" ng-click="vm.openCal()" ng-init="vm.change(vm.selectedDate)" ng-change="vm.change(vm.selectedDate)"
+							ng-max="vm.today" ng-required="true">
+						</label>
+					</div>
+
+					<div class="list card"  ng-if="vm.birthdays.length == 0">
+							<div class="item text-center">
+								<h1>NO DATA FOUND</h1>
+							</div>
+							<div class="item item-body">
+								<div class="text-center">
+									<img src="img/nodata.jpg" style="width:200px;height:200px">
+									</img>
+								</div>
+							</div>
+					</div>
+						
+						
+						<div class="list card"  ng-if="vm.birthdays.length > 0" >
+							<div class="item item-body">
+								<div class="item" ng-repeat="data in vm.birthdays">
+									<div class="row">
+										<div class="col col-50">
+											Name
+										</div>
+										<div class="col col-50">
+											<a href="" ng-click="vm.edit(data)">{{data.name}}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+		</div>
+
+
+		<div ng-if="vm.flag==4">
+					<div class="list list-inset my-search-border">
+						<label class="item item-input">
+							<i class="icon ion-search placeholder-icon"></i>
+							<input     type="date"  name="orderDate"      is-open="vm.open_orderDate"  
+								ng-model="vm.selectedDate" ng-click="vm.openCal()" ng-init="vm.change(vm.selectedDate)" ng-change="vm.change(vm.selectedDate)"
+								ng-max="vm.today" ng-required="true">
+						</label>
+					</div>
+
+						 <div class="list card"  ng-if="vm.annerversarys.length == 0">
+							<div class="item text-center">
+								<h1>NO DATA FOUND</h1>
+							</div>
+							<div class="item item-body">
+								<div class="text-center">
+									<img src="img/nodata.jpg" style="width:200px;height:200px"></img>
+								</div>
+							</div>
+						</div>
+						
+						<div class="list card"  ng-if="vm.annerversarys.length > 0" >
+							<div class="item item-body">
+								<div class="item" ng-repeat="data in vm.annerversarys">
+									<div class="row">
+										<div class="col col-50">
+											Name
+										</div>
+										<div class="col col-50">
+											<a href="" ng-click="vm.edit(data)">{{data.name}}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+		</div>
+
+	</ion-content>
+	<ion-footer>
+			<div class="tabs-striped tabs-color-assertive" ng-init="vm.flag=1">
 				<div class="tabs">
 					<a class="tab-item" ng-class="{active:  vm.flag==1}" ng-click="vm.flag=1">
 						<i class="ion-model-s"></i>
@@ -19,214 +214,6 @@
 						Anniversary
 					</a>
 				</div>
-		</div>
-
-	
-
-		<div ng-if="vm.flag == 1"> 
-			<div>
-				<div>
-					<div class="list list-inset">
-					<label class="item item-input">
-						<i class="icon ion-search placeholder-icon"></i>
-						<input type="date"  name="orderDate"  is-open="vm.open_orderDate" 
-						 ng-model="vm.selectedDate" ng-click="vm.openCal()" ng-init="vm.change(vm.selectedDate)" 
-						 ng-change="vm.change(vm.selectedDate)"
-						 ng-max="vm.today" ng-required="true">
-					</label>
-					</div>
-					
-				</div>
-
-						 <div class="list card"  ng-if="vm.deliverys.length == 0">
-							<div class="item text-center">
-							<h1>NO DATA FOUND</h1>
-							</div>
-							<div class="item item-body">
-							<p>
-							<div class="text-center">
-							<img src="img/nodata.jpg" style="width:200px;height:200px">
-							</img>
-							</div>
-							</div>
-						</div>
-						
-						<div class="list card"  ng-if="vm.deliverys.length > 0">
-							<div class="item item-body">
-							<div class="item" ng-repeat="data in vm.deliverys">
-							<div class="row">
-								<div class="col col-50">
-									OrderId
-								</div>
-								<div class="col col-50">
-									<a href="" ng-click="vm.edit3(data.OrderId)">Order # {{data.OrderId|leadingZero}}</a>
-								</div>
-							</div>
-							<div class="row ">
-								<div class="col col-50">
-									Design
-								</div>
-								<div class="col col-50">
-									{{data.Design.title}}
-								</div>
-							</div>
-							<div class="row">
-								<div class="col col-50">
-									Style
-								</div>
-								<div class="col col-50">
-									{{data.Style.title}}
-								</div>
-							</div>																
-							</div>
-							</div>
-						</div>
-					</div>
-				</div>
-		<div ng-if="vm.flag == 2">
-				<div>
-					<div class="list list-inset">
-					<label class="item item-input">
-						<i class="icon ion-search placeholder-icon"></i>
-						<input     type="date" name="orderDate"      is-open="vm.open_orderDate"  
-						ng-model="vm.selectedDate" ng-click="vm.openCal()" ng-init="vm.change(vm.selectedDate)" ng-change="vm.change(vm.selectedDate)"
-						ng-max="vm.today" ng-required="true">
-					</label>
-					</div>
-					
-				</div>
-
-						 <div class="list card"  ng-if="vm.alerts.length == 0">
-							<div class="item text-center">
-							<h1>NO DATA FOUND</h1>
-							</div>
-							<div class="item item-body">
-							<p>
-							<div class="text-center">
-							<img src="img/nodata.jpg" style="width:200px;height:200px">
-							</img>
-							</div>
-							</div>
-						</div>
-						
-						<div class="list card"  ng-if="vm.alerts.length > 0" >
-							<div class="item item-body">
-							<div class="item" ng-repeat="data in vm.alerts">
-							<div class="row">
-								<div class="col col-50">
-									OrderId
-								</div>
-								<div class="col col-50">
-									<a href="" ng-click="vm.edit3(data.OrderId)">Order # {{data.OrderId|leadingZero}}</a>
-								</div>
-							</div>
-							<div class="row ">
-								<div class="col col-50">
-									Design
-								</div>
-								<div class="col col-50">
-									{{data.Design.title}}
-								</div>
-							</div>
-							<div class="row">
-								<div class="col col-50">
-									Style
-								</div>
-								<div class="col col-50">
-									{{data.Style.title}}
-								</div>
-							</div>																
-							</div>
-							</div>
-						</div>
-					</div>
-
-
-
-
-		<div ng-if="vm.flag==3">
-			<div>
-					<div class="list list-inset">
-					<label class="item item-input">
-						<i class="icon ion-search placeholder-icon"></i>
-						<input type="date"  name="orderDate"      is-open="vm.open_orderDate"  
-						ng-model="vm.selectedDate" ng-click="vm.openCal()" ng-init="vm.change(vm.selectedDate)" ng-change="vm.change(vm.selectedDate)"
-						ng-max="vm.today" ng-required="true">
-					</label>
-					</div>
-					
-				</div>
-
-						 <div class="list card"  ng-if="vm.birthdays.length == 0">
-							<div class="item text-center">
-							<h1>NO DATA FOUND</h1>
-							</div>
-							<div class="item item-body">
-							<p>
-							<div class="text-center">
-							<img src="img/nodata.jpg" style="width:200px;height:200px">
-							</img>
-							</div>
-							</div>
-						</div>
-						
-						<div class="list card"  ng-if="vm.birthdays.length > 0" >
-							<div class="item item-body">
-							<div class="item" ng-repeat="data in vm.birthdays">
-							<div class="row">
-								<div class="col col-50">
-									Name
-								</div>
-								<div class="col col-50">
-									<a href="" ng-click="vm.edit(data)">{{data.name}}</a>
-								</div>
-							</div>
-							</div>
-							</div>
-						</div>
-		</div>
-
-
-		<div ng-if="vm.flag==4">
-			<div>
-					<div class="list list-inset">
-					<label class="item item-input">
-						<i class="icon ion-search placeholder-icon"></i>
-						<input     type="date"  name="orderDate"      is-open="vm.open_orderDate"  
-							ng-model="vm.selectedDate" ng-click="vm.openCal()" ng-init="vm.change(vm.selectedDate)" ng-change="vm.change(vm.selectedDate)"
-							ng-max="vm.today" ng-required="true">
-					</label>
-					</div>
-					
-				</div>
-
-						 <div class="list card"  ng-if="vm.annerversarys.length == 0">
-							<div class="item text-center">
-							<h1>NO DATA FOUND</h1>
-							</div>
-							<div class="item item-body">
-							<p>
-							<div class="text-center">
-							<img src="img/nodata.jpg" style="width:200px;height:200px">
-							</img>
-							</div>
-							</div>
-						</div>
-						
-						<div class="list card"  ng-if="vm.annerversarys.length > 0" >
-							<div class="item item-body">
-							<div class="item" ng-repeat="data in vm.annerversarys">
-							<div class="row">
-								<div class="col col-50">
-									Name
-								</div>
-								<div class="col col-50">
-									<a href="" ng-click="vm.edit(data)">{{data.name}}</a>
-								</div>
-							</div>
-							</div>
-							</div>
-						</div>
-
-	</ion-content>
+			</div>
+	</ion-footer>
 </ion-view>

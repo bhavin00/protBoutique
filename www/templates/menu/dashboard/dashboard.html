@@ -1,24 +1,6 @@
 <ion-view view-title="Manage Order page">
-    <ion-content>
+    <ion-content class="has-footer">
         <div ng-init="vm.activate()"></div>
-        <div class="tabs-striped tabs-color-assertive" ng-init="vm.flag=1">
-            <div class="tabs">
-                <a class="tab-item" ng-class="{active:  vm.flag==1}" ng-click="vm.flag=1">
-                    <i class="ion-model-s"></i> Delivery
-                </a>
-                <a class="tab-item " ng-class="{active: vm.flag==2}" ng-click="vm.flag=2">
-                    <i class="ion-plus"></i> New
-                </a>
-                <a class="tab-item " ng-class="{active: vm.flag==3}" ng-click="vm.flag=3">
-                    <i class="ion-checkmark-round"></i> Complete
-                </a>
-                <a class="tab-item " ng-class="{active: vm.flag==4}" ng-click="vm.flag=4">
-                    <i class="ion-close"></i> Cancel
-                </a>
-            </div>
-        </div>
-
-
 
         <div ng-if="vm.flag==1">
             <div class="list card" ng-if="!vm.list.one.length">
@@ -285,4 +267,22 @@
                     </div>
                 </div>
     </ion-content>
+    <ion-footer>
+     <div class="tabs-striped tabs-color-assertive" ng-init="vm.flag=1">
+            <div class="tabs">
+                <a class="tab-item" ng-class="{active:  vm.flag==1}" ng-click="vm.flag=1">
+                    <i class="ion-model-s"></i> Delivery
+                </a>
+                <a class="tab-item " ng-class="{active: vm.flag==2}" ng-click="vm.flag=2">
+                    <i class="ion-plus"></i> New
+                </a>
+                <a class="tab-item " ng-class="{active: vm.flag==3}" ng-click="vm.flag=3">
+                    <i class="ion-checkmark-round"></i> Complete
+                </a>
+                <a class="tab-item " ng-class="{active: vm.flag==4}" ng-click="vm.flag=4">
+                    <i class="ion-close"></i> Cancel
+                </a>
+            </div>
+        </div>
+    </ion-footer>
 </ion-view>

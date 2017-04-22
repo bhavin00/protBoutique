@@ -73,7 +73,7 @@
               </select>
               </label>
               <center>
-                <img class="padding" ng-src="http://localhost:3002/{{vm.order.OrderItems[$index].Style.image}}" alt="{{stl.title}}" width="160"
+                <img class="padding" ng-src="http://protbb.herokuapp.com/{{vm.order.OrderItems[$index].Style.image}}" alt="{{stl.title}}" width="160"
                   height="150">
               </center>
 
@@ -129,7 +129,8 @@
               </div>
             </div>
             <div class="item item-divider">
-                 <img height="80" width="80" class="image-text-set-order" ng-src="http://localhost:3002/{{orderItem.Style.image}}">
+                 <!--<img height="80" width="80" class="image-text-set-order" ng-src="http://localhost:3002/{{orderItem.Style.image}}">-->
+                 <img height="80" width="80" class="image-text-set-order" ng-src="http://protbb.herokuapp.com/{{orderItem.Style.image}}">
                   <label class="item item-input">
                      <span class="input-label">Delivery Date</span>
                      <input type="date" required

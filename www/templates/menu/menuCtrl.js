@@ -1,6 +1,6 @@
 angular.module('starter.menu', [])
 
-    .controller('MenuCtrl', function ($scope, $state, $ionicModal, $timeout,sessionService) {
+    .controller('MenuCtrl', function ($scope, $state, $ionicModal, $timeout,sessionService,$ionicHistory) {
         var vm = this;
         vm.logout = logout;
         //for group submenu toggles
@@ -25,4 +25,7 @@ angular.module('starter.menu', [])
             sessionService.logout();
         }
         //for group submenu toggles
+         $scope.clearCache = function(){
+            $ionicHistory.clearCache().then(function(){ $state.go('app.stats') })
+         }
     });

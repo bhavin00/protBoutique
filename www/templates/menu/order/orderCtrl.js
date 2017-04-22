@@ -315,7 +315,8 @@ angular.module('starter.order', [])
             //delete vm.order["0"];
             //delete vm.order["1"];
             Upload.upload({
-                url: 'http://localhost:3002/api/order',
+                // url: 'http://localhost:3002/api/order',
+                url: 'http://protbb.herokuapp.com/api/order',
                 data: { order: data },
                 file: vm.files
             }).then(function (resp) {

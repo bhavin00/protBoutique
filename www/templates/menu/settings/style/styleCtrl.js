@@ -1,5 +1,5 @@
 ﻿angular.module('starter.style', [])
-    .controller('StyleCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular, Upload) {
+    .controller('StyleCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular, Upload, $ionicHistory, $ionicModal, $ionicLoading) {
         var vm = this;
         vm.list = [];
         vm.save = save;
@@ -21,7 +21,23 @@
         vm.displayPhoto = displayPhoto;
         vm.activate = activate;
 
+        $ionicModal.fromTemplateUrl('modal.html', {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+        //loading show start from here 
+        $scope.show = function () {
+            $ionicLoading.show({
+                // template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+                template:'<p>Loading...</p> <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>'
+            });
+        };
 
+        $scope.hide = function () {
+            $ionicLoading.hide();
+        };
+        //loading show end  here 
         function edit(obj) {
             $state.go('app.edit-style', { id: obj.id });
         }
@@ -34,19 +50,21 @@
                 vm.isSubmitted = true;
                 return;
             }
-            vm.startProcessing = true;
+            $scope.show($ionicLoading);
             if (!vm.style.id) {
-                upload('http://localhost:3002/api/style');
+                // upload('http://localhost:3002/api/style');
+                upload('http://protbb.herokuapp.com/api/style');
             }
             else {
 
                 if (vm.file) {
-                    upload('http://localhost:3002/api/style');
+                    // upload('http://localhost:3002/api/style');
+                    upload('http://protbb.herokuapp.com/api/style');
                 }
                 else {
                     Restangular.one('api/style/' + vm.style.id).patch(vm.style).then(function (res) {
-                        // SweetAlert.swal("Style updated successfully!");
-                        $state.go('app.style');
+                        $scope.hide($ionicLoading);
+                        $ionicHistory.clearCache().then(function () { $state.go('app.style') })
                     });
                 }
             }
@@ -58,7 +76,8 @@
             }).then(function (resp) {
                 console.log(resp);
                 // SweetAlert.swal("Style saved successfully!");
-                $state.go('app.style');
+                $scope.hide($ionicLoading);
+                $ionicHistory.clearCache().then(function () { $state.go('app.style') })
                 //console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
             }, function (resp) {
                 console.log(resp.data);
@@ -114,7 +133,8 @@
                 if ($stateParams.id != 'new') {
                     Restangular.one('api/style/' + $stateParams.id).get().then(function (res) {
                         vm.style = res.data;
-                        vm.style.image = "http://localhost:3002/" + vm.style.image;
+                        // vm.style.image = "http://localhost:3002/" + vm.style.image;
+                        vm.style.image = "http://protbb.herokuapp.com/" + vm.style.image;
                         vm.style.DesignId = '' + vm.style.DesignId;
                     });
                 }

@@ -1,5 +1,5 @@
 ﻿angular.module('starter.orderstatus', [])
-    .controller('OrderStatusCtrl', function ($scope, $state, $ionicModal, $stateParams,$timeout,Restangular) {
+    .controller('OrderStatusCtrl', function ($scope, $state, $ionicModal, $stateParams,$timeout,Restangular,$ionicHistory) {
         var vm = this;
         vm.list = [];
         vm.save = save;
@@ -39,7 +39,7 @@
             if (!vm.orderStatus.id) {
                 Restangular.all('api/orderStatus').post(vm.orderStatus).then(function (res) {
                     // SweetAlert.swal("Order Status saved successfully!");
-                    $state.go('app.orderstatus');
+                     $ionicHistory.clearCache().then(function(){ $state.go('app.orderStatus') })
                 }, function (err) {
                     console.log(err);
                     vm.error = err.data.message;
@@ -49,7 +49,7 @@
             else {
                 Restangular.one('api/orderStatus/' + vm.orderStatus.id).patch(vm.orderStatus).then(function (res) {
                     // SweetAlert.swal("Order Status updated successfully!");
-                    $state.go('app.orderstatus');
+                     $ionicHistory.clearCache().then(function(){ $state.go('app.orderStatus') })
                 }, function (err) {
                     console.log(err);
                     vm.error = err.data.message;

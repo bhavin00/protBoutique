@@ -1,5 +1,5 @@
 angular.module('starter.customer', [])
-    .controller('CustomerCtrl', function (Restangular,$scope, $state, $ionicModal, $timeout,$stateParams) {
+    .controller('CustomerCtrl', function (Restangular,$scope, $state, $ionicModal, $timeout,$stateParams,$ionicHistory) {
         var vm = this;
         vm.list = [];
         vm.save = save;
@@ -43,7 +43,7 @@ angular.module('starter.customer', [])
             if (!vm.customer.id) {
                 Restangular.all('api/customer').post(vm.customer).then(function(res) {
                     // SweetAlert.swal("Customer saved successfully!");
-                    $state.go('app.customer');
+                    $ionicHistory.clearCache().then(function(){ $state.go('app.customer') })
                 }, function(err) {
                     console.log(err);
                     vm.error = err.data.message;
@@ -52,7 +52,7 @@ angular.module('starter.customer', [])
             } else {
                 Restangular.one('api/customer/' + vm.customer.id).patch(vm.customer).then(function(res) {
                     // SweetAlert.swal("Customer updated successfully!");
-                    $state.go('app.customer');
+                    $ionicHistory.clearCache().then(function(){ $state.go('app.customer') })
                 }, function(err) {
                     console.log(err);
                     vm.error = err.data.message;

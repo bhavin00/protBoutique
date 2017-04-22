@@ -1,7 +1,7 @@
 ﻿<ion-view view-title="Add/Edit Design">
     <ion-content>
     <form name="designForm" novalidate>
-            <label class="item item-input   item-floating-label">
+            <label class="item item-input   item-floating-label my-item-border">
                 <span class="input-label">Design</span>
                 <input name="title" required placeholder="Design" type="text" ng-pattern="/^[a-zA-Z0-9 ]+$/" ng-model="vm.design.title" ng-minlength="2"
                 ng-maxlength="30">
@@ -11,7 +11,7 @@
                 <span ng-if="(designForm.title.$dirty  || vm.isSubmitted)&& designForm.title.$error.maxlength" class="assertive"><i><b>Design</b></i> should not be more than 30 characters long.</span>
             </label>
 
-           <label class="item item-input item-select" ng-init="vm.getMeasurementList()">
+           <label class="item item-input item-select my-item-border" ng-init="vm.getMeasurementList()">
                 <div class="input-label">
                      Measurement
                 </div>
@@ -28,7 +28,7 @@
                 </div>
                 <button class="button button-balanced" type="button" ng-click="vm.addInDesignMeasurement(vm.selectMeasurement)">Add</button>
             </label> -->
-            <ul class="list" ng-repeat="msr in vm.design.DesignMeasurements">
+            <ul class="list my-item-border" ng-repeat="msr in vm.design.DesignMeasurements">
                 <li class="item my-item-border">
                     <span>
                         {{msr.Measurement.title}}
