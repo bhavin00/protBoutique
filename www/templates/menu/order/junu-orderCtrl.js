@@ -301,7 +301,7 @@ var vm = this;
         }
         function upload() {
             var data = Restangular.stripRestangular(vm.order);
-            data.totalamount = vm.totalamount;
+            data.totalamount = 800;
             //delete vm.order["0"];
             //delete vm.order["1"];
             Upload.upload({

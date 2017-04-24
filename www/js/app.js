@@ -101,6 +101,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
           }
         }
       })
+       .state('app.invoice', {
+        url: '/invoice',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/menu/order/invoice.html',
+            controller: 'OrderCtrl',
+            controllerAs: 'vm'
+          }
+        }
+      })
       .state('app.order', {
         url: '/order',
         views: {
@@ -127,12 +137,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngLodash', 'restangular', 'ngF
       .state('app.customer-order-detail', {
         url: '/customer/{customerId}/order',
         templateUrl: 'templates/menu/order/customer-order-detail.html',
-        controller: 'OrderCtrl',
-        controllerAs: 'vm'
-      })
-      .state('app.invoice', {
-        url: '/invoice',
-        templateUrl: 'templates/menu/order/invoice.html',
         controller: 'OrderCtrl',
         controllerAs: 'vm'
       })

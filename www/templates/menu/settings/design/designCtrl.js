@@ -1,6 +1,27 @@
 ﻿angular.module('starter.design', [])
-    .controller('DesignCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular,$ionicHistory,$ionicLoading) {
+    .controller('DesignCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular, $ionicHistory, $ionicLoading) {
         var vm = this;
+        vm.inProcess = true;
+        $scope.loadMore = function () {
+            if (!vm.stopload) {
+                vm.options.page++;
+                console.log(vm.options.page)
+                pageChange();
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            } else {
+                if (vm.stopload > vm.options.page) {
+                    vm.options.page++;
+                    console.log(vm.options.page)
+                    pageChange();
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }
+            }
+            if (vm.list.length == 0) {
+                vm.stopload = vm.options.page;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+                return;
+            }
+        }
         vm.list = [];
         vm.save = save;
         vm.edit = edit;
@@ -15,19 +36,20 @@
         };
 
         vm.search = search;
+        vm.searching = false;
         vm.order = order;
         vm.pageChange = pageChange;
         vm.options = {
-            pagesize: 10,
+            pagesize: 15,
             totalItems: 0,
             page: 1,
             search: ''
         }
-         //loading show start from here 
+        //loading show start from here 
         $scope.show = function () {
             $ionicLoading.show({
                 // template: '<p>Loading...</p><ion-spinner></ion-spinner>'
-                template:'<p>Loading...</p>  <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>'
+                template: '<p>Loading...</p>  <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>'
             });
         };
 
@@ -43,7 +65,7 @@
                 vm.error = err.data.message;
             });
         }
-        
+
         function edit(obj) {
             $state.go('app.edit-design', { id: obj.id });
         }
@@ -56,11 +78,11 @@
                 vm.isSubmitted = true;
                 return;
             }
-           $scope.show($ionicLoading);;
+            $scope.show($ionicLoading);
             if (!vm.design.id) {
                 Restangular.all('api/design').post(vm.design).then(function (res) {
                     $scope.hide($ionicLoading);
-                    $ionicHistory.clearCache().then(function(){ $state.go('app.design') })
+                    $ionicHistory.clearCache().then(function () { $state.go('app.design') })
                 }, function (err) {
                     console.log(err);
                     vm.error = err.data.message;
@@ -69,8 +91,8 @@
             }
             else {
                 Restangular.one('api/design/' + vm.design.id).patch(vm.design).then(function (res) {
-                   $scope.hide($ionicLoading);
-                   $ionicHistory.clearCache().then(function(){ $state.go('app.design') })
+                    $scope.hide($ionicLoading);
+                    $ionicHistory.clearCache().then(function () { $state.go('app.design') })
                 }, function (err) {
                     console.log(err);
                     vm.error = err.data.message;
@@ -79,13 +101,25 @@
             }
         }
 
+        vm.lists = [];
         function getList() {
+            vm.inProcess = true;
+            $scope.show($ionicLoading);
+            vm.searching = true;
             Restangular.all('api/design').getList(vm.options).then(function (res) {
-                vm.list = res.data;
+                // vm.lists = [];
+                vm.list = Restangular.stripRestangular(res.data);
+                // var temp = angular.copy(vm.list);
+                Array.prototype.pushArray = function () {
+                    this.push.apply(this, this.concat.apply([], arguments));
+                };
+                vm.lists.pushArray(vm.list);
+                console.log(vm.list);
+                console.log(vm.lists);
                 vm.options.totalItems = parseInt(res.headers('total'));
-            }, function (err) {
-                console.log(err);
-                vm.error = err.data.message;
+                $scope.hide($ionicLoading);
+                vm.inProcess = false;
+                vm.searching = false;
             });
         }
 
@@ -135,8 +169,12 @@
         }
         function search() {
             vm.options.page = 1;
+            vm.lists = [];
             vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
-            getList();
+            if(!vm.searching){
+                getList();
+            }
+            return;
         }
 
         function order(col, ord) {

@@ -1,6 +1,27 @@
 ﻿angular.module('starter.style', [])
     .controller('StyleCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular, Upload, $ionicHistory, $ionicModal, $ionicLoading) {
         var vm = this;
+        vm.inProcess = true;
+        $scope.loadMore = function () {
+            if (!vm.stopload) {
+                vm.options.page++;
+                console.log(vm.options)
+                pageChange();
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            } else {
+                if (vm.stopload > vm.options.page) {
+                    vm.options.page++;
+                    console.log(vm.options.page)
+                    pageChange();
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }
+            }
+            if (vm.list.length == 0) {
+                vm.stopload = vm.options.page;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+                return;
+            }
+        }
         vm.list = [];
         vm.save = save;
         vm.edit = edit;
@@ -9,9 +30,10 @@
         };
         vm.search = search;
         vm.order = order;
+        vm.searching = false;
         vm.pageChange = pageChange;
         vm.options = {
-            pagesize: 10,
+            pagesize: 15,
             totalItems: 0,
             page: 1,
             search: ''
@@ -30,7 +52,7 @@
         $scope.show = function () {
             $ionicLoading.show({
                 // template: '<p>Loading...</p><ion-spinner></ion-spinner>'
-                template:'<p>Loading...</p> <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>'
+                template: '<p>Loading...</p> <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>'
             });
         };
 
@@ -88,10 +110,26 @@
             });
         }
 
+        vm.lists = [];
         function getList() {
+           
+            vm.inProcess = true;
+            $scope.show($ionicLoading);
+            vm.searching = true;
             Restangular.all('api/style').getList(vm.options).then(function (res) {
-                vm.list = res.data;
+                
+                vm.list = Restangular.stripRestangular(res.data);
+                // var temp = angular.copy(vm.list);
+                Array.prototype.pushArray = function () {
+                    this.push.apply(this, this.concat.apply([], arguments));
+                };
+                vm.lists.pushArray(vm.list);
+                console.log(vm.list);
+                console.log(vm.lists);
                 vm.options.totalItems = parseInt(res.headers('total'));
+                $scope.hide($ionicLoading);
+                vm.inProcess = false;
+                vm.searching = false;
             });
         }
         function getDesignList() {
@@ -112,10 +150,24 @@
         function pageChange() {
             getList();
         }
+        // function search() {
+        //     vm.options.page = 1;
+        //     vm.lists = [];
+        //     vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
+        //     getList();
+        // }
         function search() {
+            vm.options.search = vm.options.search;
             vm.options.page = 1;
+            vm.lists = [];
             vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
-            getList();
+            $timeout(function(){
+                if(!vm.searching){
+                    getList();
+                }
+            },3000);
+           
+            return;
         }
 
         function order(col, ord) {

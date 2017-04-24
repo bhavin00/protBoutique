@@ -4,15 +4,15 @@
 
 
         var vm = this;
-        vm.inProcess=true;
+        vm.inProcess = true;
         $scope.loadMore = function () {
             if (!vm.stopload) {
                 vm.options.page++;
                 console.log(vm.options.page)
                 pageChange();
                 $scope.$broadcast('scroll.infiniteScrollComplete');
-            }else{
-                if(vm.stopload > vm.options.page){
+            } else {
+                if (vm.stopload > vm.options.page) {
                     vm.options.page++;
                     console.log(vm.options.page)
                     pageChange();
@@ -97,9 +97,12 @@
         }
         vm.lists = [];
         function getList() {
-            vm.inProcess=true;
+            vm.inProcess = true;
             $scope.show($ionicLoading);
             Restangular.all('api/material').getList(vm.options).then(function (res) {
+                if(vm.options.page==1){
+                    vm.lists = [];
+                }
                 vm.list = Restangular.stripRestangular(res.data);
                 // var temp = angular.copy(vm.list);
                 Array.prototype.pushArray = function () {
@@ -110,7 +113,7 @@
                 console.log(vm.lists);
                 vm.options.totalItems = parseInt(res.headers('total'));
                 $scope.hide($ionicLoading);
-                vm.inProcess=false;
+                vm.inProcess = false;
             });
         }
 

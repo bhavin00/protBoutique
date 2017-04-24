@@ -5,7 +5,7 @@
                 <label class="item item-input my-item-border item-select">
                     <span class="input-label">Filter by</span>
                     <select class="outside2 myorder-search-status-select-mobile" placeholder="Search by Status" name="statusid" ng-model="vm.searchBy.OrderStatusId" ng-change="vm.searchByField()" ng-init="vm.getOrderStatusList()">
-                        <option value="">Status</option>
+                        <option value="">--Status--</option>
                         <option value="{{os.id}}" ng-repeat="os in vm.orderStatuses">{{os.title}}</option>
                     </select>
                  </label>
@@ -13,12 +13,12 @@
                 <label class="item item-input my-item-border item-select" >
                     <span class="input-label">Filter by</span>
                     <select class="outside2" placeholder="Search by Customer" name="customeruser" ng-model="vm.searchBy.CustomerId"  ng-change="vm.searchByField()" ng-init="vm.getCustomerList()">
-                        <option value="">Customer</option>
+                        <option value="">--Customer--</option>
                         <option value="{{os.id}}" ng-repeat="os in vm.customers">{{os.name}}</option>
                     </select>
                 </label>
                 
-            <div class="list card"  ng-if="!vm.list.length">
+            <div class="list card"  ng-if="!vm.inProcess && !vm.lists.length">
                 <div class="item text-center">
                     <h1>NO DATA FOUND</h1>
                 </div>
@@ -31,7 +31,7 @@
              </div>
 
         <div >
-          <div class="card" ng-repeat="obj in vm.list" ng-if="vm.list.length > 0">
+          <div class="card" ng-repeat="obj in vm.lists" ng-if="vm.lists.length > 0">
                 <div class="item item-text-wrap item-calm" align="" ng-click="vm.edit(obj)">
                     OrderId:{{obj.id|leadingZero}}
                 </div>
@@ -71,6 +71,9 @@
             </div>
         </div>
         </div>
+
+        <ion-infinite-scroll on-infinite="loadMore()" distance="3%">
+            </ion-infinite-scroll>
   </ion-content>
   
    <div class="fixed-outside">

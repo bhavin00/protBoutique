@@ -1,10 +1,28 @@
 ﻿
 angular.module('starter.measurement', [])
-  .controller('MeasurementCtrl', function ($stateParams, $scope, $state, $ionicModal, $timeout, $http, Restangular, $ionicHistory) {
-     $scope.listlength = 5;
-   
-  
+  .controller('MeasurementCtrl', function ($stateParams, $scope, $state, $ionicModal, $timeout, $http, Restangular, $ionicHistory, $ionicLoading) {
     var vm = this;
+    vm.inProcess = true;
+    $scope.loadMore = function () {
+      if (!vm.stopload) {
+        vm.options.page++;
+        console.log(vm.options.page)
+        pageChange();
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      } else {
+        if (vm.stopload > vm.options.page) {
+          vm.options.page++;
+          console.log(vm.options.page)
+          pageChange();
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+        }
+      }
+      if (vm.list.length == 0) {
+        vm.stopload = vm.options.page;
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        return;
+      }
+    }
     vm.list = [];
     vm.save = save;
     vm.edit = edit;
@@ -13,14 +31,28 @@ angular.module('starter.measurement', [])
     vm.order = order;
     vm.pageChange = pageChange;
     vm.options = {
-      pagesize: 10,
+      pagesize: 15,
       totalItems: 0,
       page: 1,
       search: ''
     }
+    //loading show start from here 
+    $scope.show = function () {
+      $ionicLoading.show({
+        // template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+        template: '<p>Loading...</p>  <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>'
+      });
+    };
+
+    $scope.hide = function () {
+      $ionicLoading.hide();
+    };
+    //loading show end  here 
     vm.measurement = {
       isActive: true
     };
+
+
 
     if ($stateParams.id && $stateParams.id != 'new') {
       Restangular.one('api/measurement/' + $stateParams.id).get().then(function (res) {
@@ -44,35 +76,46 @@ angular.module('starter.measurement', [])
         return;
       }
       vm.startProcessing = true;
+      $scope.show($ionicLoading);
       if (!vm.measurement.id) {
         Restangular.all('api/measurement').post(vm.measurement).then(function (res) {
           // SweetAlert.swal("Measurement saved successfully!");
-          $ionicHistory.clearCache().then(function(){ $state.go('app.measurement') })
+          $ionicHistory.clearCache().then(function () { $state.go('app.measurement') })
         }, function (err) {
           console.log(err);
           vm.error = err.data.message;
           vm.startProcessing = false;
+          $scope.hide($ionicLoading);
         });
       }
       else {
         Restangular.one('api/measurement/' + vm.measurement.id).patch(vm.measurement).then(function (res) {
           // SweetAlert.swal("Measurement updated successfully!");
-         $ionicHistory.clearCache().then(function(){ $state.go('app.measurement') })
+          $ionicHistory.clearCache().then(function () { $state.go('app.measurement') })
         }, function (err) {
           console.log(err);
           vm.error = err.data.message;
           vm.startProcessing = false;
+          $scope.hide($ionicLoading);
         });
       }
     }
-
+    vm.lists = [];
     function getList() {
+      vm.inProcess = true;
+      $scope.show($ionicLoading);
       Restangular.all('api/measurement').getList(vm.options).then(function (res) {
-        vm.list = res.data;
+        vm.list = Restangular.stripRestangular(res.data);
+        // var temp = angular.copy(vm.list);
+        Array.prototype.pushArray = function () {
+          this.push.apply(this, this.concat.apply([], arguments));
+        };
+        vm.lists.pushArray(vm.list);
+        console.log(vm.list);
+        console.log(vm.lists);
         vm.options.totalItems = parseInt(res.headers('total'));
-      }, function (err) {
-        console.log(err);
-        vm.error = err.data.message;
+        $scope.hide($ionicLoading);
+        vm.inProcess = false;
       });
     }
 
@@ -81,6 +124,7 @@ angular.module('starter.measurement', [])
     }
     function search() {
       vm.options.page = 1;
+      vm.lists = [];
       vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
       getList();
     }

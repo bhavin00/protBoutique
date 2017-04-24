@@ -8,7 +8,7 @@
                 </label>
         </div>
 
-        <div class="list card" ng-if="!vm.list.length">
+        <div class="list card" ng-if="!vm.inProcess && !vm.lists.length">
             <div class="item text-center">
                 <h1>NO DATA FOUND</h1>
             </div>
@@ -22,14 +22,14 @@
         </div>
 
 
-        <div class="row calm" ng-if="vm.list.length > 0">
+        <div class="row calm" ng-if="vm.lists.length > 0">
             <!--<div class="padding"></div>-->
 
             <div class="col col-33 table-col" align="">Username</div>
             <div class="col col-33 table-col" align="">Status</div>
             <div class="col col-33 table-col" align="">Action</div>
         </div>
-        <div class="row" align="" ng-repeat="obj in vm.list">
+        <div class="row" align="" ng-repeat="obj in vm.lists">
             <div class="col col-33 table-col">{{obj.username}}</div>
             <div ng-if="obj.isActive" data-th="Status: " class="col col-33 table-col balanced">Active</div>
             <div ng-if="!obj.isActive" data-th="Status: " class="col col-33 table-col assertive">Inactive</div>
@@ -37,6 +37,8 @@
                 <button class="button  button-small button-dark" ng-click="vm.edit(obj)">Edit Data</a>
                 </div>
             </div>
+        <ion-infinite-scroll on-infinite="loadMore()" distance="3%">
+            </ion-infinite-scroll>
     </ion-content>
     
     <div class="fixed-outside">

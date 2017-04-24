@@ -1,14 +1,36 @@
 // angular.module('starter.order', [])
 //     .controller('OrderCtrl', function (Restangular,$scope, $state, $ionicModal, $stateParams ,Upload) {
-        
+
 //     });
 angular.module('starter.order', [])
 
 
-.controller('OrderCtrl' , function(Restangular,$scope, $state, $ionicModal, $timeout, $stateParams ,Upload, $ionicSlideBoxDelegate,$timeout) {
-  
-  //Stuff of base
+    .controller('OrderCtrl', function (Restangular, $scope, $state, $ionicModal, $timeout, $stateParams, Upload, $ionicLoading, $ionicSlideBoxDelegate, $timeout, $ionicHistory) {
+
+        //Stuff of base
         var vm = this;
+        vm.inProcess = true;
+        $scope.loadMore = function () {
+            console.log("hellos");
+            if (!vm.stopload) {
+                vm.options.page++;
+                console.log(vm.options.page)
+                pageChange();
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            } else {
+                if (vm.stopload > vm.options.page) {
+                    vm.options.page++;
+                    console.log(vm.options.page)
+                    pageChange();
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }
+            }
+            if (vm.list.length == 0) {
+                vm.stopload = vm.options.page;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+                return;
+            }
+        }
         vm.date = new Date();
         vm.invoice = invoice;
         vm.print = print;
@@ -84,6 +106,18 @@ angular.module('starter.order', [])
             page: 1,
             search: ''
         }
+        //loading show start from here 
+        $scope.show = function () {
+            $ionicLoading.show({
+                // template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+                template: '<p>Loading...</p>  <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>'
+            });
+        };
+
+        $scope.hide = function () {
+            $ionicLoading.hide();
+        };
+        //loading show end  here 
         vm.searchBy = {
 
         };
@@ -293,23 +327,24 @@ angular.module('starter.order', [])
             vm.isOrderProceed = true;
         }
         function submitOrder(form) {
-            if (form.$invalid) {
-                _.forEach(form.$error.required, function (frm) {
-                    frm.$setDirty();
-                });
-                _.forEach(form.$error.max, function (frm) {
-                    frm.$setDirty();
-                });
-                _.forEach(form.$error.min, function (frm) {
-                    frm.$setDirty();
-                });
-                vm.isSubmitted2 = true;
-                return;
-            }
-            vm.startProcessing = true;
+            // if (form.$invalid) {
+            //     _.forEach(form.$error.required, function (frm) {
+            //         frm.$setDirty();
+            //     });
+            //     _.forEach(form.$error.max, function (frm) {
+            //         frm.$setDirty();
+            //     });
+            //     _.forEach(form.$error.min, function (frm) {
+            //         frm.$setDirty();
+            //     });
+            //     vm.isSubmitted2 = true;
+            //     return;
+            // }
+            // vm.startProcessing = true;
             upload();
         }
         function upload() {
+            vm.order.token = localStorage.getItem("authId");
             var data = Restangular.stripRestangular(vm.order);
             data.totalamount = vm.totalamount;
             //delete vm.order["0"];
@@ -327,7 +362,7 @@ angular.module('starter.order', [])
                 // else {
                 //     SweetAlert.swal("Order saved successfully!");
                 // }
-                $state.go('app.order');
+                $ionicHistory.clearCache().then(function () { $state.go('app.order') })
                 //console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
             }, function (resp) {
                 console.log(resp.data);
@@ -337,18 +372,43 @@ angular.module('starter.order', [])
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             });
         }
+
+        vm.lists = [];
         function getList() {
+            vm.inProcess = true;
+            $scope.show($ionicLoading);
             Restangular.all('api/order').getList(vm.options).then(function (res) {
-                vm.list = res.data;
+                vm.list = Restangular.stripRestangular(res.data);
+                Array.prototype.pushArray = function () {
+                    this.push.apply(this, this.concat.apply([], arguments));
+                };
+                vm.lists.pushArray(vm.list);
                 vm.newList = res.data[localStorage.getItem('index')];
                 console.log(vm.newList);
                 vm.totalamount = 0;
                 vm.newList.OrderItems.forEach(function (element) {
                     vm.totalamount += element.amount;
                 }, this);
+                console.log(vm.list);
+                console.log(vm.lists);
                 vm.options.totalItems = parseInt(res.headers('total'));
+                $scope.hide($ionicLoading);
+                vm.inProcess = false;
             });
         }
+
+        // function getList() {
+        //     Restangular.all('api/order').getList(vm.options).then(function (res) {
+        //         vm.list = res.data;
+        //         vm.newList = res.data[localStorage.getItem('index')];
+        //         console.log(vm.newList);
+        //         vm.totalamount = 0;
+        //         vm.newList.OrderItems.forEach(function (element) {
+        //             vm.totalamount += element.amount;
+        //         }, this);
+        //         vm.options.totalItems = parseInt(res.headers('total'));
+        //     });
+        // }
         function getOrderStatusList() {
             Restangular.all('api/orderStatus').getList().then(function (res) {
                 vm.orderStatuses = res.data;
@@ -390,6 +450,7 @@ angular.module('starter.order', [])
         }
         function search() {
             vm.options.page = 1;
+            vm.lists = [];
             vm.options.where = 'name;$like|s|%' + vm.options.search + '%';
             getList();
         }
@@ -406,6 +467,7 @@ angular.module('starter.order', [])
             var ascL = vm.asc[col] ? 'asc' : 'desc';
             vm.options.sort = col + ' ' + ascL;
             vm.options.page = 1;
+
             getList();
         }
 
@@ -420,6 +482,7 @@ angular.module('starter.order', [])
                 arr.push('CustomerId;' + vm.searchBy.CustomerId);
             }
             vm.options.where = arr.join(',');
+            vm.lists = [];
             getList();
         }
 
@@ -487,97 +550,114 @@ angular.module('starter.order', [])
         }
 
 
-  //stuff of base
+        //stuff of base
 
-  //Overall stuff
-  //Control functions
-  $scope.next = function(){
-    $ionicSlideBoxDelegate.next();
-  }
-  $scope.back = function(){
-    $ionicSlideBoxDelegate.previous();
-  }
+        //Overall stuff
+        //Control functions
+        $scope.next = function () {
+            $ionicSlideBoxDelegate.next();
+        }
+        $scope.back = function () {
+            $ionicSlideBoxDelegate.previous();
+        }
 
-  $scope.slide = -1;
-  $scope.slides = [];
-  $timeout(function(){
-    $scope.$watch(function(){
-        return $ionicSlideBoxDelegate.currentIndex();
-    }, function(index){
+        $scope.slide = -1;
+        $scope.slides = [];
+        $timeout(function () {
+            $scope.$watch(function () {
+                return $ionicSlideBoxDelegate.currentIndex();
+            }, function (index) {
 
-      $scope.errorMessage = "";
+                $scope.errorMessage = "";
 
-      //Initial state, don't validate
-      if($scope.slide < 0){
-        $scope.slide = 0;
-        return;
-      }
+                //Initial state, don't validate
+                if ($scope.slide < 0) {
+                    $scope.slide = 0;
+                    return;
+                }
 
-      if($scope.slides[$scope.slide].isValid()){
-        $scope.slide = index;
-        return;
-      } else {
-        $ionicSlideBoxDelegate.slide($scope.slide);
-        $scope.errorMessage = $scope.slides[$scope.slide].errorMessage;
-      }
+                if ($scope.slides[$scope.slide].isValid()) {
+                    $scope.slide = index;
+                    return;
+                } else {
+                    $ionicSlideBoxDelegate.slide($scope.slide);
+                    $scope.errorMessage = $scope.slides[$scope.slide].errorMessage;
+                }
 
+            });
+        }, 0);
+
+
+
+        //Setup the slides
+        $scope.slide1 = new Slide();
+        $scope.slide1.validators.push(function () {
+            return vm.order.CustomerId;
+        });
+        //   $scope.slide1.validators.push(function(){
+        //     return $scope.slide1.lastName && $scope.slide1.lastName.length != 0;
+        //   });
+        $scope.slide1.errorMessage = "Please fill all mandatory fields marked with *.";
+        $scope.slides.push($scope.slide1);
+        vm.slide3flag = false;
+        $scope.slide2 = new Slide();
+
+        $scope.slide2.validators.push(function () {
+            vm.order.OrderItems.forEach(function (element) {
+                if (element.DesignId && element.StyleId && element.MaterialId) {
+                    vm.slide3flag = true;
+                }
+                else {
+                    vm.slide3flag = false;
+                }
+            });
+            return vm.slide3flag;
+        })
+        $scope.slide2.errorMessage = "Please fill all mandatory fields marked with *.";
+        //   for(i=0;i<vm.order.OrderItems.length;i++){
+        //      $scope.slide2.validators.push(function(){
+        //     return vm.order.OrderItems[i].DesignId;
+        // });
+        // $scope.slide2.errorMessage = "Please fill all mandatory fields marked with *.";
+        //   }
+
+
+        $scope.slides.push($scope.slide2);
+
+        $scope.slide3 = new Slide();
+        //   $scope.slide3.validators.push(function(){
+        //     return $scope.slide3.color && $scope.slide3.color.length != 0;
+        //   });
+        //   $scope.slide3.errorMessage = "Please choose a color";
+        $scope.slides.push($scope.slide3);
+
+        $scope.slide4 = new Slide();
+        $scope.slide4.validators.push(function () {
+            return $scope.slide4.african || $scope.slide4.european;
+        });
+        $scope.slide4.errorMessage = "Choose an air speed!";
+        $scope.slides.push($scope.slide4);
+
+        $scope.slide5 = new Slide();
+        $scope.slide5.validators.push(function () {
+            return $scope.slide5.love > 50;
+        });
+        $scope.slide5.errorMessage = "You don't love kittens enough!";
+        $scope.slides.push($scope.slide5);
     });
-  },0);
 
-
-
-  //Setup the slides
-  $scope.slide1 = new Slide();
-//   $scope.slide1.validators.push(function(){
-//     return $scope.slide1.firstName && $scope.slide1.firstName.length != 0;
-//   });
-//   $scope.slide1.validators.push(function(){
-//     return $scope.slide1.lastName && $scope.slide1.lastName.length != 0;
-//   });
-//   $scope.slide1.errorMessage = "Please enter your name!";
-  $scope.slides.push($scope.slide1);
-
-  $scope.slide2 = new Slide();
-//   $scope.slide2.validators.push(function(){
-//     return $scope.slide2.quest && $scope.slide2.quest.length != 0;
-//   });
-//   $scope.slide2.errorMessage = "Choose a quest!";
-  $scope.slides.push($scope.slide2);
-
-  $scope.slide3 = new Slide();
-//   $scope.slide3.validators.push(function(){
-//     return $scope.slide3.color && $scope.slide3.color.length != 0;
-//   });
-//   $scope.slide3.errorMessage = "Please choose a color";
-  $scope.slides.push($scope.slide3);
-
-  $scope.slide4 = new Slide();
-  $scope.slide4.validators.push(function(){
-    return $scope.slide4.african || $scope.slide4.european;
-  });
-  $scope.slide4.errorMessage = "Choose an air speed!";
-  $scope.slides.push($scope.slide4);
-
-  $scope.slide5 = new Slide();
-  $scope.slide5.validators.push(function(){
-    return $scope.slide5.love > 50;
-  });
-  $scope.slide5.errorMessage = "You don't love kittens enough!";
-  $scope.slides.push($scope.slide5);
-});
-
-var Slide = function(){
-  this.validators = [];
-  this.errorMessage = "Something went wrong!";
+var Slide = function () {
+    this.validators = [];
+    this.errorMessage = "Something went wrong!";
 }
-Slide.prototype.isValid = function(){
-  if(this.validators.length == 0){
-    return true;
-  }
-  for (var i=0; i < this.validators.length; i++){
-    if(!this.validators[i]()){
-      return false;
+Slide.prototype.isValid = function () {
+    if (this.validators.length == 0) {
+        return true;
     }
-  }
-  return true;
+    for (var i = 0; i < this.validators.length; i++) {
+        if (!this.validators[i]()) {
+            return false;
+        }
+    }
+    return true;
 }

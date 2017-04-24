@@ -1,95 +1,94 @@
 <ion-view view-title="Home Page">
     <ion-content>
-<div class="inner-heading-bar" ng-init="vm.getList()">Invoice</div>
-<div id="printable">
-<div class="main-contant-part">
-<div  class="invoice-main-table">
-	 <div class="invoice-header">
-	  <p><img src="img/newlogo.png" alt="ProT Boutique"></p>
-	  <p>B-303, Balleshwar Square, Opp. Iskon Temple</p>
-			<p>S.G. Highway Ahmedabad - 380054</p>
-	  <div class="print" ng-click="vm.print('printable')">Print</div>
-	 </div>
-	  
-	 <div class="customer-address-box">
+			<!--<div class="inner-heading-bar">Customer Details</div>-->
 
-			  <div class="customer-left-bx">
-	   <table width="100%" border="0" cellspacing="0" cellpadding="0">
-		  <tbody>
-			<tr>
-				<!--<td align="left">Customer Name:</td>-->
-			  <td align="left" style="padding: 0 0 10px 0px;">{{vm.newList.Customer.name}}</td>
-			</tr>
-			<tr>
-				<!--<td align="left">Address:</td>-->
-			  <td align="left" style="padding: 0 0 10px 0px;">{{vm.newList.Customer.address}}</td>
-			</tr>
-			<tr>
-				<!--<td align="left">Mobile No:</td>-->
-			  <td align="left">{{vm.newList.Customer.mobile}}</td>
-			</tr>
-		  </tbody>
-		</table>
-	  </div>
-	  <div class="customer-right-bx customer-left-bx-rt">
-	   <table width="100%" border="0" cellspacing="0" cellpadding="0">
-		  <tbody>
-			<tr>
-			  <td align="right" style="padding: 0 0 10px 0px;">Invoice #:</td>
-			  <td align="right" style="padding: 0 0 10px 0px;">{{vm.newList.id|leadingZero}}</td>
-			</tr>
-			<tr>
-			  <td align="right" style="padding: 0 0 10px 0px;">Invoice Date:</td>
-			  <td align="right" style="padding: 0 0 10px 0px;">{{vm.date | date: dd/mm/yyyy}}</td>
-			</tr>
-			<!--<tr>
-			  <td align="right">P.O. #:</td>
-			  <td align="right">1742/2014</td>
-			</tr>-->
-			<tr>
-			  <td align="right" style="padding: 0 0 10px 0px;">Due Date:</td>
-			  <td align="right" style="padding: 0 0 10px 0px;">18/03/2017</td>
-			</tr>
-		  </tbody>
-		</table>
-	  </div>
-	 </div>
-	 <div class="contant-table-bx">
-	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tbody>
-    <tr>
-      <th align="center">Sr. No.</th>
-      <th align="center">Description</th>
-      <th align="center">Amount</th>
-    </tr>
-    <tr ng-repeat="data in vm.newList.OrderItems">
-      <td align="center">{{$index+1}}</td>
-      <td>{{data.Design.title}} ({{data.Style.title}})</td>
-      <td align="center">{{data.amount}}</td>
-    </tr>
-	<tr>
-      <td id="border-bottom-table" class="border-bottom-table-0px">&nbsp</td>
-      <td id="border-bottom-table" class="border-bottom-table-0px" align="right">Subtotal</td>
-      <td align="center">{{vm.totalamount}}</td>
-    </tr>
-	<tr>
-      <td class="border-bottom-table-0px">&nbsp</td>
-      <td class="border-bottom-table-0px" align="right">Discount</td>
-      <td align="center">-</td>
-    </tr>
-    <tr>
-      <td class="border-bottom-table-0px">&nbsp</td>
-      <td class="border-bottom-table-0px" style=" font-weight:bold; font-size:16px;" align="right">Total</td>
-      <td class="border-bottom-table" style="border-bottom:1px solid #ccc; background:#f6f6f6; font-weight:bold; font-size:16px;" align="center">{{vm.totalamount}}</td>
-    </tr>
-	
-	
-  </tbody>
-</table>
-	 </div>
+<div class="main-contant-part" ng-init="vm.getList()">
+	<div class="customer-detail-page-contant">
+		<div class="right-add-new-button"><a href="" ng-click="vm.print('printable')">Print</a></div>
+		<div id="printable" class="details-table">
+			<div class="invoice-main-table">
+				<div class="invoice-header">
+					<p><img src="img/newlogo.png" alt="ProT Boutique"></p>
+					<p>B-303, Balleshwar Square, Opp. Iskon Temple</p>
+					<p>S.G. Highway Ahmedabad - 380054</p>
+
+				</div>
+
+				<div class="customer-address-box">
+
+					<div class="customer-left-bx">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td align="left" style="padding: 0 0 10px 0px;">{{vm.newList.Customer.name}}</td>
+								</tr>
+								<tr>
+									<td align="left" style="padding: 0 0 10px 0px;">{{vm.newList.Customer.address}}</td>
+								</tr>
+								<tr>
+									<td align="left">{{vm.newList.Customer.mobile}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="customer-right-bx customer-left-bx-rt">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td align="right" style="padding: 0 0 10px 0px;">Invoice #:</td>
+									<td align="right" style="padding: 0 0 10px 0px;">{{vm.newList.id | leadingZero}}</td>
+								</tr>
+								<tr>
+									<td align="right" style="padding: 0 0 10px 0px;">Invoice Date:</td>
+									<td align="right" style="padding: 0 0 10px 0px;">{{vm.date | date: dd/mm/yyyy}}</td>
+								</tr>
+								<tr>
+									<td align="right" style="padding: 0 0 10px 0px;">Order Date:</td>
+									<td align="right" style="padding: 0 0 10px 0px;">{{vm.newList.orderDate | date: dd/mm/yyyy}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="contant-table-bx">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tbody>
+							<tr>
+								<th align="center">Sr. No.</th>
+								<th align="center">Description</th>
+								<th align="center">Amount</th>
+							</tr>
+							<tr ng-repeat="data in vm.newList.OrderItems">
+								<td align="center">{{$index+1}}</td>
+								<td>{{data.Design.title}} ({{data.Style.title}})</td>
+								<td align="center">{{data.amount | currency : '&#8377;'}}</td>
+							</tr>
+							<tr>
+								<td id="border-bottom-table" class="border-bottom-table-0px">&nbsp</td>
+								<td id="border-bottom-table" class="border-bottom-table-0px" align="right">Subtotal</td>
+								<td align="center">{{vm.totalamount | currency : '&#8377;'}}</td>
+							</tr>
+							<tr>
+								<td class="border-bottom-table-0px">&nbsp</td>
+								<td class="border-bottom-table-0px" align="right">Discount</td>
+								<td align="center">-</td>
+							</tr>
+							<tr>
+								<td class="border-bottom-table-0px">&nbsp</td>
+								<td class="border-bottom-table-0px" style=" font-weight:bold; font-size:16px;" align="right">Total</td>
+								<td class="border-bottom-table" style="border-bottom:1px solid #ccc; background:#f6f6f6; font-weight:bold; font-size:16px;"
+								 align="center">{{vm.totalamount | currency : '&#8377;'}}</td>
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
 	</div>
-    </div>
-    </div>
+</div>
 
  </ion-content>
 </ion-view>   
