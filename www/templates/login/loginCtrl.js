@@ -35,6 +35,7 @@ angular.module('starter.login', [])
                     vm.error = 'Internal Server Error';
                     vm.startProcessing = false;
                     vm.loginBtnText = 'Login';
+                    $scope.hide($ionicLoading);
                 } else
                     if (res == "true") {
                         $scope.hide($ionicLoading);

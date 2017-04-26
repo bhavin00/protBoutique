@@ -3,6 +3,7 @@ angular.module('starter.measurement', [])
   .controller('MeasurementCtrl', function ($stateParams, $scope, $state, $ionicModal, $timeout, $http, Restangular, $ionicHistory, $ionicLoading) {
     var vm = this;
     vm.inProcess = true;
+    vm.searchFlag = false;
     $scope.loadMore = function () {
       if (!vm.stopload) {
         vm.options.page++;
@@ -17,13 +18,14 @@ angular.module('starter.measurement', [])
           $scope.$broadcast('scroll.infiniteScrollComplete');
         }
       }
-      if (vm.list.length == 0) {
+      if (vm.lists.length == 0) {
         vm.stopload = vm.options.page;
         $scope.$broadcast('scroll.infiniteScrollComplete');
         return;
       }
     }
     vm.list = [];
+    
     vm.save = save;
     vm.edit = edit;
     vm.getList = getList;
@@ -39,7 +41,6 @@ angular.module('starter.measurement', [])
     //loading show start from here 
     $scope.show = function () {
       $ionicLoading.show({
-        // template: '<p>Loading...</p><ion-spinner></ion-spinner>'
         template: '<p>Loading...</p>  <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>'
       });
     };
@@ -103,16 +104,18 @@ angular.module('starter.measurement', [])
     vm.lists = [];
     function getList() {
       vm.inProcess = true;
+
       $scope.show($ionicLoading);
       Restangular.all('api/measurement').getList(vm.options).then(function (res) {
+        if (vm.options.page == 1 && vm.searchFlag) { //vm.options.search != '' &&
+          vm.lists = [];
+        }
         vm.list = Restangular.stripRestangular(res.data);
         // var temp = angular.copy(vm.list);
         Array.prototype.pushArray = function () {
           this.push.apply(this, this.concat.apply([], arguments));
         };
         vm.lists.pushArray(vm.list);
-        console.log(vm.list);
-        console.log(vm.lists);
         vm.options.totalItems = parseInt(res.headers('total'));
         $scope.hide($ionicLoading);
         vm.inProcess = false;
@@ -125,6 +128,7 @@ angular.module('starter.measurement', [])
     function search() {
       vm.options.page = 1;
       vm.lists = [];
+      vm.searchFlag = true;
       vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
       getList();
     }

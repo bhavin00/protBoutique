@@ -16,7 +16,7 @@
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }
             }
-            if (vm.list.length == 0) {
+            if (vm.lists.length == 0) {
                 vm.stopload = vm.options.page;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 return;
@@ -36,7 +36,7 @@
         };
 
         vm.search = search;
-        vm.searching = false;
+        vm.searchFlag = false;
         vm.order = order;
         vm.pageChange = pageChange;
         vm.options = {
@@ -105,7 +105,9 @@
         function getList() {
             vm.inProcess = true;
             $scope.show($ionicLoading);
-            vm.searching = true;
+            if (vm.options.page == 1 &&  vm.searchFlag) { //vm.options.search != '' &&
+                    vm.lists = [];
+                }
             Restangular.all('api/design').getList(vm.options).then(function (res) {
                 // vm.lists = [];
                 vm.list = Restangular.stripRestangular(res.data);
@@ -167,14 +169,12 @@
         function pageChange() {
             getList();
         }
-        function search() {
+       function search() {
             vm.options.page = 1;
             vm.lists = [];
+            vm.searchFlag = true;
             vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
-            if(!vm.searching){
-                getList();
-            }
-            return;
+            getList();
         }
 
         function order(col, ord) {

@@ -4,6 +4,8 @@
 
 
         var vm = this;
+        vm.searchFlag = false;
+
         vm.inProcess = true;
         $scope.loadMore = function () {
             if (!vm.stopload) {
@@ -19,7 +21,7 @@
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }
             }
-            if (vm.list.length == 0) {
+            if (vm.lists.length == 0) {
                 vm.stopload = vm.options.page;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 return;
@@ -100,7 +102,7 @@
             vm.inProcess = true;
             $scope.show($ionicLoading);
             Restangular.all('api/material').getList(vm.options).then(function (res) {
-                if(vm.options.page==1){
+                if (vm.options.page == 1 &&  vm.searchFlag) { //vm.options.search != '' &&
                     vm.lists = [];
                 }
                 vm.list = Restangular.stripRestangular(res.data);
@@ -124,6 +126,7 @@
         function search() {
             vm.options.page = 1;
             vm.lists = [];
+            vm.searchFlag = true;
             vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
             getList();
         }

@@ -2,6 +2,7 @@
     .controller('StyleCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular, Upload, $ionicHistory, $ionicModal, $ionicLoading) {
         var vm = this;
         vm.inProcess = true;
+        vm.searchFlag = false;
         $scope.loadMore = function () {
             if (!vm.stopload) {
                 vm.options.page++;
@@ -16,7 +17,7 @@
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }
             }
-            if (vm.list.length == 0) {
+            if (vm.lists.length == 0) {
                 vm.stopload = vm.options.page;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 return;
@@ -30,7 +31,7 @@
         };
         vm.search = search;
         vm.order = order;
-        vm.searching = false;
+        vm.searchFlag = false;
         vm.pageChange = pageChange;
         vm.options = {
             pagesize: 15,
@@ -112,12 +113,14 @@
 
         vm.lists = [];
         function getList() {
-           
+
             vm.inProcess = true;
             $scope.show($ionicLoading);
-            vm.searching = true;
+            if (vm.options.page == 1 && vm.searchFlag) { //vm.options.search != '' &&
+                vm.lists = [];
+            }
             Restangular.all('api/style').getList(vm.options).then(function (res) {
-                
+
                 vm.list = Restangular.stripRestangular(res.data);
                 // var temp = angular.copy(vm.list);
                 Array.prototype.pushArray = function () {
@@ -129,7 +132,7 @@
                 vm.options.totalItems = parseInt(res.headers('total'));
                 $scope.hide($ionicLoading);
                 vm.inProcess = false;
-                vm.searching = false;
+
             });
         }
         function getDesignList() {
@@ -157,17 +160,11 @@
         //     getList();
         // }
         function search() {
-            vm.options.search = vm.options.search;
             vm.options.page = 1;
             vm.lists = [];
+            vm.searchFlag = true;
             vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
-            $timeout(function(){
-                if(!vm.searching){
-                    getList();
-                }
-            },3000);
-           
-            return;
+            getList();
         }
 
         function order(col, ord) {

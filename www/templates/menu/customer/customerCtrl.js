@@ -1,6 +1,7 @@
 angular.module('starter.customer', [])
     .controller('CustomerCtrl', function (Restangular, $scope, $state, $ionicModal, $timeout, $stateParams, $ionicHistory, $ionicLoading) {
         var vm = this;
+        vm.searchFlag = false;
         vm.inProcess = true;
         $scope.loadMore = function () {
             if (!vm.stopload) {
@@ -16,7 +17,7 @@ angular.module('starter.customer', [])
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }
             }
-            if (vm.list.length == 0) {
+            if (vm.lists.length == 0) {
                 vm.stopload = vm.options.page;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 return;
@@ -102,7 +103,9 @@ angular.module('starter.customer', [])
             vm.inProcess = true;
             $scope.show($ionicLoading);
             Restangular.all('api/customer').getList(vm.options).then(function (res) {
-                // vm.lists = [];
+                if (vm.options.page == 1 && vm.searchFlag) { //vm.options.search != '' &&
+                    vm.lists = [];
+                }
                 vm.list = Restangular.stripRestangular(res.data);
                 // var temp = angular.copy(vm.list);
                 Array.prototype.pushArray = function () {
@@ -129,10 +132,10 @@ angular.module('starter.customer', [])
         }
 
         function search() {
-            vm.options.search = vm.options.search;
             vm.options.page = 1;
             vm.lists = [];
-            vm.options.where = 'name;$like|s|%' + vm.options.search + '%';
+            vm.searchFlag = true;
+            vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
             getList();
         }
 

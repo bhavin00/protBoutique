@@ -1,6 +1,7 @@
 angular.module('starter.user', [])
     .controller('UserCtrl', function ($scope, $state, $ionicModal, $stateParams, $timeout, Restangular, sessionService, $ionicHistory, $ionicLoading) {
         var vm = this;
+        vm.searchFlag = false;
         vm.inProcess = true;
         $scope.loadMore = function () {
             if (!vm.stopload) {
@@ -16,7 +17,7 @@ angular.module('starter.user', [])
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }
             }
-            if (vm.list.length == 0) {
+            if (vm.lists.length == 0) {
                 vm.stopload = vm.options.page;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 return;
@@ -142,7 +143,9 @@ angular.module('starter.user', [])
             vm.inProcess = true;
             $scope.show($ionicLoading);
             Restangular.all('api/user').getList(vm.options).then(function (res) {
-                vm.lists = [];
+                if (vm.options.page == 1 && vm.searchFlag) { //vm.options.search != '' &&
+                    vm.lists = [];
+                }
                 vm.list = Restangular.stripRestangular(res.data);
                 // var temp = angular.copy(vm.list);
                 Array.prototype.pushArray = function () {
@@ -160,11 +163,12 @@ angular.module('starter.user', [])
         function pageChange() {
             getList();
         }
-        function search() {
-                vm.options.page = 1;
-                vm.lists = [];
-                vm.options.where = 'fullname;$like|s|%' + vm.options.search + '%';
-                getList();
+         function search() {
+            vm.options.page = 1;
+            vm.lists = [];
+            vm.searchFlag = true;
+            vm.options.where = 'title;$like|s|%' + vm.options.search + '%';
+            getList();
         }
 
         function order(col, ord) {
